@@ -11,7 +11,7 @@
     "prettier": "^3.2.5",
     "turbo": "^2.0.4"
   },
-  "name": "with-vite",
+  "name": "poke-ron",
   "packageManager": "npm@9.5.1",
   "workspaces": [
     "apps/*",
