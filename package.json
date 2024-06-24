@@ -8,8 +8,10 @@
   },
   "devDependencies": {
     "eslint": "^8.57.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
     "prettier": "^3.2.5",
-    "turbo": "^2.0.4"
+    "turbo": "^2.0.4",
+    "vite-plugin-eslint": "^1.8.1"
   },
   "name": "poke-ron",
   "packageManager": "npm@9.5.1",
