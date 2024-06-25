@@ -1,6 +1,13 @@
 module.exports = {
-  root: true,
-  extends: [
-    '@repo/eslint-config/vite.js'
-  ],
-}
+  env: { browser: true, es2020: true },
+  extends: ["plugin:react-hooks/recommended", "@repo/eslint-config/index.js"],
+  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  parser: "@typescript-eslint/parser",
+  plugins: ["react-refresh"],
+  rules: {
+    "react-refresh/only-export-components": [
+      "warn",
+      { allowConstantExport: true },
+    ],
+  },
+};
