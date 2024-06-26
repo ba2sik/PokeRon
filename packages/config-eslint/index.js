@@ -1,15 +1,16 @@
 module.exports = {
   env: {
-    node: true
+    node: true,
   },
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier'
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
   ],
-  plugins: ['@typescript-eslint'],
+  plugins: ["@typescript-eslint"],
   rules: {
-    '@typescript-eslint/no-non-null-assertion': 'off'
-  }
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "max-len": ["error", { code: 120 }],
+  },
 };
