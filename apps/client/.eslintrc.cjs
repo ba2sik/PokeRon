@@ -1,13 +1,13 @@
 module.exports = {
   env: { browser: true, es2020: true },
   extends: ['plugin:react-hooks/recommended', 'plugin:react/recommended', '@repo/eslint-config/index.js', 'airbnb', 'airbnb-typescript', 'prettier'],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', 'prettier'],
   parserOptions: {
     sourceType: 'module',
     ecmaVersion: 2020,
-    project: ['./tsconfig.app.json']
+    project: ['./tsconfig.json']
   },
   rules: {
     'prettier/prettier': 'error',
@@ -16,6 +16,14 @@ module.exports = {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true }
-    ]
-  }
+    ],
+  },
+  overrides: [
+    {
+      files: ['vite.config.ts'],
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ]
 };
