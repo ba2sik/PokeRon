@@ -10,19 +10,19 @@ module.exports = {
     project: ['./tsconfig.json']
   },
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': ['error', { 'endOfLine': 'auto' }],
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true }
-    ],
+    ]
   },
   overrides: [
     {
       files: ['vite.config.ts'],
       rules: {
-        "@typescript-eslint/no-explicit-any": "off"
+        '@typescript-eslint/no-explicit-any': 'off',
       }
     }
   ]
