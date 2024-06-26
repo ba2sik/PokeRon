@@ -9,11 +9,8 @@ module.exports = {
     "prettier",
   ],
   plugins: ["@typescript-eslint"],
-  parserOptions: {
-    sourceType: "module",
-    ecmaVersion: 2020,
-  },
   rules: {
     "@typescript-eslint/no-non-null-assertion": "off",
+    "max-len": ["error", { code: 120 }],
   },
 };
