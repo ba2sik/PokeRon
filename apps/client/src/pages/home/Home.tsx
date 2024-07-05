@@ -7,7 +7,14 @@ function Home() {
     <>
       <h1> PokéRon</h1>
       <GoButton type="button">GO</GoButton>
-      <PokeCard>Hello</PokeCard>
+      <div className="cards">
+        <PokeCard>Hello</PokeCard>
+        <PokeCard>Hello</PokeCard>
+        <PokeCard>Hello</PokeCard>
+        <PokeCard>Hello</PokeCard>
+        <PokeCard>Hello</PokeCard>
+        <PokeCard>Hello</PokeCard>
+      </div>
     </>
   );
 }
