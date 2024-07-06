@@ -10,7 +10,7 @@ function Home() {
 
   return (
     <>
-      <h1> PokéRon</h1>
+      <h1 className="text-center p-5"> PokéRon</h1>
       <Pokedex pokemons={pokemons}></Pokedex>
     </>
   );
