@@ -7,6 +7,8 @@ function Home() {
   const pokemons: Pokemon[] = [
     { name: "pikachu", id: 1 },
     { name: "charizard", id: 2 },
+    { name: "squirtle", id: 3 },
+    { name: "kaki", id: 4 },
   ];
 
   return (
