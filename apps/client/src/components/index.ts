@@ -1,2 +1,2 @@
-export * from "./Button/GoButton/GoButton";
 export * from "./PokeCard/PokeCard";
+export * from "./Search/Search";
