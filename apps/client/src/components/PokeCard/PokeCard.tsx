@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardProps } from "@mui/material";
+import { Card, CardProps, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { Pokemon } from "../../types/pokemon";
 
@@ -19,23 +19,23 @@ const CustomCard = styled(Card)`
   }
 `;
 
+export type PokeCardProps = {
+  pokemon: Pokemon;
+} & CardProps;
+
 const PokeCard: React.FC<PokeCardProps> = ({ pokemon }) => {
   return (
     <CustomCard>
       <div>
-        <span>This is the Pokemeon:</span>
-        <span>{pokemon.name}</span>
+        <Typography>This is the Pokemeon:</Typography>
+        <Typography>{pokemon.name}</Typography>
       </div>
       <div>
-        <span>With the id: #</span>
-        <span>{pokemon.id}</span>
+        <Typography>With the id: #</Typography>
+        <Typography>{pokemon.id}</Typography>
       </div>
     </CustomCard>
   );
 };
-
-export type PokeCardProps = {
-  pokemon: Pokemon;
-} & CardProps;
 
 export default PokeCard;
