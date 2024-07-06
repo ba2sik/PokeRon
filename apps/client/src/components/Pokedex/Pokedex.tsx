@@ -14,7 +14,6 @@ const Pokedex: React.FC<PokedexProps> = ({ pokemons }) => {
         <PokeCard
           pokemon={p}
           key={p.id}
-          style={{}}
         />
       ))}
     </div>
