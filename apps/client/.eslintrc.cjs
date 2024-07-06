@@ -11,7 +11,6 @@ module.exports = {
     tsconfigRootDir: __dirname
   },
   rules: {
-    'prettier/prettier': ['error', { 'endOfLine': 'auto' }],
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': [
@@ -19,56 +18,52 @@ module.exports = {
       { allowConstantExport: true }
     ],
     // Typescript
-    "@typescript-eslint/naming-convention": "off",
+    '@typescript-eslint/naming-convention': 'off',
     // React rules
-    "react/jsx-indent": [
-      "error",
+    'react/jsx-indent': [
+      'error',
       2,
       {
-        "checkAttributes": true,
-        "indentLogicalExpressions": true
+        'checkAttributes': true,
+        'indentLogicalExpressions': true
       }
     ],
-    "react/jsx-curly-brace-presence": [
-      "error",
+    'react/jsx-curly-brace-presence': [
+      'error',
       {
-        "props": "never",
-        "children": "never"
+        'props': 'never',
+        'children': 'never'
       }
     ],
-    "react/jsx-indent-props": [
-      "error",
-      2
-    ],
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-wrap-multilines": [
-      "error",
+    'react/jsx-wrap-multilines': [
+      'error',
       {
-        "return": "parens-new-line",
-        "arrow": "parens-new-line",
-        "logical": "parens-new-line"
+        'return': 'parens-new-line',
+        'arrow': 'parens-new-line',
+        'logical': 'parens-new-line'
       }
     ],
-    "react/jsx-max-props-per-line": [
-      "error",
+    'react/jsx-max-props-per-line': [
+      'error',
       {
-        "maximum": 1
+        'maximum': 1
       }
     ],
-    "react/prop-types": "off",
-    "react/jsx-one-expression-per-line": [
-      "error",
+    'react/prop-types': 'off',
+    'react/jsx-one-expression-per-line': [
+      'error',
       {
-        "allow": "single-child"
+        'allow': 'single-child'
       }
     ],
-    "react/jsx-closing-bracket-location": "error",
-    "react/jsx-first-prop-new-line": [
-      "error",
-      "multiline-multiprop"
+    'react/jsx-first-prop-new-line': [2, 'multiline'],
+    'react/jsx-indent-props': [2, 2],
+    'react/jsx-closing-bracket-location': [
+      2,
+      'tag-aligned'
     ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn'
   },
   overrides: [
     {
