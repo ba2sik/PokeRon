@@ -1,19 +1,18 @@
 import React from "react";
-import { Pokemon } from "../../types/pokemon";
 import PokeCard from "../PokeCard/PokeCard";
 
 type PokedexProps = {
   // Note: I know that "Pokemons" isn't the plural, but I use the "s" to distinguish
-  pokemons: Pokemon[];
+  pokemonNames: string[];
 };
 
-const Pokedex: React.FC<PokedexProps> = ({ pokemons }) => {
+const Pokedex: React.FC<PokedexProps> = ({ pokemonNames }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {pokemons.map((p) => (
+      {pokemonNames.map((name) => (
         <PokeCard
-          pokemon={p}
-          key={p.id}
+          name={name}
+          key={name}
         />
       ))}
     </div>
