@@ -11,6 +11,6 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   rules: {
     "@typescript-eslint/no-non-null-assertion": "off",
-    "max-len": ["error", { code: 120 }],
+    "max-len": ["error", { code: 80 }],
   },
 };
