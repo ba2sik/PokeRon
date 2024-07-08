@@ -3,21 +3,25 @@ import Search from '../../components/Search/Search';
 import { useQuery } from 'react-query';
 import { POKE_API_URL } from '../../constants/api';
 import { BasicPokemon } from '../../types/api/apiTypes';
+import axios from 'axios';
 
 // CR: should be in requests folder and not here
 const getPokemons = async () => {
-  // CR: I would switch to axios and create pokemonClient so that it would look like:
+  // CR: create pokemonClient so that it would look like:
   // const { data } = await pokemonClient.get('/pokemon');
-  const response = await fetch(`${POKE_API_URL}/pokemon`);
-  return response.json();
+  const response = await axios.get(`${POKE_API_URL}/pokemon`);
+  return response.data.results;
 };
 
 function Home() {
   // CR: should be in a hook in a separated file. an example is down below
-  const { data, isLoading, isError } = useQuery('pokemons', getPokemons);
+  const {
+    data: pokemons,
+    isLoading,
+    isError,
+  } = useQuery('pokemons', getPokemons);
   // CR: and it would look like this here:
   // const { data, isLoading, isError } = usePokemons();
-
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error...</h1>;
 
@@ -29,7 +33,7 @@ function Home() {
   // const pokemonNames = extract(data.results, ({ name }) => name);
   // OR:
   // const pokemonNames = extract(data.results, pokemon => pokemon.name);
-  const pokemonNames: string[] = data.results.map(
+  const pokemonNames: string[] = pokemons.map(
     // CR: don't use shortcuts... When you use shortcuts you lose out of context.
     // should be called pokemon
     (r: BasicPokemon) => r.name,
