@@ -1,0 +1,8 @@
+{
+  "name": "@repo/poke-client",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "scripts": {
+    "codegen:pokeapi": "openapi-generator-cli generate -i https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml -g typescript-axios -o ./src"
+  }
+}

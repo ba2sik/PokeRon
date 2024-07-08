@@ -6,16 +6,19 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "codegen:pokeapi": "openapi-generator-cli generate -i https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml -g typescript-axios -o ./src"
   },
   "dependencies": {
     "@repo/eslint-config": "*",
+    "@repo/poke-client": "*",
     "axios": "^1.7.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-query": "^3.39.3"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.13.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",

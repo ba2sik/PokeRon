@@ -1,16 +1,19 @@
 import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
 import { useQuery } from 'react-query';
-import { POKE_API_URL } from '../../constants/api';
-import { BasicPokemon, BasicPokemonList } from '../../types/api/apiTypes';
-import axios from 'axios';
+import { BasicPokemon } from '../../types/api/apiTypes';
+import { PokemonApi } from '@repo/poke-client';
 
 // CR: should be in requests folder and not here
-const getPokemons = async (): Promise<BasicPokemon[]> => {
+const getPokemons = async () => {
   // CR: create pokemonClient so that it would look like:
   // const { data } = await pokemonClient.get('/pokemon');
-  const response = await axios.get<BasicPokemonList>(`${POKE_API_URL}/pokemon`);
-  return response.data.results;
+  const api = new PokemonApi();
+  const {
+    data: { results: pokemonsSummaries = [] },
+  } = await api.pokemonList();
+
+  return pokemonsSummaries;
 };
 
 function Home() {
