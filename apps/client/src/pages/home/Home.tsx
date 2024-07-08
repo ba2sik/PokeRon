@@ -26,9 +26,6 @@ function Home() {
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error...</h1>;
 
-  // CR: remove log
-  console.log(data);
-
   // CR: I would infer the type like this:
   // const pokemonNames = data.results.map<string>(
   // Also I would create a generic extract function so that it would look like this:
