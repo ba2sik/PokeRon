@@ -1,20 +1,20 @@
-import React from "react";
-import { Pokemon } from "../../types/pokemon";
+import React from 'react';
 
 export type PokeCardProps = {
-  pokemon: Pokemon;
+  name: string;
 };
 
-const PokeCard: React.FC<PokeCardProps> = ({ pokemon }) => {
+const PokeCard: React.FC<PokeCardProps> = ({ name }) => {
   return (
-    <div className="card bg-base-100 m-4 w-60 shadow-xl">
+    <div className="card bg-base-100 m-4 w-60 items-center shadow-xl hover:scale-105 hover:cursor-pointer transition duration-300 ease-in-out">
       <img
-        src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
+        src={`https://img.pokemondb.net/artwork/${name}.jpg`}
         alt="shoes"
+        className="h-40"
       />
       <div className="card-body">
-        <h2 className="card-title">{pokemon.id}</h2>
-        <p>{`This is ${pokemon.name}`}</p>
+        <h2 className="card-title capitalize">{name}</h2>
+        <p>{`This is ${name}`}</p>
         <div className="card-actions justify-end">
           <div className="badge badge-outline">Fashion</div>
           <div className="badge badge-outline">Products</div>
