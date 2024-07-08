@@ -1,5 +1,5 @@
-import React from "react";
-import PokeCard from "../PokeCard/PokeCard";
+import React from 'react';
+import PokeCard from '../PokeCard/PokeCard';
 
 type PokedexProps = {
   // Note: I know that "Pokemons" isn't the plural, but I use the "s" to distinguish

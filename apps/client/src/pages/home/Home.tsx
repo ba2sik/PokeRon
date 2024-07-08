@@ -1,9 +1,9 @@
-import "./Home.css";
-import Pokedex from "../../components/Pokedex/Pokedex";
-import Search from "../../components/Search/Search";
-import { useQuery } from "react-query";
+import './Home.css';
+import Pokedex from '../../components/Pokedex/Pokedex';
+import Search from '../../components/Search/Search';
+import { useQuery } from 'react-query';
 
-const API_URL = "https://pokeapi.co/api/v2";
+const API_URL = 'https://pokeapi.co/api/v2';
 
 const getPokemons = async () => {
   const response = await fetch(`${API_URL}/pokemon`);
@@ -16,13 +16,15 @@ export type PokemonAPISimple = {
 };
 
 function Home() {
-  const { data, isLoading, isError } = useQuery("pokemons", getPokemons);
+  const { data, isLoading, isError } = useQuery('pokemons', getPokemons);
 
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error...</h1>;
 
   console.log(data);
-  const pokemonNames: string[] = data.results.map((r: PokemonAPISimple) => r.name);
+  const pokemonNames: string[] = data.results.map(
+    (r: PokemonAPISimple) => r.name,
+  );
 
   return (
     <>
