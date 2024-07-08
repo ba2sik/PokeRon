@@ -1,20 +1,8 @@
 import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
 import { useQuery } from 'react-query';
-import { PokemonApi } from '@repo/poke-client';
 import _ from 'lodash';
-
-// CR: should be in requests folder and not here
-const getPokemons = async () => {
-  // CR: create pokemonClient so that it would look like:
-  // const { data } = await pokemonClient.get('/pokemon');
-  const api = new PokemonApi();
-  const {
-    data: { results: pokemonsSummaries = [] },
-  } = await api.pokemonList();
-
-  return pokemonsSummaries;
-};
+import { getPokemonsSummaries } from '../../requests/getPokemons';
 
 function Home() {
   // CR: should be in a hook in a separated file. an example is down below
@@ -22,7 +10,7 @@ function Home() {
     data: pokemons, // Ron: how do i add type here?
     isLoading,
     isError,
-  } = useQuery('pokemons', getPokemons);
+  } = useQuery('pokemons', getPokemonsSummaries);
   // CR: and it would look like this here:
   // const { data, isLoading, isError } = usePokemons();
   if (isLoading) return <h1>Loading...</h1>;
