@@ -1,20 +1,16 @@
 import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
-import { useQuery } from 'react-query';
 import _ from 'lodash';
-import { getPokemonsSummaries } from '../../requests/getPokemons';
+import { useGetPokemonsSummaries } from '../../hooks/useGetPokemonsSummaries';
 
 function Home() {
   // CR: should be in a hook in a separated file. an example is down below
-  const {
-    data: pokemons, // Ron: how do i add type here?
-    isLoading,
-    isError,
-  } = useQuery('pokemons', getPokemonsSummaries);
+
   // CR: and it would look like this here:
   // const { data, isLoading, isError } = usePokemons();
+  const { pokemons, isLoading, error } = useGetPokemonsSummaries();
   if (isLoading) return <h1>Loading...</h1>;
-  if (isError || !pokemons) return <h1>Error...</h1>;
+  if (error || !pokemons) return <h1>{error}</h1>;
 
   const pokemonNames = _.map(pokemons, 'name');
 
