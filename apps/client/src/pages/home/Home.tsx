@@ -34,9 +34,7 @@ function Home() {
   // OR:
   // const pokemonNames = extract(data.results, pokemon => pokemon.name);
   const pokemonNames: string[] = pokemons.map(
-    // CR: don't use shortcuts... When you use shortcuts you lose out of context.
-    // should be called pokemon
-    (r: BasicPokemon) => r.name,
+    (pokemon: BasicPokemon) => pokemon.name,
   );
 
   return (
