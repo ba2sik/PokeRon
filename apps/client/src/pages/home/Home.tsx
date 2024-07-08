@@ -5,7 +5,7 @@ import { PokemonApi } from '@repo/poke-client';
 import _ from 'lodash';
 
 // CR: should be in requests folder and not here
-const getPokemons = async () => {
+const getPokemons = async (): Promise<BasicPokemon[]> => {
   // CR: create pokemonClient so that it would look like:
   // const { data } = await pokemonClient.get('/pokemon');
   const api = new PokemonApi();
@@ -19,7 +19,7 @@ const getPokemons = async () => {
 function Home() {
   // CR: should be in a hook in a separated file. an example is down below
   const {
-    data: pokemons,
+    data: pokemons, // Ron: how do i add type here?
     isLoading,
     isError,
   } = useQuery('pokemons', getPokemons);
