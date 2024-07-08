@@ -6,6 +6,7 @@ const Search = () => {
         className="grow"
         placeholder="Search"
       />
+      {/* CR: I would put svg in .svg file and import it and use it like a component */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"

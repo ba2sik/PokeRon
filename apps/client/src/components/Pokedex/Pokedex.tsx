@@ -12,6 +12,7 @@ const Pokedex: React.FC<PokedexProps> = ({ pokemonNames }) => {
       {pokemonNames.map((name) => (
         <PokeCard
           name={name}
+          // cr: should be used by a key and not a name. if you dont have id, use crypto.randomUUID()
           key={name}
         />
       ))}
