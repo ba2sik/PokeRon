@@ -2,8 +2,9 @@
   "trailingComma": "all",
   "tabWidth": 2,
   "semi": true,
-  "printWidth": 120,
+  "printWidth": 80,
   "bracketSpacing": true,
   "endOfLine": "lf",
+  "singleQuote": true,
   "singleAttributePerLine": true
 }
