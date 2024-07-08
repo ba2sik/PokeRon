@@ -1,8 +1,8 @@
 import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
 import { useQuery } from 'react-query';
-import { BasicPokemon } from '../../types/api/apiTypes';
 import { PokemonApi } from '@repo/poke-client';
+import _ from 'lodash';
 
 // CR: should be in requests folder and not here
 const getPokemons = async () => {
@@ -19,7 +19,7 @@ const getPokemons = async () => {
 function Home() {
   // CR: should be in a hook in a separated file. an example is down below
   const {
-    data: pokemons, // Ron: how do i add type here?
+    data: pokemons,
     isLoading,
     isError,
   } = useQuery('pokemons', getPokemons);
@@ -28,15 +28,7 @@ function Home() {
   if (isLoading) return <h1>Loading...</h1>;
   if (isError || !pokemons) return <h1>Error...</h1>;
 
-  // Also I would create a generic extract function so that it would look like this:
-  // const pokemonNames = extract(data.results, 'name');
-  // OR:
-  // const pokemonNames = extract(data.results, ({ name }) => name);
-  // OR:
-  // const pokemonNames = extract(data.results, pokemon => pokemon.name);
-  const pokemonNames = pokemons.map<string>(
-    (pokemon: BasicPokemon) => pokemon.name,
-  );
+  const pokemonNames = _.map(pokemons, 'name');
 
   return (
     <>
