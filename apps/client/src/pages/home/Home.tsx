@@ -5,7 +5,7 @@ import { PokemonApi } from '@repo/poke-client';
 import _ from 'lodash';
 
 // CR: should be in requests folder and not here
-const getPokemons = async (): Promise<BasicPokemon[]> => {
+const getPokemons = async () => {
   // CR: create pokemonClient so that it would look like:
   // const { data } = await pokemonClient.get('/pokemon');
   const api = new PokemonApi();
