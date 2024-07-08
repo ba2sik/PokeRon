@@ -6,10 +6,11 @@ export type PokeCardProps = {
 
 const PokeCard: React.FC<PokeCardProps> = ({ name }) => {
   return (
-    <div className="card bg-base-100 m-4 w-60 shadow-xl">
+    <div className="card bg-base-100 m-4 w-60 items-center shadow-xl">
       <img
-        src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
+        src={`https://img.pokemondb.net/artwork/${name}.jpg`}
         alt="shoes"
+        className="h-40"
       />
       <div className="card-body">
         <h2 className="card-title">{name}</h2>
