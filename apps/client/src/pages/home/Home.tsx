@@ -2,6 +2,7 @@ import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
 import { useQuery } from 'react-query';
 import { POKE_API_URL } from '../../constants/api';
+import { BasicPokemon } from '../../types/api/apiTypes';
 
 // CR: should be in requests folder and not here
 const getPokemons = async () => {
@@ -9,12 +10,6 @@ const getPokemons = async () => {
   // const { data } = await pokemonClient.get('/pokemon');
   const response = await fetch(`${POKE_API_URL}/pokemon`);
   return response.json();
-};
-
-// CR: this type should be defined under it's own file
-export type PokemonAPISimple = {
-  name: string;
-  url: URL;
 };
 
 function Home() {
@@ -37,7 +32,7 @@ function Home() {
   const pokemonNames: string[] = data.results.map(
     // CR: don't use shortcuts... When you use shortcuts you lose out of context.
     // should be called pokemon
-    (r: PokemonAPISimple) => r.name,
+    (r: BasicPokemon) => r.name,
   );
 
   return (
