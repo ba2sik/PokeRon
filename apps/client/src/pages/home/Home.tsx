@@ -1,16 +1,13 @@
 import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
 import { useQuery } from 'react-query';
-
-// CR: You should be more specific about the naming... Which api are you using?
-// I would change it to POKE_API_URL and also move it to a constants file
-const API_URL = 'https://pokeapi.co/api/v2';
+import { POKE_API_URL } from '../../constants/api';
 
 // CR: should be in requests folder and not here
 const getPokemons = async () => {
   // CR: I would switch to axios and create pokemonClient so that it would look like:
   // const { data } = await pokemonClient.get('/pokemon');
-  const response = await fetch(`${API_URL}/pokemon`);
+  const response = await fetch(`${POKE_API_URL}/pokemon`);
   return response.json();
 };
 
