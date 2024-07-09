@@ -1,11 +1,11 @@
 import { QueryOptions, useQuery, UseQueryResult } from 'react-query';
-import { getPokemonsSummaries } from '../requests/getPokemons';
-import { PokemonSummary } from '@repo/poke-client';
+import { getBasicPokemons } from '../requests/getPokemons';
+import { BasicPokemon } from '../types/pokemons';
 
-export const usePokemons = (options?: QueryOptions): UseQueryResult<PokemonSummary[]> => {
+export const usePokemons = (options?: QueryOptions): UseQueryResult<BasicPokemon[]> => {
   return useQuery({
     queryKey: 'pokemons',
-    queryFn: getPokemonsSummaries,
+    queryFn: getBasicPokemons,
     ...options,
   });
 };
