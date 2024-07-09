@@ -20,7 +20,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <h1 className="text-center p-5"> PokéRon</h1>
+      <h1 className="text-center text-7xl p-5"> PokéRon</h1>
       <Search />
       <Pokedex basicPokemons={basicPokemons} />
     </>
