@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PokeCard from '../PokeCard/PokeCard';
 import { BasicPokemon } from '../../types/pokemons';
 import { useEventListener } from '../../hooks/useEventListener';
@@ -14,6 +14,7 @@ const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
     basicPokemons.slice(0, NUM_OF_POKEMONS_TO_LOAD),
   );
   const [currentOffset, setCurrentOffset] = useState(NUM_OF_POKEMONS_TO_LOAD);
+  const divRef = useRef<HTMLDivElement | null>(null);
 
   const loadMorePokemons = () => {
     const newItems = basicPokemons.slice(currentOffset, currentOffset + NUM_OF_POKEMONS_TO_LOAD);
@@ -33,15 +34,16 @@ const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
   useEventListener('scroll', handleScroll);
 
   return (
-    <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {currentShowingBasicPokemons.map(({ name, id }) => (
-          <PokeCard
-            name={name}
-            key={id}
-          />
-        ))}
-      </div>
+    <div
+      ref={divRef}
+      className="flex flex-wrap justify-center p-4 gap-8 max-h-[70vh] overflow-y-scroll"
+    >
+      {currentShowingBasicPokemons.map(({ name, id }) => (
+        <PokeCard
+          name={name}
+          key={id}
+        />
+      ))}
     </div>
   );
 };
