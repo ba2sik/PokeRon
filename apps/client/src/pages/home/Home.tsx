@@ -5,11 +5,17 @@ import { isAxiosError } from 'axios';
 import { isEmptyArray, isNotNullOrUndefined, isNullOrUndefined } from '../../utils/arrays';
 
 const Home: React.FC = () => {
-  const { data: basicPokemons, isLoading, error } = usePokemons();
+  const {
+    data: basicPokemons,
+    isLoading: isLoadingBasicPokemons,
+    error: basicPokemonsError,
+  } = usePokemons();
 
-  if (isLoading || isNullOrUndefined(basicPokemons)) return <h1>Loading...</h1>;
-  if (isNotNullOrUndefined(error) || isEmptyArray(basicPokemons)) {
-    return <h1>{isAxiosError(error) ? error.message : 'unknown error'}</h1>;
+  if (isLoadingBasicPokemons || isNullOrUndefined(basicPokemons)) return <h1>Loading...</h1>;
+  if (isNotNullOrUndefined(basicPokemonsError) || isEmptyArray(basicPokemons)) {
+    return (
+      <h1>{isAxiosError(basicPokemonsError) ? basicPokemonsError.message : 'unknown error'}</h1>
+    );
   }
 
   return (
