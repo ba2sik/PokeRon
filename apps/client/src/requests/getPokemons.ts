@@ -5,11 +5,15 @@ import { BasicPokemon } from '../types/pokemons';
 
 export const getBasicPokemons = async () => {
   const api = new PokemonApi();
-  const {
-    data: { results: pokemonsSummaries = [] },
-  } = await api.pokemonList();
-
-  return pokemonsSummaries.map(mapPokemonSummaryToBasicPokemon);
+  try {
+    const {
+      data: { results: pokemonsSummaries = [] },
+    } = await api.pokemonList();
+    return pokemonsSummaries.map(mapPokemonSummaryToBasicPokemon);
+  } catch (error) {
+    console.error('Error fetching pokemons', error);
+    throw error;
+  }
 };
 
 const mapPokemonSummaryToBasicPokemon = (pokemonSummary: PokemonSummary): BasicPokemon => ({
