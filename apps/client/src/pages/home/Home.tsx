@@ -1,12 +1,16 @@
 import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
 import { usePokemons } from '../../hooks/usePokemons';
+import { isAxiosError } from 'axios';
+import { isEmptyArray, isNotNullOrUndefined, isNullOrUndefined } from '../../utils/arrays';
 
 const Home: React.FC = () => {
   const { data: basicPokemons, isLoading, error } = usePokemons();
 
-  if (isLoading) return <h1>Loading...</h1>;
-  if (error || !basicPokemons) return <h1>{error}</h1>;
+  if (isLoading || isNullOrUndefined(basicPokemons)) return <h1>Loading...</h1>;
+  if (isNotNullOrUndefined(error) || isEmptyArray(basicPokemons)) {
+    return <h1>{isAxiosError(error) ? error.message : 'unknown error'}</h1>;
+  }
 
   return (
     <>
