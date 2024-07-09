@@ -1,14 +1,23 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { isNotNullOrUndefined } from '../utils/arrays';
 
-export const useEventListener = <EventNameType extends keyof WindowEventMap>(
-  eventName: EventNameType,
-  onEvent: Parameters<typeof window.addEventListener<EventNameType>>[1],
+export const useEventListener = <
+  Element extends HTMLElement | Window,
+  EventName extends Parameters<Element['addEventListener']>[0],
+>(
+  eventName: EventName,
+  onEvent: Parameters<Element['addEventListener']>[1],
+  ref: React.MutableRefObject<Element | null>,
 ) => {
   useEffect(() => {
-    window.addEventListener(eventName, onEvent);
-    console.log('useEffect');
-    return () => {
-      window.removeEventListener(eventName, onEvent);
-    };
-  }, [eventName, onEvent]);
+    if (isNotNullOrUndefined(ref.current)) {
+      ref.current.addEventListener(eventName, onEvent);
+
+      return () => {
+        if (isNotNullOrUndefined(ref.current)) {
+          ref.current.removeEventListener(eventName, onEvent);
+        }
+      };
+    }
+  }, [ref.current, eventName, onEvent]);
 };
