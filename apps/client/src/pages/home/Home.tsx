@@ -28,7 +28,7 @@ const Home: React.FC = () => {
     <>
       <h1 className="text-center p-5"> PokéRon</h1>
       <Search />
-      <Pokedex pokemons={pokemons}></Pokedex>
+      <Pokedex pokemons={pokemons}/>
     </>
   );
 };
