@@ -3,13 +3,13 @@ import PokeCard from '../PokeCard/PokeCard';
 import { BasicPokemon } from '../../types/pokemons';
 
 type PokedexProps = {
-  pokemons: BasicPokemon[];
+  basicPokemons: BasicPokemon[];
 };
 
-const Pokedex: React.FC<PokedexProps> = ({ pokemons }) => {
+const Pokedex: React.FC<PokedexProps> = ({ basicPokemons }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {pokemons.map(({ name, id }) => (
+      {basicPokemons.map(({ name, id }) => (
         <PokeCard
           name={name}
           key={id}
