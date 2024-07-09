@@ -18,11 +18,13 @@ const Home: React.FC = () => {
     );
   }
 
+  const currentShowingBasicPokemons = basicPokemons.slice(0, 20);
+
   return (
     <>
       <h1 className="text-center p-5"> PokéRon</h1>
       <Search />
-      <Pokedex basicPokemons={basicPokemons} />
+      <Pokedex basicPokemons={currentShowingBasicPokemons} />
     </>
   );
 };
