@@ -3,7 +3,6 @@ import PokeCard from '../PokeCard/PokeCard';
 import { BasicPokemon } from '../../types/pokemons';
 
 type PokedexProps = {
-  // Note: I know that "Pokemons" isn't the plural, but I use the "s" to distinguish
   pokemons: BasicPokemon[];
 };
 
