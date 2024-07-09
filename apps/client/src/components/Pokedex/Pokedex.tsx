@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PokeCard from '../PokeCard/PokeCard';
 import { BasicPokemon } from '../../types/pokemons';
+import { useEventListener } from '../../hooks/useEventListener';
 
 type PokedexProps = {
   basicPokemons: BasicPokemon[];
@@ -29,14 +30,7 @@ const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [currentOffset]);
-
-  console.log(currentShowingBasicPokemons);
+  useEventListener('scroll', handleScroll);
 
   return (
     <div>
