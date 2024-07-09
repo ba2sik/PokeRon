@@ -12,5 +12,5 @@ export function extractUrlPathSegment(url: string, segmentIndex: number) {
     return nonEmptySegments[segmentIndex];
   }
 
-  return '';
+  throw new Error('Path segment does not exist');
 }
