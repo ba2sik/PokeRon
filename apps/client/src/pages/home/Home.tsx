@@ -6,7 +6,7 @@ import { BasicPokemon } from '../../types/pokemons';
 import { extractUrlPathSegment } from '../../utils/urlExtractor';
 import { URL_ID_SEGMENT_INDEX } from '../../constants/api';
 
-function Home() {
+const Home: React.FC = () => {
   const { data: pokemonSummaries, isLoading, error } = usePokemons();
   const [pokemons, setPokemons] = useState<BasicPokemon[]>([]);
 
@@ -31,6 +31,6 @@ function Home() {
       <Pokedex pokemons={pokemons}></Pokedex>
     </>
   );
-}
+};
 
 export default Home;
