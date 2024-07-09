@@ -7,5 +7,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'no-console': 'warn',
   },
 };

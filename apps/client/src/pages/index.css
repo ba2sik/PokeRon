@@ -29,6 +29,12 @@ body {
     min-width: 320px;
 }
 
+*,
+*:hover {
+    scrollbar-color: red transparent;
+    scrollbar-width: thin;
+}
+
 /*@media (prefers-color-scheme: dark) {*/
 /*    :root {*/
 /*        color: rgba(255, 255, 255, 0.87);*/
