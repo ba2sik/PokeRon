@@ -25,9 +25,9 @@ const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
   useOnReachedBottom(divRef, loadMorePokemons);
 
   // To Re-render the component when the basicPokemons change
-  const [prevShowingPokemons, setPrevShowingPokemons] = useState(basicPokemons);
-  if (basicPokemons !== prevShowingPokemons) {
-    setPrevShowingPokemons(basicPokemons);
+  const [previousShowingPokemons, setPreviousShowingPokemons] = useState(basicPokemons);
+  if (basicPokemons !== previousShowingPokemons) {
+    setPreviousShowingPokemons(basicPokemons);
     setCurrentShowingBasicPokemons(basicPokemons.slice(0, NUM_OF_POKEMONS_TO_LOAD));
   }
 
