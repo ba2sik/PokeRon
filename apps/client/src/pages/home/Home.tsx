@@ -1,38 +1,30 @@
-import './Home.css';
 import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
-import { useQuery } from 'react-query';
+import { usePokemons } from '../../hooks/usePokemons';
+import { isAxiosError } from 'axios';
+import { isEmptyArray, isNotNullOrUndefined, isNullOrUndefined } from '../../utils/arrays';
 
-const API_URL = 'https://pokeapi.co/api/v2';
+const Home: React.FC = () => {
+  const {
+    data: basicPokemons,
+    isLoading: isLoadingBasicPokemons,
+    error: basicPokemonsError,
+  } = usePokemons();
 
-const getPokemons = async () => {
-  const response = await fetch(`${API_URL}/pokemon`);
-  return response.json();
-};
-
-export type PokemonAPISimple = {
-  name: string;
-  url: URL;
-};
-
-function Home() {
-  const { data, isLoading, isError } = useQuery('pokemons', getPokemons);
-
-  if (isLoading) return <h1>Loading...</h1>;
-  if (isError) return <h1>Error...</h1>;
-
-  console.log(data);
-  const pokemonNames: string[] = data.results.map(
-    (r: PokemonAPISimple) => r.name,
-  );
+  if (isLoadingBasicPokemons || isNullOrUndefined(basicPokemons)) return <h1>Loading...</h1>;
+  if (isNotNullOrUndefined(basicPokemonsError) || isEmptyArray(basicPokemons)) {
+    return (
+      <h1>{isAxiosError(basicPokemonsError) ? basicPokemonsError.message : 'unknown error'}</h1>
+    );
+  }
 
   return (
     <>
-      <h1 className="text-center p-5"> PokéRon</h1>
+      <h1 className="text-center text-7xl p-5"> PokéRon</h1>
       <Search />
-      <Pokedex pokemonNames={pokemonNames}></Pokedex>
+      <Pokedex basicPokemons={basicPokemons} />
     </>
   );
-}
+};
 
 export default Home;

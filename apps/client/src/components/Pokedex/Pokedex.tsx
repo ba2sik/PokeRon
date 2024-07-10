@@ -1,18 +1,38 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import PokeCard from '../PokeCard/PokeCard';
+import { BasicPokemon } from '../../types/pokemons';
+import { useOnReachedBottom } from '../../hooks/useOnReachedBottom';
 
 type PokedexProps = {
-  // Note: I know that "Pokemons" isn't the plural, but I use the "s" to distinguish
-  pokemonNames: string[];
+  basicPokemons: BasicPokemon[];
 };
 
-const Pokedex: React.FC<PokedexProps> = ({ pokemonNames }) => {
+const NUM_OF_POKEMONS_TO_LOAD = 24;
+
+const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
+  const [currentShowingBasicPokemons, setCurrentShowingBasicPokemons] = React.useState(
+    basicPokemons.slice(0, NUM_OF_POKEMONS_TO_LOAD),
+  );
+  const [currentOffset, setCurrentOffset] = useState(NUM_OF_POKEMONS_TO_LOAD);
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const loadMorePokemons = () => {
+    const newItems = basicPokemons.slice(currentOffset, currentOffset + NUM_OF_POKEMONS_TO_LOAD);
+    setCurrentShowingBasicPokemons((prevItems) => [...prevItems, ...newItems]);
+    setCurrentOffset(currentOffset + NUM_OF_POKEMONS_TO_LOAD);
+  };
+
+  useOnReachedBottom(divRef, loadMorePokemons);
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {pokemonNames.map((name) => (
+    <div
+      ref={divRef}
+      className="flex flex-wrap justify-center p-4 gap-8 max-h-[70vh] overflow-y-scroll"
+    >
+      {currentShowingBasicPokemons.map(({ name, id }) => (
         <PokeCard
           name={name}
-          key={name}
+          key={id}
         />
       ))}
     </div>
