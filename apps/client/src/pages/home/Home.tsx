@@ -4,6 +4,7 @@ import { usePokemons } from '../../hooks/usePokemons';
 import { isAxiosError } from 'axios';
 import { isEmptyArray, isNotNullOrUndefined, isNullOrUndefined } from '../../utils/arrays';
 import React, { useState } from 'react';
+import { useDebounce } from '@uidotdev/usehooks';
 
 const Home: React.FC = () => {
   const {
@@ -11,7 +12,8 @@ const Home: React.FC = () => {
     isLoading: isLoadingBasicPokemons,
     error: basicPokemonsError,
   } = usePokemons();
-  const [searchItem, setSearchItem] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   if (isLoadingBasicPokemons || isNullOrUndefined(basicPokemons)) return <h1>Loading...</h1>;
   if (isNotNullOrUndefined(basicPokemonsError) || isEmptyArray(basicPokemons)) {
@@ -21,15 +23,15 @@ const Home: React.FC = () => {
   }
 
   const filteredPokemons = basicPokemons.filter((pokemon) => {
-    return pokemon.name.toLowerCase().includes(searchItem.toLowerCase());
+    return pokemon.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
   });
 
   return (
     <>
       <h1 className="text-center text-7xl p-5"> PokéRon</h1>
       <Search
-        text={searchItem}
-        onChange={setSearchItem}
+        text={searchTerm}
+        onChange={setSearchTerm}
       />
       <Pokedex basicPokemons={filteredPokemons} />
     </>
