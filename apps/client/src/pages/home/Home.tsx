@@ -2,7 +2,7 @@ import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
 import { usePokemons } from '../../hooks/usePokemons';
 import { isAxiosError } from 'axios';
-import { isEmptyArray, isNotNullOrUndefined, isNullOrUndefined } from '../../utils/arrays';
+import { isNotNullOrUndefined, isNullOrUndefined } from '../../utils/arrays';
 import React, { useState } from 'react';
 
 const Home: React.FC = () => {
@@ -13,14 +13,7 @@ const Home: React.FC = () => {
   } = usePokemons();
   const [searchItem, setSearchItem] = useState('');
 
-  if (isLoadingBasicPokemons || isNullOrUndefined(basicPokemons)) return <h1>Loading...</h1>;
-  if (isNotNullOrUndefined(basicPokemonsError) || isEmptyArray(basicPokemons)) {
-    return (
-      <h1>{isAxiosError(basicPokemonsError) ? basicPokemonsError.message : 'unknown error'}</h1>
-    );
-  }
-
-  const filteredPokemons = basicPokemons.filter((pokemon) => {
+  const filteredPokemons = basicPokemons?.filter((pokemon) => {
     return pokemon.name.toLowerCase().includes(searchItem.toLowerCase());
   });
 
@@ -31,7 +24,11 @@ const Home: React.FC = () => {
         text={searchItem}
         onChange={setSearchItem}
       />
-      <Pokedex basicPokemons={filteredPokemons} />
+      {(isLoadingBasicPokemons || isNullOrUndefined(basicPokemons)) && <h1>Loading...</h1>}
+      {isNotNullOrUndefined(basicPokemonsError) && (
+        <h1>{isAxiosError(basicPokemonsError) ? basicPokemonsError.message : 'unknown error'}</h1>
+      )}
+      <Pokedex basicPokemons={filteredPokemons || []} />
     </div>
   );
 };

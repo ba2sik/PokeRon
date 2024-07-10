@@ -5,9 +5,16 @@ import { BasicPokemon } from '../types/pokemons';
 
 const POKEMONS_COUNT = 1000;
 
+function wait(ms: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 export const getBasicPokemons = async () => {
   const api = new PokemonApi();
   try {
+    await wait(2000);
     const {
       data: { results: pokemonsSummaries = [] },
     } = await api.pokemonList(POKEMONS_COUNT);
