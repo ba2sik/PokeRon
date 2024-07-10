@@ -35,6 +35,11 @@ body {
     scrollbar-width: thin;
 }
 
+::selection {
+    background: #ff4444;
+    color: white;
+}
+
 /*@media (prefers-color-scheme: dark) {*/
 /*    :root {*/
 /*        color: rgba(255, 255, 255, 0.87);*/
