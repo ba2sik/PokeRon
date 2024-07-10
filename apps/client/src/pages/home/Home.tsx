@@ -30,8 +30,8 @@ const Home: React.FC = () => {
     <>
       <h1 className="text-center text-7xl p-5"> PokéRon</h1>
       <Search
-        text={searchTerm}
-        onChange={setSearchTerm}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
       <Pokedex basicPokemons={filteredPokemons} />
     </>
