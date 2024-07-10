@@ -25,14 +25,14 @@ const Home: React.FC = () => {
   });
 
   return (
-    <>
+    <div className="flex flex-col items-center">
       <h1 className="text-center text-7xl p-5"> PokéRon</h1>
       <Search
         text={searchItem}
         onChange={setSearchItem}
       />
       <Pokedex basicPokemons={filteredPokemons} />
-    </>
+    </div>
   );
 };
 

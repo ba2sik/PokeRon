@@ -15,7 +15,7 @@ const Search: React.FC<SearchProps> = ({ text, onChange }) => {
   );
 
   return (
-    <label className="input input-bordered m-4 flex items-center gap-2">
+    <label className="input input-bordered m-4 w-3/4 flex items-center gap-2">
       <input
         type="text"
         value={text}
