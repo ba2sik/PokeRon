@@ -1,5 +1,6 @@
 import Pokedex from '../../components/Pokedex/Pokedex';
 import Search from '../../components/Search/Search';
+import Loader from '../../components/Loader/Loader';
 import { usePokemons } from '../../hooks/usePokemons';
 import { isAxiosError } from 'axios';
 import { isNotNullOrUndefined, isNullOrUndefined } from '../../utils/arrays';
@@ -18,13 +19,13 @@ const Home: React.FC = () => {
   });
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center min-w-[60vw] h-screen">
       <h1 className="text-center text-7xl p-5"> PokéRon</h1>
       <Search
         text={searchItem}
         onChange={setSearchItem}
       />
-      {(isLoadingBasicPokemons || isNullOrUndefined(basicPokemons)) && <h1>Loading...</h1>}
+      {(isLoadingBasicPokemons || isNullOrUndefined(basicPokemons)) && <Loader />}
       {isNotNullOrUndefined(basicPokemonsError) && (
         <h1>{isAxiosError(basicPokemonsError) ? basicPokemonsError.message : 'unknown error'}</h1>
       )}
