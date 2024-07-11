@@ -3,7 +3,7 @@ import Search from '../../components/Search/Search';
 import Loader from '../../components/Loader/Loader';
 import { usePokemons } from '../../hooks/usePokemons';
 import { isAxiosError } from 'axios';
-import { isNotNullOrUndefined, isNullOrUndefined } from '../../utils/arrays';
+import { isNotNullOrUndefined } from '../../utils/arrays';
 import React, { useMemo, useState } from 'react';
 import { useDebounce } from '@uidotdev/usehooks';
 
@@ -27,17 +27,19 @@ const Home: React.FC = () => {
     <div className="flex flex-col items-center min-w-[60vw] h-screen">
       <h1 className="text-center text-7xl p-5"> PokéRon</h1>
       <Search
-        text={searchTerm}
-        onChange={setSearchTerm}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
-      {(isLoadingBasicPokemons || isNullOrUndefined(basicPokemons)) && <Loader />}
-      {isNotNullOrUndefined(basicPokemonsError) && (
+      {isLoadingBasicPokemons ? (
+        <Loader />
+      ) : isNotNullOrUndefined(basicPokemonsError) ? (
         <h1>{isAxiosError(basicPokemonsError) ? basicPokemonsError.message : 'unknown error'}</h1>
+      ) : (
+        <Pokedex
+          basicPokemons={filteredPokemons}
+          key={debouncedSearchTerm} // a key is needed in order to re-render the component
+        />
       )}
-      <Pokedex
-        basicPokemons={filteredPokemons || []}
-        key={debouncedSearchTerm} // a key is needed in order to re-render the component
-      />
     </div>
   );
 };
