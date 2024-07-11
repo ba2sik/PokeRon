@@ -36,7 +36,10 @@ const Home: React.FC = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <Pokedex basicPokemons={filteredPokemons} />
+      <Pokedex
+        basicPokemons={filteredPokemons}
+        key={debouncedSearchTerm} // a key is needed in order to re-render the component
+      />
     </>
   );
 };
