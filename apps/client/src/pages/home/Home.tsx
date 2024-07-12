@@ -28,7 +28,7 @@ const Home: React.FC = () => {
       <h1 className="text-center text-7xl p-5"> PokéRon</h1>
       <Search
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(event) => setSearchTerm(event.target.value)}
       />
       {isLoadingBasicPokemons ? (
         <Loader />
