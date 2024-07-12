@@ -12,11 +12,11 @@
   "dependencies": {
     "@repo/eslint-config": "*",
     "@repo/poke-client": "*",
+    "@tanstack/react-query": "^5.51.1",
     "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.7.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-query": "^3.39.3",
     "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {
