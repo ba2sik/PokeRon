@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import PokeCard from '../PokeCard/PokeCard';
 import { BasicPokemon } from '../../types/pokemons';
 import { useOnReachedBottom } from '../../hooks/useOnReachedBottom';
+import { PokeCard } from '..';
 
 type PokedexProps = {
   basicPokemons: BasicPokemon[];
@@ -9,7 +9,7 @@ type PokedexProps = {
 
 const NUM_OF_POKEMONS_TO_LOAD = 24;
 
-const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
+export const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
   const [currentShowingBasicPokemons, setCurrentShowingBasicPokemons] = React.useState(
     basicPokemons.slice(0, NUM_OF_POKEMONS_TO_LOAD),
   );
@@ -38,5 +38,3 @@ const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
     </div>
   );
 };
-
-export default Pokedex;

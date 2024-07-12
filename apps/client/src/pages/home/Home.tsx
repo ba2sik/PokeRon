@@ -1,9 +1,7 @@
-import Pokedex from '../../components/Pokedex/Pokedex';
-import Search from '../../components/Search/Search';
 import { usePokemons } from '../../hooks/usePokemons';
 import React, { useState } from 'react';
 import { useDebounce } from '@uidotdev/usehooks';
-import QueryWrapper from '../../components/QueryWrapper/QueryWrapper';
+import { Pokedex, QueryWrapper, Search } from '../../components';
 
 const Home: React.FC = () => {
   const basicPokemonsQueryResults = usePokemons();

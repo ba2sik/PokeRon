@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 
 type LoaderProps = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src'>;
 
-const Loader: React.FC<LoaderProps> = ({ className, ...props }) => {
+export const Loader: React.FC<LoaderProps> = ({ className, ...props }) => {
   return (
     <img
       src={PokeballIcon}
@@ -14,5 +14,3 @@ const Loader: React.FC<LoaderProps> = ({ className, ...props }) => {
     />
   );
 };
-
-export default Loader;
