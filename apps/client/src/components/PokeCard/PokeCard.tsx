@@ -1,10 +1,10 @@
 import React from 'react';
 
-export type PokeCardProps = {
+type PokeCardProps = {
   name: string;
 };
 
-const PokeCard: React.FC<PokeCardProps> = ({ name }) => {
+export const PokeCard: React.FC<PokeCardProps> = ({ name }) => {
   return (
     <div className="card bg-base-100 w-60 p-4 items-center shadow-xl hover:scale-105 hover:cursor-pointer transition duration-300 ease-in-out">
       <img
@@ -24,5 +24,3 @@ const PokeCard: React.FC<PokeCardProps> = ({ name }) => {
     </div>
   );
 };
-
-export default PokeCard;

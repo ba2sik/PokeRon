@@ -10,14 +10,17 @@ export const useEventListener = <
   ref: React.MutableRefObject<Element | null>,
 ) => {
   useEffect(() => {
-    if (isNotNullOrUndefined(ref.current)) {
-      ref.current.addEventListener(eventName, onEvent);
+    let refValue = ref.current;
+
+    if (isNotNullOrUndefined(refValue)) {
+      refValue.addEventListener(eventName, onEvent);
+      refValue = ref.current;
 
       return () => {
-        if (isNotNullOrUndefined(ref.current)) {
-          ref.current.removeEventListener(eventName, onEvent);
+        if (isNotNullOrUndefined(refValue)) {
+          refValue.removeEventListener(eventName, onEvent);
         }
       };
     }
-  }, [ref.current, eventName, onEvent]);
+  }, [ref, eventName, onEvent]);
 };

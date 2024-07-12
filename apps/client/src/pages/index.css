@@ -4,7 +4,7 @@
 
 #root {
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0 2rem;
 }
 
 :root {
@@ -27,12 +27,18 @@ body {
     display: flex;
     place-items: center;
     min-width: 320px;
+    background-color: aliceblue;
 }
 
 *,
 *:hover {
     scrollbar-color: red transparent;
     scrollbar-width: thin;
+}
+
+::selection {
+    background: #ff4444;
+    color: white;
 }
 
 /*@media (prefers-color-scheme: dark) {*/

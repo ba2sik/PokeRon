@@ -24,7 +24,7 @@ module.exports = {
   },
   rules: {
     // Typescript
-    '@typescript-eslint/naming-convention': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
     // React rules
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
