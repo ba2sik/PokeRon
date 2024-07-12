@@ -25,7 +25,7 @@ const Home: React.FC = () => {
       <QueryWrapper queryResults={basicPokemonsQueryResults}>
         <Pokedex
           basicPokemons={filteredPokemons}
-          key={debouncedSearchTerm} // a key is needed in order to re-render the component
+          key={debouncedSearchTerm}
         />
       </QueryWrapper>
     </div>
