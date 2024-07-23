@@ -32,6 +32,7 @@ export const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
       {currentShowingBasicPokemons.map(({ name, id }) => (
         <PokeCard
           name={name}
+          id={id}
           key={id}
         />
       ))}
