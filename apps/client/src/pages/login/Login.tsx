@@ -1,10 +1,17 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ErrorMessage } from '../../components';
 
-type Inputs = {
-  username: string;
-  password: string;
-};
+const payloadSchema = z
+  .object({
+    username: z.string().min(1, { message: 'Please Enter Username.' }),
+    password: z.string().min(6, { message: 'Password must contain at least 6 Characters' }),
+  })
+  .strict();
+
+type Inputs = z.infer<typeof payloadSchema>;
 
 export const Login: React.FC = () => {
   const {
@@ -12,7 +19,7 @@ export const Login: React.FC = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({ resolver: zodResolver(payloadSchema) });
   const onSubmit: SubmitHandler<Inputs> = (data) => alert(JSON.stringify(data));
 
   const username = watch('username');
@@ -21,7 +28,8 @@ export const Login: React.FC = () => {
   console.log({ username, password }); // watch input value by passing the name of it
 
   return (
-    <div className="max-w-xs flex flex-col justify-center h-screen w-full">
+    <div className="max-w-xs flex flex-col justify-center items-center gap-12 h-screen w-full">
+      <h1 className="text-5xl">Admin Page</h1>
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit(onSubmit)}
@@ -34,12 +42,13 @@ export const Login: React.FC = () => {
             Username
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
             placeholder="Username"
-            {...register('username', { required: true })}
+            {...register('username')}
           />
+          {errors.username && <ErrorMessage error={errors.username.message} />}
         </div>
         <div className="mb-6">
           <label
@@ -53,14 +62,9 @@ export const Login: React.FC = () => {
             id="password"
             type="password"
             placeholder="*********"
-            {...register('password', { required: true, minLength: 6 })}
+            {...register('password')}
           />
-          {errors.password?.type === 'required' && (
-            <p className="text-red-500 text-xs italic">Please choose a password.</p>
-          )}
-          {errors.password?.type === 'minLength' && (
-            <p className="text-red-500 text-xs italic">Min length 6 characters.</p>
-          )}
+          {errors.password && <ErrorMessage error={errors.password.message} />}
         </div>
         <div className="flex items-center justify-around">
           <button

@@ -21,7 +21,7 @@ export const ErrorMessage: React.FC<ErrorProps> = ({ error }) => {
   }
 
   return (
-    <p className="text-slate-400 text-xl">
+    <p className="text-red-500 text-xs italic">
       <i>{errorMessage}</i>
     </p>
   );

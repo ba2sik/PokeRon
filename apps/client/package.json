@@ -10,6 +10,7 @@
     "codegen:pokeapi": "openapi-generator-cli generate -i https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml -g typescript-axios -o ./src"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@repo/eslint-config": "*",
     "@repo/poke-client": "*",
     "@tanstack/react-query": "^5.51.1",
@@ -19,7 +20,8 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.1",
     "react-router-dom": "^6.25.1",
-    "tailwind-merge": "^2.4.0"
+    "tailwind-merge": "^2.4.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.13.4",
