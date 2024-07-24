@@ -14,8 +14,8 @@ const Home: React.FC = () => {
   });
 
   return (
-    <div className="flex flex-col items-center min-w-[60vw] h-screen">
-      <h1 className="text-center text-7xl p-5"> PokéRon</h1>
+    <div className="flex flex-col items-center min-w-[60vw] h-screen bg-sky-50">
+      <h1 className="text-center text-7xl mt-12"> PokéRon</h1>
       <Search
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}

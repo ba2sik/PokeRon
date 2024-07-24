@@ -10,7 +10,7 @@ export const PokeCard: React.FC<BasicPokemon> = ({ name, id }) => {
         className="h-52 p-1"
         loading="lazy"
       />
-      <div className="card-body items-center">
+      <div className="card-body items-center p-2">
         <h2 className="card-title capitalize">{name}</h2>
         <p className="justify-center">{`#${id}`}</p>
       </div>
