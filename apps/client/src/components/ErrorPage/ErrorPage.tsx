@@ -7,10 +7,7 @@ export const ErrorPage: React.FC = () => {
   const error = useRouteError();
 
   return (
-    <div
-      id="error-page"
-      className="flex flex-col gap-8 justify-center items-center h-screen w-full"
-    >
+    <div className="flex flex-col gap-8 justify-center items-center h-screen w-full">
       <div className="flex">
         <h1 className="text-5xl font-bold">Oops!</h1>
         <Loader className="w-12 mx-4" />

@@ -5,11 +5,17 @@ import './index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from '../components/ErrorPage/ErrorPage';
+import { Login } from './login/Login';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'login',
+    element: <Login />,
     errorElement: <ErrorPage />,
   },
 ]);
