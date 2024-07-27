@@ -3,52 +3,82 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ErrorMessage } from '../../components';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '../../supabase/supabseClient';
 
-const payloadSchema = z
+const authPayloadSchema = z
   .object({
-    username: z.string().min(1, { message: 'Please Enter Username.' }),
+    email: z.string().email({ message: 'Invalid email address' }),
     password: z.string().min(6, { message: 'Password must contain at least 6 Characters' }),
   })
   .strict();
 
-type Inputs = z.infer<typeof payloadSchema>;
+type AuthPayload = z.infer<typeof authPayloadSchema>;
+
+const authMethodToSupabaseMethod = {
+  SignIn: 'signInWithPassword',
+  SignUp: 'signUp',
+} as const;
+
+type SupabaseAuthMethods =
+  (typeof authMethodToSupabaseMethod)[keyof typeof authMethodToSupabaseMethod];
+
+type AuthMethods = Pick<typeof supabase.auth, SupabaseAuthMethods>;
+type CredentialsType<T extends keyof AuthMethods> = Parameters<AuthMethods[T]>[0];
 
 export const Login: React.FC = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>({ resolver: zodResolver(payloadSchema) });
-  const onSubmit: SubmitHandler<Inputs> = (data) => alert(JSON.stringify(data));
+  } = useForm<AuthPayload>({ resolver: zodResolver(authPayloadSchema) });
+  const navigate = useNavigate();
 
-  const username = watch('username');
-  const password = watch('password');
+  const handleAuth = async <T extends keyof AuthMethods>(
+    authMethod: T,
+    authPayload: CredentialsType<T>,
+  ) => {
+    const { data, error } = await supabase.auth[authMethod](authPayload);
 
-  console.log({ username, password }); // watch input value by passing the name of it
+    if (error) {
+      alert(error.message);
+      return null;
+    } else {
+      alert(data?.user?.email + ' signed in successfully');
+      return navigate('/');
+    }
+  };
+
+  const handleLogin: SubmitHandler<AuthPayload> = async ({ email, password }) => {
+    await handleAuth(authMethodToSupabaseMethod.SignIn, { email, password });
+  };
+
+  const handleSignUp: SubmitHandler<AuthPayload> = async ({ email, password }) => {
+    await handleAuth(authMethodToSupabaseMethod.SignUp, { email, password });
+  };
 
   return (
     <div className="max-w-xs flex flex-col justify-center items-center gap-12 h-screen w-full">
       <h1 className="text-5xl">Admin Page</h1>
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleLogin)}
       >
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
+            htmlFor="email"
           >
-            Username
+            Email
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="username"
+            id="email"
             type="text"
-            placeholder="Username"
-            {...register('username')}
+            placeholder="Email"
+            {...register('email')}
           />
-          {errors.username && <ErrorMessage error={errors.username.message} />}
+          {errors.email && <ErrorMessage error={errors.email.message} />}
         </div>
         <div className="mb-6">
           <label
@@ -73,12 +103,12 @@ export const Login: React.FC = () => {
           >
             Sign In
           </button>
-          <a
+          <button
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="#"
+            onClick={handleSubmit(handleSignUp)}
           >
             Join Now
-          </a>
+          </button>
         </div>
       </form>
     </div>

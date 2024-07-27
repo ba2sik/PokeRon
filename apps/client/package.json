@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@repo/eslint-config": "*",
     "@repo/poke-client": "*",
+    "@supabase/supabase-js": "^2.44.4",
     "@tanstack/react-query": "^5.51.1",
     "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.7.2",
