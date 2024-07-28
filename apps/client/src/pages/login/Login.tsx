@@ -1,30 +1,21 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ErrorMessage } from '../../components';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase/supabseClient';
+import { AuthPayload, authPayloadSchema } from './types/auth-payload-schema';
+import { isNotNullOrUndefined } from '../../utils/arrays';
 
-const authPayloadSchema = z
-  .object({
-    email: z.string().email({ message: 'Invalid email address' }),
-    password: z.string().min(6, { message: 'Password must contain at least 6 Characters' }),
-  })
-  .strict();
-
-type AuthPayload = z.infer<typeof authPayloadSchema>;
-
-const authMethodToSupabaseMethod = {
+const SupabaseAuthMethods = {
   SignIn: 'signInWithPassword',
   SignUp: 'signUp',
 } as const;
 
-type SupabaseAuthMethods =
-  (typeof authMethodToSupabaseMethod)[keyof typeof authMethodToSupabaseMethod];
+type SupabaseAuthMethod = (typeof SupabaseAuthMethods)[keyof typeof SupabaseAuthMethods];
 
-type AuthMethods = Pick<typeof supabase.auth, SupabaseAuthMethods>;
-type CredentialsType<T extends keyof AuthMethods> = Parameters<AuthMethods[T]>[0];
+type AuthMethods = Pick<typeof supabase.auth, SupabaseAuthMethod>;
+type CredentialsType<AuthMethod extends keyof AuthMethods> = Parameters<AuthMethods[AuthMethod]>[0];
 
 export const Login: React.FC = () => {
   const {
@@ -34,27 +25,27 @@ export const Login: React.FC = () => {
   } = useForm<AuthPayload>({ resolver: zodResolver(authPayloadSchema) });
   const navigate = useNavigate();
 
-  const handleAuth = async <T extends keyof AuthMethods>(
-    authMethod: T,
-    authPayload: CredentialsType<T>,
+  const handleAuth = async <AuthMethod extends keyof AuthMethods>(
+    authMethod: AuthMethod,
+    authPayload: CredentialsType<AuthMethod>,
   ) => {
     const { data, error } = await supabase.auth[authMethod](authPayload);
 
-    if (error) {
+    if (isNotNullOrUndefined(error)) {
       alert(error.message);
       return null;
-    } else {
-      alert(data?.user?.email + ' signed in successfully');
-      return navigate('/');
     }
+
+    alert(data?.user?.email + ' signed in successfully');
+    return navigate('/');
   };
 
   const handleLogin: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    await handleAuth(authMethodToSupabaseMethod.SignIn, { email, password });
+    await handleAuth(SupabaseAuthMethods.SignIn, { email, password });
   };
 
   const handleSignUp: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    await handleAuth(authMethodToSupabaseMethod.SignUp, { email, password });
+    await handleAuth(SupabaseAuthMethods.SignUp, { email, password });
   };
 
   return (
