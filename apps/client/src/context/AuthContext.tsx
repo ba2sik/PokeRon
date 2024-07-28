@@ -1,26 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { User } from '@supabase/supabase-js';
+import {
+  SignInWithPasswordCredentials,
+  SignUpWithPasswordCredentials,
+  User,
+} from '@supabase/supabase-js';
 import { supabase } from '../supabase/supabseClient';
 import { isNotNullOrUndefined } from '../utils/arrays';
 import { Loader } from '../components';
-// import { supabase } from '../supabase/supabseClient';
-
-// const SupabaseAuthMethods = {
-//   SignIn: 'signInWithPassword',
-//   SignUp: 'signUp',
-// } as const;
-//
-// type SupabaseAuthMethod = (typeof SupabaseAuthMethods)[keyof typeof SupabaseAuthMethods];
-//
-// type AuthMethods = Pick<typeof supabase.auth, SupabaseAuthMethod>;
-// type CredentialsType<AuthMethod extends keyof AuthMethods> = Parameters<AuthMethods[AuthMethod]>[0];
-//
-// const handleAuth = async <AuthMethod extends keyof AuthMethods>(
-//   authMethod: AuthMethod,
-//   authPayload: CredentialsType<AuthMethod>,
-// ) => {
-//   const { data, error } = await supabase.auth[authMethod](authPayload);
-// };
 
 type AuthContextType = {
   signUp: typeof supabase.auth.signUp;
@@ -77,9 +63,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   }, []);
 
   const value = {
-    signUp: supabase.auth.signUp,
-    signIn: supabase.auth.signInWithPassword,
-    signOut: supabase.auth.signOut,
+    signUp: (credentials: SignUpWithPasswordCredentials) => supabase.auth.signUp(credentials),
+    signIn: (credentials: SignInWithPasswordCredentials) =>
+      supabase.auth.signInWithPassword(credentials),
+    signOut: () => supabase.auth.signOut(),
     user,
   };
 

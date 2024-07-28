@@ -3,19 +3,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ErrorMessage } from '../../components';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../supabase/supabseClient';
 import { AuthPayload, authPayloadSchema } from './types/auth-payload-schema';
 import { isNotNullOrUndefined } from '../../utils/arrays';
-
-const SupabaseAuthMethods = {
-  SignIn: 'signInWithPassword',
-  SignUp: 'signUp',
-} as const;
-
-type SupabaseAuthMethod = (typeof SupabaseAuthMethods)[keyof typeof SupabaseAuthMethods];
-
-type AuthMethods = Pick<typeof supabase.auth, SupabaseAuthMethod>;
-type CredentialsType<AuthMethod extends keyof AuthMethods> = Parameters<AuthMethods[AuthMethod]>[0];
+import { useAuth } from '../../hooks/auth/useAuth';
 
 export const Login: React.FC = () => {
   const {
@@ -23,13 +13,11 @@ export const Login: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<AuthPayload>({ resolver: zodResolver(authPayloadSchema) });
+  const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
 
-  const handleAuth = async <AuthMethod extends keyof AuthMethods>(
-    authMethod: AuthMethod,
-    authPayload: CredentialsType<AuthMethod>,
-  ) => {
-    const { data, error } = await supabase.auth[authMethod](authPayload);
+  const handleLogin: SubmitHandler<AuthPayload> = async ({ email, password }) => {
+    const { data, error } = await signIn({ email, password });
 
     if (isNotNullOrUndefined(error)) {
       alert(error.message);
@@ -40,12 +28,16 @@ export const Login: React.FC = () => {
     return navigate('/');
   };
 
-  const handleLogin: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    await handleAuth(SupabaseAuthMethods.SignIn, { email, password });
-  };
-
   const handleSignUp: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    await handleAuth(SupabaseAuthMethods.SignUp, { email, password });
+    const { data, error } = await signUp({ email, password });
+
+    if (isNotNullOrUndefined(error)) {
+      alert(error.message);
+      return null;
+    }
+
+    alert(data?.user?.email + ' signed up successfully');
+    return navigate('/');
   };
 
   return (
