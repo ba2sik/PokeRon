@@ -8,20 +8,21 @@ import { ErrorPage } from './error/ErrorPage';
 import { AuthProvider } from '../context/AuthContext';
 import { Register } from './auth/Register';
 import { Login } from './auth/Login';
+import { ROUTES } from '../constants/routes';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.HOME,
     element: <Home />,
     errorElement: <ErrorPage />,
   },
   {
-    path: 'login',
+    path: ROUTES.LOGIN,
     element: <Login />,
     errorElement: <ErrorPage />,
   },
   {
-    path: 'register',
+    path: ROUTES.REGISTER,
     element: <Register />,
     errorElement: <ErrorPage />,
   },

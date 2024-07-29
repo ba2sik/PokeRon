@@ -1,42 +1,48 @@
+import { useAuth } from '../../hooks/auth/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../constants/routes';
+
 export const Navbar = () => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
   return (
-    <div className="navbar">
-      <div className="flex-none">
-        <button className="btn btn-square btn-ghost">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            className="inline-block h-5 w-5 stroke-current"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </button>
-      </div>
+    <div className="navbar w-screen">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">PokéRon</a>
+        <a
+          className="btn btn-ghost text-xl"
+          onClick={() => navigate(ROUTES.HOME)}
+        >
+          PokéRon
+        </a>
       </div>
       <div className="flex-none">
-        <button className="btn btn-square btn-ghost">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            className="inline-block h-5 w-5 stroke-current"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-            ></path>
-          </svg>
-        </button>
+        {user ? (
+          <div className="flex items-center">
+            <p>{user?.email}</p>
+            <button
+              className="btn btn-ghost"
+              onClick={() => signOut()}
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <>
+            <button
+              className="btn btn-ghost"
+              onClick={() => navigate(ROUTES.REGISTER)}
+            >
+              Sign Up
+            </button>
+            <button
+              className="btn btn-ghost"
+              onClick={() => navigate(ROUTES.LOGIN)}
+            >
+              Login
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
