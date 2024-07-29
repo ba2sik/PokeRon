@@ -34,3 +34,6 @@ body {
     color: white;
 }
 
+.btn {
+    @apply rounded-full;
+}

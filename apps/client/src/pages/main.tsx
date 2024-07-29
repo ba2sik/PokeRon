@@ -8,32 +8,42 @@ import { ErrorPage } from './error/ErrorPage';
 import { AuthProvider } from '../context/AuthContext';
 import { Register } from './auth/Register';
 import { Login } from './auth/Login';
+import { ROUTES } from '../constants/routes';
+import { Loader } from '../components';
+import { Layout } from './Layout';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Home />,
+    path: ROUTES.HOME,
+    element: <Layout />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: 'login',
-    element: <Login />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: 'register',
-    element: <Register />,
-    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: ROUTES.HOME,
+        element: <Home />,
+      },
+      {
+        path: ROUTES.LOGIN,
+        element: <Login />,
+      },
+      {
+        path: ROUTES.REGISTER,
+        element: <Register />,
+      },
+    ],
   },
 ]);
-
-const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <RouterProvider
+          router={router}
+          fallbackElement={<Loader />}
+        />
       </QueryClientProvider>
     </AuthProvider>
   </React.StrictMode>,

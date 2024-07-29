@@ -6,7 +6,6 @@ import {
 } from '@supabase/supabase-js';
 import { supabase } from '../supabase/supabseClient';
 import { isNotNullOrUndefined } from '../utils/arrays';
-import { Loader } from '../components';
 
 type AuthContextType = {
   signUp: typeof supabase.auth.signUp;
@@ -70,7 +69,5 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     user,
   };
 
-  return (
-    <AuthContext.Provider value={value}>{isLoading ? <Loader /> : children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{!isLoading && children}</AuthContext.Provider>;
 };
