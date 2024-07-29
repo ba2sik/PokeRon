@@ -5,6 +5,7 @@ import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema
 import { isNotNullOrUndefined } from '../../utils/arrays';
 import { useAuth } from '../../hooks/auth/useAuth';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
+import { ROUTES } from '../../constants/routes';
 
 export const Login: React.FC = () => {
   const { signIn } = useAuth();
@@ -19,7 +20,7 @@ export const Login: React.FC = () => {
     }
 
     alert(data?.user?.email + ' signed in successfully');
-    return navigate('/');
+    return navigate(ROUTES.HOME);
   };
 
   return (
