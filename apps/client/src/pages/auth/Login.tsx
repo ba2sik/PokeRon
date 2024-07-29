@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xs flex flex-col justify-center items-center gap-12 h-screen w-full">
+    <div className="max-w-xs flex flex-col justify-center items-center gap-12 w-full">
       <h1 className="text-5xl">Sign In</h1>
       <AuthForm
         onSubmit={handleLogin}

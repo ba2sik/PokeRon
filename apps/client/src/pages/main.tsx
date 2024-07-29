@@ -10,11 +10,14 @@ import { Register } from './auth/Register';
 import { Login } from './auth/Login';
 import { ROUTES } from '../constants/routes';
 import { Loader } from '../components';
+import { Layout } from './Layout';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
-    element: <Home />,
+    element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -32,8 +35,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

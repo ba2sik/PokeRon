@@ -2,7 +2,6 @@ import { usePokemons } from '../../hooks/usePokemons';
 import React, { useState } from 'react';
 import { useDebounce } from '@uidotdev/usehooks';
 import { Pokedex, QueryWrapper, Search } from '../../components';
-import { Navbar } from '../../components/Navbar/Navbar';
 import PokeRonLogo from '../../assets/pokeron.png';
 
 const Home: React.FC = () => {
@@ -17,7 +16,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center min-w-[60vw] h-screen">
-      <Navbar />
       <img
         src={PokeRonLogo}
         className="h-40"
