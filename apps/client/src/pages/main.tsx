@@ -9,22 +9,27 @@ import { AuthProvider } from '../context/AuthContext';
 import { Register } from './auth/Register';
 import { Login } from './auth/Login';
 import { ROUTES } from '../constants/routes';
+import { Loader } from '../components';
 
 const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
     element: <Home />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: ROUTES.LOGIN,
-    element: <Login />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: ROUTES.REGISTER,
-    element: <Register />,
-    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: ROUTES.HOME,
+        element: <Home />,
+      },
+      {
+        path: ROUTES.LOGIN,
+        element: <Login />,
+      },
+      {
+        path: ROUTES.REGISTER,
+        element: <Register />,
+      },
+    ],
   },
 ]);
 
@@ -34,7 +39,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <RouterProvider
+          router={router}
+          fallbackElement={<Loader />}
+        />
       </QueryClientProvider>
     </AuthProvider>
   </React.StrictMode>,
