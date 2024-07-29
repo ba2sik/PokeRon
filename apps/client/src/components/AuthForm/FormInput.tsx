@@ -1,10 +1,10 @@
-import { useFormContext } from 'react-hook-form';
+import { FieldPath, useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import React from 'react';
 import { AuthPayload } from './types/auth-payload-schema';
 
 type FormInputProps = {
-  fieldName: keyof AuthPayload;
+  fieldName: FieldPath<AuthPayload>;
   placeholder?: string;
   type?: React.HTMLInputTypeAttribute;
 };
