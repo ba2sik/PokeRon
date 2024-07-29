@@ -14,6 +14,8 @@ type AuthContextType = {
   user: User | null;
 };
 
+type UserType = AuthContextType['user'];
+
 // TODO: figure out how to use this type without adding "isUserChangedEventType" function
 // type UserChangedEventType = Extract<AuthChangeEvent, 'SIGNED_IN' | 'USER_UPDATED' | 'TOKEN_REFRESHED'>;
 const UserChangedEvents = ['SIGNED_IN', 'USER_UPDATED', 'TOKEN_REFRESHED'];
@@ -22,7 +24,7 @@ const SIGN_OUT_EVENT = 'SIGNED_OUT';
 export const AuthContext = React.createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserType>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -61,13 +63,19 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     };
   }, []);
 
-  const value = {
+  const returnedAuthObject = createAuthContextReturnedObject(user);
+
+  return (
+    <AuthContext.Provider value={returnedAuthObject}>{!isLoading && children}</AuthContext.Provider>
+  );
+};
+
+function createAuthContextReturnedObject(user: UserType): AuthContextType {
+  return {
     signUp: (credentials: SignUpWithPasswordCredentials) => supabase.auth.signUp(credentials),
     signIn: (credentials: SignInWithPasswordCredentials) =>
       supabase.auth.signInWithPassword(credentials),
     signOut: () => supabase.auth.signOut(),
     user,
   };
-
-  return <AuthContext.Provider value={value}>{!isLoading && children}</AuthContext.Provider>;
-};
+}
