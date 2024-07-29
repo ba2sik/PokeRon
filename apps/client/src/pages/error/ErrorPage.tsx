@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouteError } from 'react-router-dom';
-import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
-import { Loader } from '../Loader/Loader';
+import { ErrorMessage, Loader } from '../../components';
 
 export const ErrorPage: React.FC = () => {
   const error = useRouteError();

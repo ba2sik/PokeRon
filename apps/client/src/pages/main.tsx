@@ -4,9 +4,10 @@ import Home from './home/Home';
 import './index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ErrorPage } from '../components/ErrorPage/ErrorPage';
-import { Login } from './login/Login';
+import { ErrorPage } from './error/ErrorPage';
 import { AuthProvider } from '../context/AuthContext';
+import { Register } from './auth/Register';
+import { Login } from './auth/Login';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,11 @@ const router = createBrowserRouter([
   {
     path: 'login',
     element: <Login />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'register',
+    element: <Register />,
     errorElement: <ErrorPage />,
   },
 ]);
