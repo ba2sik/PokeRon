@@ -1,10 +1,10 @@
 import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { AuthPayload } from './types/auth-payload-schema';
+import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema';
 import { isNotNullOrUndefined } from '../../utils/arrays';
 import { useAuth } from '../../hooks/auth/useAuth';
-import { AuthForm } from './AuthForm';
+import { AuthForm } from '../../components/AuthForm/AuthForm';
 
 export const Register: React.FC = () => {
   const { signUp } = useAuth();
