@@ -24,10 +24,10 @@ export const Navbar = () => {
       </div>
       <div className="flex-none">
         {user ? (
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <p>{user?.email}</p>
             <button
-              className="btn btn-ghost"
+              className="btn btn-primary"
               onClick={() => signOut()}
             >
               Logout
