@@ -7,7 +7,7 @@ export const PokeCard: React.FC<BasicPokemon> = ({ name, id }) => {
       <img
         src={`https://img.pokemondb.net/artwork/${name}.jpg`}
         alt="shoes"
-        className="h-52 p-1"
+        className="h-44 p-1"
         loading="lazy"
       />
       <div className="card-body items-center p-2">

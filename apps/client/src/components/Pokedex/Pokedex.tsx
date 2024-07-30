@@ -27,7 +27,7 @@ export const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
   return (
     <div
       ref={divRef}
-      className="flex flex-wrap justify-center mt-6 px-8 gap-8 overflow-y-auto"
+      className="flex flex-wrap justify-center px-8 py-2 gap-8 overflow-y-auto"
     >
       {currentShowingBasicPokemons.map(({ name, id }) => (
         <PokeCard

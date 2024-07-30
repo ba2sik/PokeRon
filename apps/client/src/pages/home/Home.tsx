@@ -18,7 +18,7 @@ const Home: React.FC = () => {
     <div className="flex flex-col items-center min-w-[60vw] flex-1 overflow-auto">
       <img
         src={PokeRonLogo}
-        className="h-40"
+        className="h-36"
         alt="PokeRon Logo"
       />
       <Search
