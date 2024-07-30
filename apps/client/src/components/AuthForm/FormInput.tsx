@@ -1,20 +1,17 @@
-import { FieldPath, useFormContext } from 'react-hook-form';
+import { FieldPath } from 'react-hook-form';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import React from 'react';
 import { AuthPayload } from './types/auth-payload-schema';
 
 type FormInputProps = {
   fieldName: FieldPath<AuthPayload>;
-  placeholder?: string;
-  type?: React.HTMLInputTypeAttribute;
-};
+  errorMessage?: string;
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
-export const FormInput: React.FC<FormInputProps> = ({ fieldName, placeholder, type = 'text' }) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<AuthPayload>();
-
+export const FormInput: React.FC<FormInputProps> = React.forwardRef<
+  HTMLInputElement,
+  FormInputProps
+>(function FormInput({ fieldName, errorMessage, type = 'text', placeholder, ...props }, ref) {
   return (
     <div className="mb-4">
       <label
@@ -28,11 +25,10 @@ export const FormInput: React.FC<FormInputProps> = ({ fieldName, placeholder, ty
         id={fieldName}
         type={type}
         placeholder={placeholder}
-        {...register(fieldName)}
+        ref={ref}
+        {...props}
       />
-      <div className="ml-1 h-4">
-        {errors[fieldName] && <ErrorMessage error={errors[fieldName].message} />}
-      </div>
+      <div className="ml-1 h-4">{errorMessage && <ErrorMessage error={errorMessage} />}</div>
     </div>
   );
-};
+});
