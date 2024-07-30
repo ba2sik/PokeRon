@@ -1,7 +1,7 @@
 import { useAuth } from '../../hooks/auth/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
-import PokeballIcon from '/Poké_Ball_icon.svg';
+import PokeballIcon from '/pokeball.svg';
 
 export const Navbar = () => {
   const { user, signOut } = useAuth();
