@@ -2,7 +2,7 @@ import { usePokemons } from '../../hooks/usePokemons';
 import React, { useState } from 'react';
 import { useDebounce } from '@uidotdev/usehooks';
 import { Pokedex, QueryWrapper, Search } from '../../components';
-import PokeRonLogo from '../../assets/pokeron.png';
+import PokeRonLogo from '/pokeron.png';
 
 const Home: React.FC = () => {
   const basicPokemonsQueryResults = usePokemons();
