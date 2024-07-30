@@ -2,7 +2,7 @@ import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema';
-import { isNotNullOrUndefined } from '../../utils/arrays';
+import { isNotNullOrUndefined } from '../../utils';
 import { useAuth } from '../../hooks/auth/useAuth';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { isAxiosError } from 'axios';
 import { isRouteErrorResponse } from 'react-router-dom';
-import { isString } from '../../utils/strings';
+import { isString } from '../../utils';
 
 type ErrorMessageProps = {
   error: unknown;

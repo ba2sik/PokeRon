@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { isNotNullOrUndefined } from '../utils/arrays';
+import { isNotNullOrUndefined } from '../utils';
 
 export const useEventListener = <
   Element extends HTMLElement | Window,

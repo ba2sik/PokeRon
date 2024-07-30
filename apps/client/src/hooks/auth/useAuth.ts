@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { isNullOrUndefined } from '../../utils/types';
+import { isNullOrUndefined } from '../../utils';
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
