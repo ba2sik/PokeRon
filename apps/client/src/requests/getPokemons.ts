@@ -1,5 +1,5 @@
 import { PokemonApi, PokemonSummary } from '@repo/poke-client';
-import { extractUrlPathSegment } from '../utils/urlExtractor';
+import { extractUrlPathSegment } from '../utils';
 import { URL_ID_SEGMENT_INDEX } from '../constants/api';
 import { BasicPokemon } from '../types/pokemons';
 

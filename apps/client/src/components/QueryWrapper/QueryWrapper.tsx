@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { UseQueryResult } from '@tanstack/react-query';
-import { isNotNullOrUndefined } from '../../utils/arrays';
+import { isNotNullOrUndefined } from '../../utils';
 import { ErrorMessage, Loader } from '../index';
 
 type QueryWrapperProps = PropsWithChildren<{

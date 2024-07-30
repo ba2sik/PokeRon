@@ -1,5 +1,5 @@
 import { supabase } from '../supabase/supabseClient';
-import { isNotNullOrUndefined } from '../utils/arrays';
+import { isNotNullOrUndefined } from '../utils';
 import { UserType } from '../context/AuthContext';
 
 export const getConnectedUser = async (): Promise<UserType> => {

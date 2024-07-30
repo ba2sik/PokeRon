@@ -12,7 +12,13 @@ import { ROUTES } from '../constants/routes';
 import { Loader } from '../components';
 import { Layout } from './Layout';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const router = createHashRouter([
   {
