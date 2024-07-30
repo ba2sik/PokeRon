@@ -15,7 +15,7 @@ const Home: React.FC = () => {
   });
 
   return (
-    <div className="flex flex-col items-center min-w-[60vw] h-screen">
+    <div className="flex flex-col items-center min-w-[60vw] flex-1 overflow-auto">
       <img
         src={PokeRonLogo}
         className="h-40"
