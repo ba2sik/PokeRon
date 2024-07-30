@@ -2,6 +2,7 @@ import { usePokemons } from '../../hooks/usePokemons';
 import React, { useState } from 'react';
 import { useDebounce } from '@uidotdev/usehooks';
 import { Pokedex, QueryWrapper, Search } from '../../components';
+import PokeRonLogo from '/pokeron.png';
 
 const Home: React.FC = () => {
   const basicPokemonsQueryResults = usePokemons();
@@ -14,8 +15,12 @@ const Home: React.FC = () => {
   });
 
   return (
-    <div className="flex flex-col items-center min-w-[60vw] h-screen">
-      <h1 className="text-center text-7xl p-5"> PokéRon</h1>
+    <div className="flex flex-col items-center min-w-[60vw] flex-1 overflow-auto">
+      <img
+        src={PokeRonLogo}
+        className="h-36"
+        alt="PokeRon Logo"
+      />
       <Search
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}

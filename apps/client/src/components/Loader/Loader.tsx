@@ -1,4 +1,4 @@
-import PokeballIcon from '/Poké_Ball_icon.svg';
+import PokeballIcon from '/pokeball.svg';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 

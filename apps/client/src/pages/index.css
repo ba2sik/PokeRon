@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
-    margin: 0 auto;
-    padding: 0 2rem;
+html{
+    height: 100%;
 }
 
 :root {
@@ -12,9 +11,7 @@
     line-height: 1.5;
     font-weight: 400;
 
-    /*color-scheme: light dark;*/
     color: #213547;
-    background-color: #ffffff;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -23,11 +20,12 @@
 }
 
 body {
+    height: 100%;
     margin: 0;
+    position: relative;
     display: flex;
     place-items: center;
-    min-width: 320px;
-    background-color: aliceblue;
+    justify-content: center;
 }
 
 *,
@@ -41,9 +39,6 @@ body {
     color: white;
 }
 
-/*@media (prefers-color-scheme: dark) {*/
-/*    :root {*/
-/*        color: rgba(255, 255, 255, 0.87);*/
-/*        background-color: #242424;*/
-/*    }*/
-/*}*/
+.btn {
+    @apply rounded-full;
+}

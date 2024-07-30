@@ -9,7 +9,7 @@ export const Search: React.FC<SearchProps> = ({ value, onChange }) => {
   const handleInputChange = useCallback(onChange, [onChange]);
 
   return (
-    <label className="input input-bordered m-4 w-[40vw] flex items-center gap-2">
+    <label className="input input-primary m-4 p-4 w-[40vw] flex items-center gap-2">
       <input
         type="text"
         value={value}
