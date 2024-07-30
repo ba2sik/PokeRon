@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   SignInWithPasswordCredentials,
   SignUpWithPasswordCredentials,
   User,
 } from '@supabase/supabase-js';
 import { supabase } from '../supabase/supabseClient';
-import { isNotNullOrUndefined } from '../utils/arrays';
-import { Loader } from '../components';
+import { QueryWrapper } from '../components';
+import { useQueryClient } from '@tanstack/react-query';
+import { useConnectedUser } from '../hooks/auth/useConnectedUser';
 
 type AuthContextType = {
   signUp: typeof supabase.auth.signUp;
@@ -15,77 +16,43 @@ type AuthContextType = {
   user: User | null;
 };
 
-type UserType = AuthContextType['user'];
-
-// TODO: figure out how to use this type without adding "isUserChangedEventType" function
-// type UserChangedEventType = Extract<AuthChangeEvent, 'SIGNED_IN' | 'USER_UPDATED' | 'TOKEN_REFRESHED'>;
-const UserChangedEvents = ['SIGNED_IN', 'USER_UPDATED', 'TOKEN_REFRESHED'];
-const SIGN_OUT_EVENT = 'SIGNED_OUT';
+export type UserType = AuthContextType['user'];
 
 export const AuthContext = React.createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<UserType>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const loadUserFromLocalStorage = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      if (isNotNullOrUndefined(session)) {
-        setUser(session.user ?? null);
-      }
-
-      setIsLoading(false);
-    };
-
-    loadUserFromLocalStorage();
-  }, []);
+  const queryClient = useQueryClient();
+  const connectedUserQueryResults = useConnectedUser();
 
   useEffect(() => {
     const {
       data: { subscription: listener },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      if (isNotNullOrUndefined(session) && UserChangedEvents.includes(event)) {
-        setUser(session.user ?? null);
-      }
-
-      if (event === SIGN_OUT_EVENT) {
-        setUser(null);
-      }
-
-      setIsLoading(false);
+    } = supabase.auth.onAuthStateChange(() => {
+      void queryClient.invalidateQueries({ queryKey: ['connectedUser'] });
     });
 
     return () => {
       listener?.unsubscribe();
     };
-  }, []);
+  }, [queryClient]);
 
-  const returnedAuthObject = createAuthContextReturnedObject(user);
+  const returnedAuthObject = createAuthContextReturnedObject(connectedUserQueryResults);
 
   return (
     <AuthContext.Provider value={returnedAuthObject}>
-      {isLoading ? (
-        <div className="flex flex-col gap-16">
-          <h1 className="text-5xl">Loading Authorization...</h1>
-          <Loader />
-        </div>
-      ) : (
-        children
-      )}
+      <QueryWrapper queryResults={connectedUserQueryResults}>{children}</QueryWrapper>
     </AuthContext.Provider>
   );
 };
 
-function createAuthContextReturnedObject(user: UserType): AuthContextType {
+function createAuthContextReturnedObject(
+  connectedUserQueryResults: ReturnType<typeof useConnectedUser>,
+): AuthContextType {
   return {
     signUp: (credentials: SignUpWithPasswordCredentials) => supabase.auth.signUp(credentials),
     signIn: (credentials: SignInWithPasswordCredentials) =>
       supabase.auth.signInWithPassword(credentials),
     signOut: () => supabase.auth.signOut(),
-    user,
+    user: connectedUserQueryResults.data ?? null,
   };
 }
