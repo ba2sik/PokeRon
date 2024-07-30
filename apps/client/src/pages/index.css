@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+    height: 100%;
+}
+
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
@@ -18,6 +22,7 @@
 body {
     height: 100%;
     margin: 0;
+    position: relative;
     display: flex;
     place-items: center;
     justify-content: center;
