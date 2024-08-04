@@ -2,7 +2,11 @@ import React from 'react';
 import { BasicPokemon } from '../../types/pokemons';
 import { FavoriteButton } from './FavoriteButton';
 
-export const PokeCard: React.FC<BasicPokemon> = ({ name, id }) => {
+export const PokeCard: React.FC<BasicPokemon> = React.memo(function PokeCard({
+  name,
+  id,
+  isFavorite,
+}) {
   const onFavoriteClick = (isChecked: boolean) => {
     if (isChecked) {
       console.log(name, id);
@@ -12,6 +16,7 @@ export const PokeCard: React.FC<BasicPokemon> = ({ name, id }) => {
   return (
     <div className="card bg-base-100 w-60 p-4 items-center shadow-xl hover:scale-105 hover:cursor-pointer transition duration-300 ease-in-out">
       <FavoriteButton
+        isFavorite={isFavorite}
         onClick={onFavoriteClick}
         className="absolute start-0 top-0 p-3"
       />
@@ -27,4 +32,4 @@ export const PokeCard: React.FC<BasicPokemon> = ({ name, id }) => {
       </div>
     </div>
   );
-};
+});

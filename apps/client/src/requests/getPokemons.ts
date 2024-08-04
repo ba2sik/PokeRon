@@ -23,5 +23,6 @@ const mapPokemonSummaryToBasicPokemon = (pokemonSummary: PokemonSummary): BasicP
   return {
     name: pokemonSummary.name,
     id: Number(pokemonId),
+    isFavorite: false,
   };
 };

@@ -1,5 +1,5 @@
-import { PokemonSummary } from '@repo/poke-client';
-
-export type BasicPokemon = Pick<PokemonSummary, 'name'> & {
+export type BasicPokemon = {
+  name: string;
   id: number;
+  isFavorite: boolean;
 };

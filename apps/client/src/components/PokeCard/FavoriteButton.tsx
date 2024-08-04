@@ -1,28 +1,24 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import HeartFilled from '/heart-filled.svg';
 import HeartOutline from '/heart-outline.svg';
 
 type FavoriteButtonProps = {
+  isFavorite: boolean;
   onClick: (isChecked: boolean) => void;
 } & Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick'>;
 
-export const FavoriteButton: FC<FavoriteButtonProps> = ({ onClick, ...props }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleClick = () => {
-    onClick(!isChecked);
-    setIsChecked(!isChecked);
-  };
+export const FavoriteButton: FC<FavoriteButtonProps> = ({ isFavorite, onClick, ...props }) => {
+  const handleClick = () => onClick(!isFavorite);
 
   return (
     <div {...props}>
       <button
         onClick={handleClick}
         className={`w-9 h-9 flex items-center justify-center rounded-full shadow-lg bg-white border border-gray-300 transition-colors duration-200 ${
-          isChecked ? 'bg-red-500 border-transparent' : ''
+          isFavorite ? 'bg-red-500 border-transparent' : ''
         }`}
       >
-        {isChecked ? (
+        {isFavorite ? (
           <img
             src={HeartFilled}
             alt="Filled Heart"
