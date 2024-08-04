@@ -29,12 +29,10 @@ export const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
       ref={divRef}
       className="flex flex-wrap justify-center px-8 py-2 gap-8 overflow-y-auto"
     >
-      {currentShowingBasicPokemons.map(({ name, id, isFavorite }) => (
+      {currentShowingBasicPokemons.map(({ id }) => (
         <PokeCard
-          name={name}
           id={id}
           key={id}
-          isFavorite={isFavorite}
         />
       ))}
     </div>

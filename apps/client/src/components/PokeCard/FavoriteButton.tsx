@@ -4,16 +4,14 @@ import HeartOutline from '/heart-outline.svg';
 
 type FavoriteButtonProps = {
   isFavorite: boolean;
-  onClick: (isChecked: boolean) => void;
+  onClick: () => void;
 } & Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick'>;
 
 export const FavoriteButton: FC<FavoriteButtonProps> = ({ isFavorite, onClick, ...props }) => {
-  const handleClick = () => onClick(!isFavorite);
-
   return (
     <div {...props}>
       <button
-        onClick={handleClick}
+        onClick={onClick}
         className={`w-9 h-9 flex items-center justify-center rounded-full shadow-lg bg-white border border-gray-300 transition-colors duration-200 ${
           isFavorite ? 'bg-red-500 border-transparent' : ''
         }`}

@@ -1,16 +1,21 @@
 import React from 'react';
 import { BasicPokemon } from '../../types/pokemons';
 import { FavoriteButton } from './FavoriteButton';
+import { usePokemon } from '../../hooks/usePokemons';
+import { useQueryClient } from '@tanstack/react-query';
 
-export const PokeCard: React.FC<BasicPokemon> = React.memo(function PokeCard({
-  name,
-  id,
-  isFavorite,
-}) {
-  const onFavoriteClick = (isChecked: boolean) => {
-    if (isChecked) {
-      console.log(name, id);
-    }
+type PokeCardProps = Pick<BasicPokemon, 'id'>;
+
+export const PokeCard: React.FC<PokeCardProps> = React.memo(function PokeCard({ id }) {
+  const queryClient = useQueryClient();
+  const { name, isFavorite } = usePokemon(id);
+
+  const onFavoriteClick = () => {
+    queryClient.setQueryData<BasicPokemon[]>(['pokemons'], (previousPokemons) => {
+      return previousPokemons?.map((pokemon) =>
+        pokemon.id === id ? { ...pokemon, isFavorite: !isFavorite } : pokemon,
+      );
+    });
   };
 
   return (
