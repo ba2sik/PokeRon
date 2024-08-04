@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "module": "ESNext",
+    "module": "ES2022",
     "moduleResolution": "Bundler",
     "noUnusedLocals": false,
     "noUnusedParameters": false,

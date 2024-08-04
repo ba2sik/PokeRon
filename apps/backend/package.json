@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -b",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0"
+  },
+  "dependencies": {
+    "@repo/eslint-config": "*",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=20.6.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.0.2",
+    "tsx": "^4.16.5",
+    "typescript": "^5.5.4"
+  }
+}
