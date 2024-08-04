@@ -18,7 +18,10 @@ export const getBasicPokemons = async () => {
   }
 };
 
-const mapPokemonSummaryToBasicPokemon = (pokemonSummary: PokemonSummary): BasicPokemon => ({
-  name: pokemonSummary.name,
-  id: extractUrlPathSegment(pokemonSummary.url, URL_ID_SEGMENT_INDEX),
-});
+const mapPokemonSummaryToBasicPokemon = (pokemonSummary: PokemonSummary): BasicPokemon => {
+  const pokemonId = extractUrlPathSegment(pokemonSummary.url, URL_ID_SEGMENT_INDEX);
+  return {
+    name: pokemonSummary.name,
+    id: Number(pokemonId),
+  };
+};
