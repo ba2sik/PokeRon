@@ -1,24 +1,20 @@
-import { PokemonApi, PokemonSummary } from '@repo/poke-client';
-import { extractUrlPathSegment } from '../utils';
-import { URL_ID_SEGMENT_INDEX } from '../constants/api';
-import { BasicPokemon } from '../types/pokemons';
+import axios from 'axios';
 
-const POKEMONS_COUNT = 1000;
+const apiUrl = 'http://localhost:2999/api/pokemons';
+
+type TODO = {
+  name: string;
+  id: number;
+  isFavorite: boolean;
+};
 
 export const getBasicPokemons = async () => {
-  const api = new PokemonApi();
   try {
-    const {
-      data: { results: pokemonsSummaries = [] },
-    } = await api.pokemonList(POKEMONS_COUNT);
-    return pokemonsSummaries.map(mapPokemonSummaryToBasicPokemon);
+    const response = await axios.get<TODO[]>(apiUrl);
+
+    return response.data;
   } catch (error) {
     console.error('Error fetching pokemons', error);
     throw error;
   }
 };
-
-const mapPokemonSummaryToBasicPokemon = (pokemonSummary: PokemonSummary): BasicPokemon => ({
-  name: pokemonSummary.name,
-  id: extractUrlPathSegment(pokemonSummary.url, URL_ID_SEGMENT_INDEX),
-});
