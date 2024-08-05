@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "tsx src/index.ts",
+    "start": "npm run build && node dist/index.js",
     "dev": "tsx watch src/index.ts",
     "build": "tsc -b",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0"
