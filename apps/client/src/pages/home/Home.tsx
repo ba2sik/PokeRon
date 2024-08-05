@@ -5,12 +5,12 @@ import { Pokedex, QueryWrapper, Search } from '../../components';
 import PokeRonLogo from '/pokeron.png';
 
 const Home: React.FC = () => {
-  const basicPokemonsQueryResults = usePokemons();
+  const pokemonsQueryResults = usePokemons();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  const basicPokemons = basicPokemonsQueryResults.data ?? [];
-  const filteredPokemons = basicPokemons.filter((pokemon) => {
+  const pokemons = pokemonsQueryResults.data ?? [];
+  const filteredPokemons = pokemons.filter((pokemon) => {
     return pokemon.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
   });
 
@@ -25,9 +25,9 @@ const Home: React.FC = () => {
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}
       />
-      <QueryWrapper queryResults={basicPokemonsQueryResults}>
+      <QueryWrapper queryResults={pokemonsQueryResults}>
         <Pokedex
-          basicPokemons={filteredPokemons}
+          pokemons={filteredPokemons}
           key={debouncedSearchTerm}
         />
       </QueryWrapper>

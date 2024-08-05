@@ -1,6 +1,6 @@
 import * as pokeClient from '@repo/poke-client';
 import { PokemonSummary } from '@repo/poke-client';
-import { BasicPokemon } from 'client/src/types/pokemons';
+import { Pokemon } from 'client/src/types/pokemons';
 import { URL_ID_SEGMENT_INDEX } from '../types/api';
 import { extractUrlPathSegment } from '../utils/urlExtractor';
 
@@ -22,7 +22,12 @@ export const getAllPokemons = async (): Promise<PokemonSummary[]> => {
   }
 };
 
-const mapPokemonSummaryToBasicPokemon = (pokemonSummary: PokemonSummary): BasicPokemon => ({
-  name: pokemonSummary.name,
-  id: extractUrlPathSegment(pokemonSummary.url, URL_ID_SEGMENT_INDEX),
-});
+const mapPokemonSummaryToBasicPokemon = (pokemonSummary: PokemonSummary): Pokemon => {
+  const pokemonId = extractUrlPathSegment(pokemonSummary.url, URL_ID_SEGMENT_INDEX);
+
+  return {
+    name: pokemonSummary.name,
+    id: Number(pokemonId),
+    isFavorite: false,
+  };
+};

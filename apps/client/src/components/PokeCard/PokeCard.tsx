@@ -1,10 +1,10 @@
 import React from 'react';
-import { BasicPokemon } from '../../types/pokemons';
+import { Pokemon } from '../../types/pokemons';
 import { FavoriteButton } from './FavoriteButton';
 import { usePokemon } from '../../hooks/usePokemons';
 import { useUpdatePokemonCache } from '../../hooks/useUpdatePokemonCache';
 
-type PokeCardProps = Pick<BasicPokemon, 'id'>;
+type PokeCardProps = Pick<Pokemon, 'id'>;
 
 export const PokeCard: React.FC<PokeCardProps> = React.memo(function PokeCard({ id }) {
   const { name, isFavorite } = usePokemon(id);

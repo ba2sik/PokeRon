@@ -1,16 +1,11 @@
 import axios from 'axios';
+import { Pokemon } from '../types/pokemons';
 
 const apiUrl = 'http://localhost:2999/api/pokemons';
 
-type TODO = {
-  name: string;
-  id: number;
-  isFavorite: boolean;
-};
-
-export const getBasicPokemons = async () => {
+export const getPokemons = async () => {
   try {
-    const response = await axios.get<TODO[]>(apiUrl);
+    const response = await axios.get<Pokemon[]>(apiUrl);
 
     return response.data;
   } catch (error) {

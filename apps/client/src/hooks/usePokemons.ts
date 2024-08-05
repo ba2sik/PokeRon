@@ -1,12 +1,12 @@
 import { QueryOptions, useQuery, UseQueryResult } from '@tanstack/react-query';
-import { getBasicPokemons } from '../requests/getPokemons';
-import { BasicPokemon } from '../types/pokemons';
+import { getPokemons } from '../requests/getPokemons';
+import { Pokemon } from '../types/pokemons';
 import { isNullOrUndefined } from '../utils';
 
-export const usePokemons = (options?: QueryOptions): UseQueryResult<BasicPokemon[]> => {
+export const usePokemons = (options?: QueryOptions): UseQueryResult<Pokemon[]> => {
   return useQuery({
     queryKey: ['pokemons'],
-    queryFn: getBasicPokemons,
+    queryFn: getPokemons,
     ...options,
   });
 };
