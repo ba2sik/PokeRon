@@ -1,9 +1,27 @@
 import React from 'react';
 import { BasicPokemon } from '../../types/pokemons';
+import { FavoriteButton } from './FavoriteButton';
+import { usePokemon } from '../../hooks/usePokemons';
+import { useUpdatePokemonCache } from '../../hooks/useUpdatePokemonCache';
 
-export const PokeCard: React.FC<BasicPokemon> = ({ name, id }) => {
+type PokeCardProps = Pick<BasicPokemon, 'id'>;
+
+export const PokeCard: React.FC<PokeCardProps> = React.memo(function PokeCard({ id }) {
+  const { name, isFavorite } = usePokemon(id);
+  const updatePokemonCache = useUpdatePokemonCache();
+
+  const onFavoriteClick = () => {
+    updatePokemonCache(id);
+    // TODO: update db
+  };
+
   return (
     <div className="card bg-base-100 w-60 p-4 items-center shadow-xl hover:scale-105 hover:cursor-pointer transition duration-300 ease-in-out">
+      <FavoriteButton
+        isFavorite={isFavorite}
+        onClick={onFavoriteClick}
+        className="absolute start-0 top-0 p-3"
+      />
       <img
         src={`https://img.pokemondb.net/artwork/${name}.jpg`}
         alt="shoes"
@@ -16,4 +34,4 @@ export const PokeCard: React.FC<BasicPokemon> = ({ name, id }) => {
       </div>
     </div>
   );
-};
+});
