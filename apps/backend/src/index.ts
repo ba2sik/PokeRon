@@ -1,13 +1,14 @@
 import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { PrismaClient } from '@prisma/client';
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('hello to the world');
+export const prisma = new PrismaClient();
+
+app.get('/', async (req: Request, res: Response) => {
+  const favoriteCards = await prisma.favoriteCard.findMany();
+  res.send(favoriteCards);
 });
 
 app.listen(port, () => {

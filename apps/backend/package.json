@@ -4,13 +4,15 @@
   "type": "module",
   "scripts": {
     "start": "npm run build && node dist/index.js",
-    "dev": "tsx watch src/index.ts",
+    "dev": "dotenv -e .env.local -- tsx watch src/index.ts",
     "build": "tsc -b",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "prisma:generate": "dotenv -e .env.local -- npx prisma generate"
   },
   "dependencies": {
+    "@prisma/client": "^5.17.0",
     "@repo/eslint-config": "*",
-    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.2",
     "express": "^4.19.2"
   },
   "engines": {
@@ -20,6 +22,7 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^22.0.2",
+    "prisma": "^5.17.0",
     "tsx": "^4.16.5",
     "typescript": "^5.5.4"
   }

@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model FavoriteCard {
+  user_id    String
+  pokemon_id Int    @db.SmallInt
+
+  @@id([user_id, pokemon_id])
+  @@map("favorite_cards")
+}
