@@ -2,6 +2,9 @@
   "extends": "@repo/typescript-config/node.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "baseUrl": "./",
-  }
+    "baseUrl": "./"
+  },
+  "exclude": [
+    "./dist/**/*"
+  ]
 }
