@@ -4,5 +4,8 @@
   "main": "./src/index.ts",
   "scripts": {
     "codegen:pokeapi": "openapi-generator-cli generate -i https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml -g typescript-axios -o ./src"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.13.4"
   }
 }
