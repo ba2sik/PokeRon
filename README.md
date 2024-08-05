@@ -14,7 +14,7 @@
 ![axios](https://img.shields.io/badge/-axios-darkslategray?style=for-the-badge&logo=axios&color=1c1c1c&logoColor=5A29E3)
 ![react-hook-form](https://img.shields.io/badge/-react--hook--form-darkslategray?style=for-the-badge&logo=react&color=1c1c1c&logoColor=00BFFF)
 
-**PokeRon** is an app that lets you view Pokémon, search for specific ones, and log in to your account. 
+**PokeRon** is an app that lets you view Pokémon, search for specific ones, and log in to your account.
 Explore, find your favorites, and enjoy a personalized Pokémon experience!
 
 Check it out [here](https://ba2sik.github.io/PokeRon/).
