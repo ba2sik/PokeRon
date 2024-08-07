@@ -9,7 +9,11 @@ const api = new pokeClient.default.PokemonApi();
 
 const POKEMONS_COUNT = 1000;
 
-export const getAllPokemons = async (): Promise<PokemonSummary[]> => {
+export default {
+  getPokemons,
+};
+
+async function getPokemons(): Promise<Pokemon[]> {
   try {
     const {
       data: { results: pokemonsSummaries = [] },
@@ -20,7 +24,7 @@ export const getAllPokemons = async (): Promise<PokemonSummary[]> => {
     console.error('Error fetching pokemons', error);
     throw error;
   }
-};
+}
 
 const mapPokemonSummaryToBasicPokemon = (pokemonSummary: PokemonSummary): Pokemon => {
   const pokemonId = extractUrlPathSegment(pokemonSummary.url, URL_ID_SEGMENT_INDEX);
