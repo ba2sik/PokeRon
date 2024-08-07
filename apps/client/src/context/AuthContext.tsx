@@ -7,7 +7,7 @@ import {
 import { supabase } from '../supabase/supabseClient';
 import { QueryWrapper } from '../components';
 import { useQueryClient } from '@tanstack/react-query';
-import { useConnectedUser } from '../hooks/auth/useConnectedUser';
+import { useSession } from '../hooks/auth/useSession';
 
 type AuthContextType = {
   signUp: typeof supabase.auth.signUp;
@@ -16,19 +16,17 @@ type AuthContextType = {
   user: User | null;
 };
 
-export type UserType = AuthContextType['user'];
-
 export const AuthContext = React.createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const queryClient = useQueryClient();
-  const connectedUserQueryResults = useConnectedUser();
+  const sessionQueryResults = useSession();
 
   useEffect(() => {
     const {
       data: { subscription: listener },
     } = supabase.auth.onAuthStateChange(() => {
-      void queryClient.invalidateQueries({ queryKey: ['connectedUser'] });
+      void queryClient.invalidateQueries({ queryKey: ['session'] });
     });
 
     return () => {
@@ -36,23 +34,23 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     };
   }, [queryClient]);
 
-  const returnedAuthObject = createAuthContextReturnedObject(connectedUserQueryResults);
+  const returnedAuthObject = createAuthContextReturnedObject(sessionQueryResults);
 
   return (
     <AuthContext.Provider value={returnedAuthObject}>
-      <QueryWrapper queryResults={connectedUserQueryResults}>{children}</QueryWrapper>
+      <QueryWrapper queryResults={sessionQueryResults}>{children}</QueryWrapper>
     </AuthContext.Provider>
   );
 };
 
 function createAuthContextReturnedObject(
-  connectedUserQueryResults: ReturnType<typeof useConnectedUser>,
+  sessionQueryResults: ReturnType<typeof useSession>,
 ): AuthContextType {
   return {
     signUp: (credentials: SignUpWithPasswordCredentials) => supabase.auth.signUp(credentials),
     signIn: (credentials: SignInWithPasswordCredentials) =>
       supabase.auth.signInWithPassword(credentials),
     signOut: () => supabase.auth.signOut(),
-    user: connectedUserQueryResults.data ?? null,
+    user: sessionQueryResults?.data?.user ?? null,
   };
 }
