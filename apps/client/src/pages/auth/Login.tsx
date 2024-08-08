@@ -3,23 +3,23 @@ import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema';
 import { isNotNullOrUndefined } from '../../utils';
-import { useAuth } from '../../hooks/auth/useAuth';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';
+import { useAuthNEW } from '../../hooks/auth/useAuthNEW';
 
 export const Login: React.FC = () => {
-  const { signIn } = useAuth();
+  const { login } = useAuthNEW();
   const navigate = useNavigate();
 
   const handleLogin: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    const { data, error } = await signIn({ email, password });
+    const { message, error } = await login.mutateAsync({ email, password });
 
     if (isNotNullOrUndefined(error)) {
-      alert(error.message);
+      alert(message + error);
       return null;
     }
 
-    alert(data?.user?.email + ' signed in successfully');
+    alert(message);
     return navigate(ROUTES.HOME);
   };
 

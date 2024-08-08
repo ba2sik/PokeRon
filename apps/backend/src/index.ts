@@ -14,10 +14,14 @@ export const prisma = new PrismaClient();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 app.use(cookieParser());
 app.use(helmet());
-
+app.use(
+  cors({
+    origin: env.CLIENT_URL,
+    credentials: true,
+  }),
+);
 app.use('/api', apiRouter);
 
 app.get('/', async (req: Request, res: Response) => {
