@@ -1,17 +1,15 @@
 import { Request, Response } from 'express';
 import pokemonService from '../services/pokemons.service.js';
-import { getBearerToken } from '../utils/auth';
 import AuthService from '../services/auth.service';
 
 export const getPokemons = async (req: Request, res: Response) => {
-  const authHeader = req.get('authorization');
-  const token = authHeader ? getBearerToken(authHeader) : null;
+  const accessToken = req.cookies.access_token;
 
   try {
     const pokemons = await pokemonService.getPokemons();
 
-    if (token) {
-      const user = await AuthService.getUserByToken(token);
+    if (accessToken) {
+      const user = await AuthService.getUserByToken(accessToken);
       if (user) {
         await pokemonService.addUserFavoritePokemons(pokemons, user.id);
       }
