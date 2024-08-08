@@ -1,13 +1,13 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { Pokemon } from '../types/pokemons';
 
-const apiUrl = 'http://localhost:2999/api/pokemons';
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const getPokemons = async (token?: string): Promise<Pokemon[]> => {
   const config = buildConfig(token);
 
   try {
-    const response = await axios.get<Pokemon[]>(apiUrl, config);
+    const response = await axios.get<Pokemon[]>(`${SERVER_URL}/api/pokemons`, config);
 
     return response.data;
   } catch (error) {
