@@ -10,28 +10,27 @@ type PokedexProps = {
 const NUM_OF_POKEMONS_TO_LOAD = 24;
 
 export const Pokedex: React.FC<PokedexProps> = ({ pokemons = [] }) => {
-  const [currentShowingPokemons, setCurrentShowingPokemons] = React.useState(
-    pokemons.slice(0, NUM_OF_POKEMONS_TO_LOAD),
-  );
-  const [currentOffset, setCurrentOffset] = useState(NUM_OF_POKEMONS_TO_LOAD);
   const divRef = useRef<HTMLDivElement>(null);
+  const [numberOfPokemonsShowing, setNumberOfPokemonsShowing] = useState(NUM_OF_POKEMONS_TO_LOAD);
 
   const loadMorePokemons = () => {
-    const newItems = pokemons.slice(currentOffset, currentOffset + NUM_OF_POKEMONS_TO_LOAD);
-    setCurrentShowingPokemons((prevItems) => [...prevItems, ...newItems]);
-    setCurrentOffset(currentOffset + NUM_OF_POKEMONS_TO_LOAD);
+    setNumberOfPokemonsShowing(numberOfPokemonsShowing + NUM_OF_POKEMONS_TO_LOAD);
   };
 
   useOnReachedBottom(divRef, loadMorePokemons);
+
+  const pokemonsToRender = pokemons.slice(0, numberOfPokemonsShowing);
 
   return (
     <div
       ref={divRef}
       className="flex flex-wrap justify-center px-8 py-2 gap-8 overflow-y-auto"
     >
-      {currentShowingPokemons.map(({ id }) => (
+      {pokemonsToRender.map(({ id, name, isFavorite }) => (
         <PokeCard
           id={id}
+          name={name}
+          isFavorite={isFavorite}
           key={id}
         />
       ))}

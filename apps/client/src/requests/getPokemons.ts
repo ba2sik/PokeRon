@@ -3,7 +3,7 @@ import { Pokemon } from '../types/pokemons';
 
 const apiUrl = 'http://localhost:2999/api/pokemons';
 
-export const getPokemons = async (token?: string) => {
+export const getPokemons = async (token?: string): Promise<Pokemon[]> => {
   const config = buildConfig(token);
 
   try {
