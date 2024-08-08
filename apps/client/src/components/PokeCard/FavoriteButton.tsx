@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import HeartFilled from '/heart-filled.svg';
 import HeartOutline from '/heart-outline.svg';
+import { twMerge } from 'tailwind-merge';
 
 type FavoriteButtonProps = {
   isFavorite: boolean;
@@ -12,9 +13,10 @@ export const FavoriteButton: FC<FavoriteButtonProps> = ({ isFavorite, onClick, .
     <div {...props}>
       <button
         onClick={onClick}
-        className={`w-9 h-9 flex items-center justify-center rounded-full shadow-lg bg-white border border-gray-300 transition-colors duration-200 ${
-          isFavorite ? 'bg-red-500 border-transparent' : ''
-        }`}
+        className={twMerge(
+          'w-9 h-9 flex items-center justify-center rounded-full shadow-lg bg-white border border-gray-300 transition-colors duration-200',
+          isFavorite ? 'bg-red-500 border-transparent' : '',
+        )}
       >
         {isFavorite ? (
           <img
