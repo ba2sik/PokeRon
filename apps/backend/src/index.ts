@@ -3,9 +3,11 @@ import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
 import helmet from 'helmet';
 import { apiRouter } from './routes/api.routes.js';
+import { supabaseBACKEND } from './supabase/supabseClient';
+import { env } from './env/env';
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = env.PORT;
 
 export const prisma = new PrismaClient();
 
@@ -17,8 +19,10 @@ app.use(helmet());
 app.use('/api', apiRouter);
 
 app.get('/', async (req: Request, res: Response) => {
-  const favoriteCards = await prisma.favoriteCard.findMany();
-  res.send(favoriteCards);
+  // const favoriteCards = await prisma.favoriteCard.findMany();
+  // res.send(favoriteCards);
+  const user = await supabaseBACKEND.auth.getSession();
+  res.send(user);
 });
 
 app.listen(port, () => {
