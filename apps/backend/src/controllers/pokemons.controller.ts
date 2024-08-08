@@ -13,7 +13,7 @@ export const getPokemons = async (req: Request, res: Response) => {
     if (token) {
       const user = await AuthService.getUserByToken(token);
       if (user) {
-        console.log(user?.id);
+        await pokemonService.addUserFavoritePokemons(pokemons, user.id);
       }
     }
 
