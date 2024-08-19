@@ -1,5 +1,6 @@
 import apiClient from './apiClient';
 import { AuthPayload } from '../components/AuthForm/types/auth-payload-schema';
+import { isAxiosError } from 'axios';
 
 export type UserSession = {
   loggedIn: boolean;
@@ -21,7 +22,10 @@ async function login(credentials: AuthPayload) {
 
     return response.data;
   } catch (error) {
-    console.error('Error logging in ', error);
+    if (isAxiosError(error) && error.response?.status === 401) {
+      return error.response.data;
+    }
+
     throw error;
   }
 }
@@ -32,7 +36,10 @@ async function register(credentials: AuthPayload) {
 
     return response.data;
   } catch (error) {
-    console.error('Error logging in ', error);
+    if (isAxiosError(error) && error.response?.status === 409) {
+      return error.response.data;
+    }
+
     throw error;
   }
 }

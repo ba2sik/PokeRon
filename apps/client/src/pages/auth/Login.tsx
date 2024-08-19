@@ -15,7 +15,7 @@ export const Login: React.FC = () => {
     const { message, error } = await login({ email, password });
 
     if (isNotNullOrUndefined(error)) {
-      alert(message + error);
+      alert(error);
       return null;
     }
 
