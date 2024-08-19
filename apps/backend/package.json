@@ -13,6 +13,7 @@
     "@prisma/client": "^5.17.0",
     "@repo/eslint-config": "*",
     "@repo/poke-client": "*",
+    "@supabase/supabase-js": "^2.45.1",
     "@t3-oss/env-core": "^0.11.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
