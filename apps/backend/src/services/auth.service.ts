@@ -12,7 +12,7 @@ async function getUserByToken(token: string): Promise<User | null> {
       error,
     } = await supabaseBACKEND.auth.getUser(token);
 
-    if (error) throw error;
+    if (error) return null;
 
     return user;
   } catch (error) {

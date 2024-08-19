@@ -7,7 +7,7 @@ export const deleteFavoritePokemon = async (req: Request, res: Response, next: N
   const accessToken = req.cookies.access_token;
 
   if (isNullOrUndefined(accessToken)) {
-    return res.status(400).json({ message: 'No access token provided' });
+    return res.status(401).json({ message: 'No access token provided' });
   }
 
   try {
@@ -45,7 +45,7 @@ export const addFavoritePokemon = async (req: Request, res: Response, next: Next
   const accessToken = req.cookies.access_token;
 
   if (isNullOrUndefined(accessToken)) {
-    return res.status(400).json({ message: 'No access token provided' });
+    return res.status(401).json({ message: 'No access token provided' });
   }
 
   try {

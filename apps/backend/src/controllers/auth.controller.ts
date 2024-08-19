@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { supabaseBACKEND } from '../supabase/supabseClient';
 import { isNullOrUndefined } from '../utils/types';
+import AuthService from '../services/auth.service';
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -76,4 +77,20 @@ export const logout = async (req: Request, res: Response) => {
   });
 
   return res.status(200).json({ message: 'Logged out successfully' });
+};
+
+export const verifyToken = async (req: Request, res: Response) => {
+  const accessToken = req.cookies.access_token;
+
+  if (!accessToken) {
+    return res.status(200).json({ loggedIn: false, email: null });
+  }
+
+  const user = await AuthService.getUserByToken(accessToken);
+
+  if (isNullOrUndefined(user)) {
+    return res.status(200).json({ loggedIn: false, email: null });
+  }
+
+  return res.status(200).json({ loggedIn: true, email: user.email });
 };
