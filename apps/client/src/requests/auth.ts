@@ -50,7 +50,7 @@ async function logout() {
 
     return response.data;
   } catch (error) {
-    console.error('Error logging in ', error);
+    console.error('Error logging out ', error);
     throw error;
   }
 }
@@ -61,7 +61,7 @@ async function getSession(): Promise<UserSession> {
 
     return response.data;
   } catch (error) {
-    console.error('Error logging in ', error);
+    console.error('Error retrieving session ', error);
     throw error;
   }
 }

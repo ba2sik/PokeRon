@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
 import PokeballIcon from '/pokeball.svg';
-import { useAuth } from '../../hooks/auth/useAuth';
+import { useSession } from '../../hooks/auth/useSession';
+import { useLogout } from '../../hooks/auth/useLogout';
 
 export const Navbar = () => {
-  const { session, logout } = useAuth();
+  const { data: session, isLoading } = useSession();
+  const { mutateAsync: logout, isPending } = useLogout();
   const navigate = useNavigate();
-  console.log(session);
 
   return (
     <div className="navbar w-screen">

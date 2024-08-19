@@ -5,11 +5,11 @@ import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema
 import { isNotNullOrUndefined } from '../../utils';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';
-import { useAuth } from '../../hooks/auth/useAuth';
 import toast from 'react-hot-toast';
+import { useRegister } from '../../hooks/auth/useRegister';
 
 export const Register: React.FC = () => {
-  const { register } = useAuth();
+  const { mutateAsync: register, isPending } = useRegister();
   const navigate = useNavigate();
 
   const handleSignUp: SubmitHandler<AuthPayload> = async ({ email, password }) => {
