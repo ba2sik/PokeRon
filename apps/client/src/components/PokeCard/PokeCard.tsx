@@ -2,13 +2,19 @@ import React from 'react';
 import { Pokemon } from '../../types/pokemons';
 import { FavoriteButton } from './FavoriteButton';
 import { useUpdatePokemonCache } from '../../hooks/useUpdatePokemonCache';
+import { useFavoriteApiOperations } from '../../hooks/useFavoriteApiOperations';
 
 export const PokeCard: React.FC<Pokemon> = React.memo(function PokeCard({ id, name, isFavorite }) {
   const updatePokemonCache = useUpdatePokemonCache();
-
+  const { removeFavorite, addFavorite } = useFavoriteApiOperations();
   const onFavoriteClick = () => {
     updatePokemonCache(id);
-    // TODO: update db
+
+    if (isFavorite) {
+      removeFavorite(id);
+    } else {
+      addFavorite(id);
+    }
   };
 
   return (
