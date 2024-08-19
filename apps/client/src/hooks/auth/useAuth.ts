@@ -10,7 +10,10 @@ type AuthResponse = {
 export const useAuth = (options?: UseMutationOptions<AuthResponse, unknown, AuthPayload>) => {
   const queryClient = useQueryClient();
 
-  const refreshSession = () => void queryClient.invalidateQueries({ queryKey: ['session'] });
+  const refreshSession = async () => {
+    await queryClient.invalidateQueries({ queryKey: ['session'] });
+    await queryClient.invalidateQueries({ queryKey: ['pokemons'] });
+  };
 
   const loginMutation = useMutation({
     mutationKey: ['login'],
