@@ -3,11 +3,19 @@ import { Pokemon } from '../../types/pokemons';
 import { FavoriteButton } from './FavoriteButton';
 import { useUpdatePokemonCache } from '../../hooks/useUpdatePokemonCache';
 import { useFavoriteApiOperations } from '../../hooks/useFavoriteApiOperations';
+import { useAuth } from '../../hooks/auth/useAuth';
+import { isNotNullOrUndefined } from '../../utils';
 
 export const PokeCard: React.FC<Pokemon> = React.memo(function PokeCard({ id, name, isFavorite }) {
+  const { session } = useAuth();
   const updatePokemonCache = useUpdatePokemonCache();
   const { removeFavorite, addFavorite } = useFavoriteApiOperations();
   const onFavoriteClick = () => {
+    if (isNotNullOrUndefined(session) && !session.loggedIn) {
+      alert('Please login to favorite a pokemon');
+      return;
+    }
+
     updatePokemonCache(id);
 
     if (isFavorite) {
