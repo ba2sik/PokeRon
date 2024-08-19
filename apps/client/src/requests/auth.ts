@@ -23,7 +23,7 @@ async function login(credentials: AuthPayload) {
     return response.data;
   } catch (error) {
     if (isAxiosError(error) && error.response?.status === 401) {
-      return error.response.data;
+      throw new Error('Invalid email or password');
     }
 
     throw error;
@@ -37,7 +37,7 @@ async function register(credentials: AuthPayload) {
     return response.data;
   } catch (error) {
     if (isAxiosError(error) && error.response?.status === 409) {
-      return error.response.data;
+      throw new Error('Email already in use');
     }
 
     throw error;

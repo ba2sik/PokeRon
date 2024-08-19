@@ -2,27 +2,25 @@ import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema';
-import { isNotNullOrUndefined } from '../../utils';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';
 import toast from 'react-hot-toast';
 import { useLogin } from '../../hooks/auth/useLogin';
 
 export const Login: React.FC = () => {
-  const { mutateAsync: login, isPending } = useLogin();
+  const { mutateAsync: login } = useLogin();
 
   const navigate = useNavigate();
 
-  const handleLogin: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    const { message, error } = await login({ email, password });
-
-    if (isNotNullOrUndefined(error)) {
-      toast.error(error);
-      return null;
-    }
-
-    toast.success(message);
-    return navigate(ROUTES.HOME);
+  const handleLogin: SubmitHandler<AuthPayload> = ({ email, password }) => {
+    toast.promise(login({ email, password }), {
+      loading: 'Signing in...',
+      success: ({ message }) => {
+        navigate(ROUTES.HOME);
+        return message;
+      },
+      error: (err) => err.toString(),
+    });
   };
 
   return (

@@ -8,6 +8,7 @@ export const PokeToaster = () => (
       style: {
         border: '1px solid darkblue',
         padding: '16px',
+        minWidth: '300px',
         textTransform: 'capitalize',
       },
     }}
