@@ -3,7 +3,8 @@ import { PokemonSummary } from '@repo/poke-client';
 import { Pokemon } from 'client/src/types/pokemons';
 import { URL_ID_SEGMENT_INDEX } from '../types/api';
 import { extractUrlPathSegment } from '../utils/urlExtractor';
-import { prisma } from '../index';
+import { prismaClient } from '../index';
+import { FavoriteCard, Prisma } from '@prisma/client';
 
 // @ts-expect-error weird ass usage
 const api = new pokeClient.default.PokemonApi();
@@ -13,6 +14,8 @@ const POKEMONS_COUNT = 1000;
 export default {
   getPokemons,
   addUserFavoritePokemons,
+  addFavoritePokemon,
+  deleteFavoritePokemon,
 };
 
 async function getPokemons(): Promise<Pokemon[]> {
@@ -31,7 +34,7 @@ async function getPokemons(): Promise<Pokemon[]> {
 async function addUserFavoritePokemons(pokemons: Pokemon[], userId: string): Promise<Pokemon[]> {
   try {
     console.log(userId);
-    const favoriteCards = await prisma.favoriteCard.findMany({
+    const favoriteCards = await prismaClient.favoriteCard.findMany({
       where: {
         user_id: userId,
       },
@@ -44,6 +47,41 @@ async function addUserFavoritePokemons(pokemons: Pokemon[], userId: string): Pro
     return pokemons;
   } catch (error) {
     console.error('Error fetching favorite cards', error);
+    throw error;
+  }
+}
+
+async function addFavoritePokemon(favoriteCard: FavoriteCard): Promise<FavoriteCard> {
+  try {
+    return await prismaClient.favoriteCard.create({
+      data: favoriteCard,
+    });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      throw new Error(
+        `The pokemon ${favoriteCard.pokemon_id} is already a favorite for user ${favoriteCard.user_id}`,
+      );
+    }
+    throw error;
+  }
+}
+
+async function deleteFavoritePokemon(favoriteCard: FavoriteCard): Promise<FavoriteCard> {
+  try {
+    return await prismaClient.favoriteCard.delete({
+      where: {
+        user_id_pokemon_id: {
+          user_id: favoriteCard.user_id,
+          pokemon_id: favoriteCard.pokemon_id,
+        },
+      },
+    });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
+      throw new Error(
+        `Record not found for pokemon_id: ${favoriteCard.pokemon_id} and user: ${favoriteCard.user_id}`,
+      );
+    }
     throw error;
   }
 }

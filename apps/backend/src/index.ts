@@ -10,7 +10,7 @@ import { env } from './env/env';
 const app: Express = express();
 const port = env.PORT;
 
-export const prisma = new PrismaClient();
+export const prismaClient = new PrismaClient();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,6 +29,11 @@ app.get('/', async (req: Request, res: Response) => {
   // res.send(favoriteCards);
   const user = await supabaseBACKEND.auth.getSession();
   res.send(user);
+});
+
+app.use((err: Error, req: Request, res: Response) => {
+  console.error('Unhandled error:', err.message); // Log the error
+  res.status(500).json({ message: 'An unexpected error occurred', error: err.message });
 });
 
 app.listen(port, () => {
