@@ -4,7 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { apiRouter } from './routes/api.routes.js';
-import { supabaseBACKEND } from './supabase/supabseClient';
+import { supabase } from './supabase/supabseClient';
 import { env } from './env/env';
 
 const app: Express = express();
@@ -27,7 +27,7 @@ app.use('/api', apiRouter);
 app.get('/', async (req: Request, res: Response) => {
   // const favoriteCards = await prisma.favoriteCard.findMany();
   // res.send(favoriteCards);
-  const user = await supabaseBACKEND.auth.getSession();
+  const user = await supabase.auth.getSession();
   res.send(user);
 });
 

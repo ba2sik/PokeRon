@@ -1,11 +1,10 @@
 import { QueryOptions, useQuery } from '@tanstack/react-query';
-import { getSession } from '../../requests/getSession';
-import { Session } from '@supabase/supabase-js';
+import AuthService from '../../requests/auth';
 
-export const useSession = (options?: QueryOptions<Session | null>) => {
+export const useSession = (options?: QueryOptions<unknown>) => {
   return useQuery({
     queryKey: ['session'],
-    queryFn: getSession,
+    queryFn: AuthService.getSession,
     ...options,
   });
 };

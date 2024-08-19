@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { deleteFavoritePokemon } from '../requests/deleteFavoritePokemon';
-import { addFavoritePokemon } from '../requests/addFavoritePokemon';
+import { deleteFavoritePokemon } from '../requests/favoritePokemons/deleteFavoritePokemon';
+import { addFavoritePokemon } from '../requests/favoritePokemons/addFavoritePokemon';
 
 export const useFavoriteApiOperations = () => {
   const removeMutation = useMutation({

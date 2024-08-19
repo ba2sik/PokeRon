@@ -1,5 +1,5 @@
 import { User } from '@supabase/supabase-js';
-import { supabaseBACKEND } from '../supabase/supabseClient';
+import { supabase } from '../supabase/supabseClient';
 
 export default {
   getUserByToken,
@@ -10,7 +10,7 @@ async function getUserByToken(token: string): Promise<User | null> {
     const {
       data: { user },
       error,
-    } = await supabaseBACKEND.auth.getUser(token);
+    } = await supabase.auth.getUser(token);
 
     if (error) return null;
 

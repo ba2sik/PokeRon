@@ -1,10 +1,16 @@
-import { AuthPayload } from '../components/AuthForm/types/auth-payload-schema';
 import apiClient from './apiClient';
+import { AuthPayload } from '../components/AuthForm/types/auth-payload-schema';
+
+export type UserSession = {
+  loggedIn: boolean;
+  email: string;
+};
 
 export default {
   login,
   register,
   logout,
+  getSession,
 };
 
 async function login(credentials: AuthPayload) {
@@ -34,6 +40,17 @@ async function register(credentials: AuthPayload) {
 async function logout() {
   try {
     const response = await apiClient.post('/api/auth/logout');
+
+    return response.data;
+  } catch (error) {
+    console.error('Error logging in ', error);
+    throw error;
+  }
+}
+
+async function getSession(): Promise<UserSession> {
+  try {
+    const response = await apiClient.get<UserSession>('/api/auth/me');
 
     return response.data;
   } catch (error) {

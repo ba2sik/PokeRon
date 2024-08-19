@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { supabaseBACKEND } from '../supabase/supabseClient';
+import { supabase } from '../supabase/supabseClient';
 import { isNullOrUndefined } from '../utils/types';
 import AuthService from '../services/auth.service';
 
@@ -10,7 +10,7 @@ export const login = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'Please fill in all fields' });
   }
 
-  const { data, error } = await supabaseBACKEND.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     return res.status(401).json({ message: 'Invalid credentials', error: error.message });
@@ -35,7 +35,7 @@ export const register = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'Please fill in all fields' });
   }
 
-  const { data, error } = await supabaseBACKEND.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signUp({ email, password });
 
   if (error) {
     return res.status(409).json({ message: 'Invalid credentials', error: error.message });
@@ -64,7 +64,7 @@ export const logout = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'No user logged in' });
   }
 
-  const { error } = await supabaseBACKEND.auth.signOut(accessToken);
+  const { error } = await supabase.auth.signOut(accessToken);
 
   if (error) {
     return res.status(500).json({ message: 'Failed to log out', error: error.message });

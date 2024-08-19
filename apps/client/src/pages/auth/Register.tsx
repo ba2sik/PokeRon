@@ -3,23 +3,23 @@ import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema';
 import { isNotNullOrUndefined } from '../../utils';
-import { useAuth } from '../../hooks/auth/useAuth';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';
+import { useAuth } from '../../hooks/auth/useAuth';
 
 export const Register: React.FC = () => {
-  const { signUp } = useAuth();
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSignUp: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    const { data, error } = await signUp({ email, password });
+    const { message, error } = await register({ email, password });
 
     if (isNotNullOrUndefined(error)) {
-      alert(error.message);
+      alert(error);
       return null;
     }
 
-    alert(data?.user?.email + ' signed up successfully');
+    alert(message);
     return navigate(ROUTES.HOME);
   };
 

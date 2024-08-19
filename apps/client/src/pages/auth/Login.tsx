@@ -5,14 +5,14 @@ import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema
 import { isNotNullOrUndefined } from '../../utils';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';
-import { useAuthNEW } from '../../hooks/auth/useAuthNEW';
+import { useAuth } from '../../hooks/auth/useAuth';
 
 export const Login: React.FC = () => {
-  const { login } = useAuthNEW();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    const { message, error } = await login.mutateAsync({ email, password });
+    const { message, error } = await login({ email, password });
 
     if (isNotNullOrUndefined(error)) {
       alert(message + error);
