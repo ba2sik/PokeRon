@@ -10,6 +10,7 @@ import { Login } from './auth/Login';
 import { ROUTES } from '../constants/routes';
 import { Loader } from '../components';
 import { Layout } from './Layout';
+import { PokeToaster } from '../components/Toaster/PokeToaster';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +49,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         router={router}
         fallbackElement={<Loader />}
       />
+      <PokeToaster />
     </QueryClientProvider>
   </React.StrictMode>,
 );

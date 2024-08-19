@@ -6,6 +6,7 @@ import { isNotNullOrUndefined } from '../../utils';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';
 import { useAuth } from '../../hooks/auth/useAuth';
+import toast from 'react-hot-toast';
 
 export const Login: React.FC = () => {
   const { login } = useAuth();
@@ -15,11 +16,11 @@ export const Login: React.FC = () => {
     const { message, error } = await login({ email, password });
 
     if (isNotNullOrUndefined(error)) {
-      alert(error);
+      toast.error(error);
       return null;
     }
 
-    alert(message);
+    toast.success(message);
     return navigate(ROUTES.HOME);
   };
 

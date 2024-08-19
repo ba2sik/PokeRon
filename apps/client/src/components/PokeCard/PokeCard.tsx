@@ -5,6 +5,7 @@ import { useUpdatePokemonCache } from '../../hooks/useUpdatePokemonCache';
 import { useFavoriteApiOperations } from '../../hooks/useFavoriteApiOperations';
 import { useAuth } from '../../hooks/auth/useAuth';
 import { isNotNullOrUndefined } from '../../utils';
+import toast from 'react-hot-toast';
 
 export const PokeCard: React.FC<Pokemon> = React.memo(function PokeCard({ id, name, isFavorite }) {
   const { session } = useAuth();
@@ -12,7 +13,7 @@ export const PokeCard: React.FC<Pokemon> = React.memo(function PokeCard({ id, na
   const { removeFavorite, addFavorite } = useFavoriteApiOperations();
   const onFavoriteClick = () => {
     if (isNotNullOrUndefined(session) && !session.loggedIn) {
-      alert('Please login to favorite a pokemon');
+      toast.error('Please login to favorite a pokemon');
       return;
     }
 
