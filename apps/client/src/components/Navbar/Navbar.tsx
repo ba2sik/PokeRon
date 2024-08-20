@@ -1,12 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
 import PokeballIcon from '/pokeball.svg';
-import { useAuth } from '../../hooks/auth/useAuth';
+import { useSession } from '../../hooks/auth/useSession';
+import { useLogout } from '../../hooks/auth/useLogout';
+import toast from 'react-hot-toast';
 
 export const Navbar = () => {
-  const { session, logout } = useAuth();
+  const { data: session } = useSession();
+  const { mutateAsync: logout } = useLogout();
   const navigate = useNavigate();
-  console.log(session);
+
+  const handleLogout = () => {
+    toast.promise(logout(), {
+      loading: 'Logging out...',
+      success: () => 'Logged out successfully',
+      error: (err) => err.toString(),
+    });
+  };
 
   return (
     <div className="navbar w-screen">
@@ -29,7 +39,7 @@ export const Navbar = () => {
             <p>{session.email}</p>
             <button
               className="btn btn-primary"
-              onClick={() => logout()}
+              onClick={handleLogout}
             >
               Logout
             </button>
