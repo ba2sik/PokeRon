@@ -33,7 +33,6 @@ async function getPokemons(): Promise<Pokemon[]> {
 
 async function addUserFavoritePokemons(pokemons: Pokemon[], userId: string): Promise<Pokemon[]> {
   try {
-    console.log(userId);
     const favoriteCards = await prismaClient.favoriteCard.findMany({
       where: {
         user_id: userId,

@@ -56,7 +56,6 @@ export const addFavoritePokemon = async (req: Request, res: Response, next: Next
     }
 
     const pokemonId = parseInt(req.params.id);
-    console.log(pokemonId);
     const favoriteCard = await pokemonsService.addFavoritePokemon({
       pokemon_id: pokemonId,
       user_id: user.id,
