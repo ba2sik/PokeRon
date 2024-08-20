@@ -58,13 +58,7 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  const accessToken = req.cookies.access_token;
-
-  if (!accessToken) {
-    return res.status(400).json({ message: 'No user logged in' });
-  }
-
-  const { error } = await supabase.auth.signOut(accessToken);
+  const { error } = await supabase.auth.signOut(req.cookies.access_token);
 
   if (error) {
     return res.status(500).json({ message: 'Failed to log out', error: error.message });

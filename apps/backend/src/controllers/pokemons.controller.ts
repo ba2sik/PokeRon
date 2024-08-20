@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import pokemonService from '../services/pokemons.service.js';
 import AuthService from '../services/auth.service';
+import { isNotNullOrUndefined } from '../utils/types';
 
 export const getPokemons = async (req: Request, res: Response) => {
   const accessToken = req.cookies.access_token;
@@ -8,7 +9,7 @@ export const getPokemons = async (req: Request, res: Response) => {
   try {
     const pokemons = await pokemonService.getPokemons();
 
-    if (accessToken) {
+    if (isNotNullOrUndefined(accessToken)) {
       const user = await AuthService.getUserByToken(accessToken);
       if (user) {
         await pokemonService.addUserFavoritePokemons(pokemons, user.id);

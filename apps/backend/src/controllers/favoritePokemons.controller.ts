@@ -1,17 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import AuthService from '../services/auth.service';
 import pokemonsService from '../services/pokemons.service';
-import { isNotNullOrUndefined, isNullOrUndefined } from '../utils/types';
+import { isNotNullOrUndefined } from '../utils/types';
 
 export const deleteFavoritePokemon = async (req: Request, res: Response, next: NextFunction) => {
-  const accessToken = req.cookies.access_token;
-
-  if (isNullOrUndefined(accessToken)) {
-    return res.status(401).json({ message: 'No access token provided' });
-  }
-
   try {
-    const user = await AuthService.getUserByToken(accessToken);
+    const user = await AuthService.getUserByToken(req.cookies.access_token);
 
     if (!user) {
       return res.status(401).json({ message: 'Access token is invalid' });
@@ -42,14 +36,8 @@ export const deleteFavoritePokemon = async (req: Request, res: Response, next: N
 };
 
 export const addFavoritePokemon = async (req: Request, res: Response, next: NextFunction) => {
-  const accessToken = req.cookies.access_token;
-
-  if (isNullOrUndefined(accessToken)) {
-    return res.status(401).json({ message: 'No access token provided' });
-  }
-
   try {
-    const user = await AuthService.getUserByToken(accessToken);
+    const user = await AuthService.getUserByToken(req.cookies.access_token);
 
     if (!user) {
       return res.status(401).json({ message: 'Access token is invalid' });
