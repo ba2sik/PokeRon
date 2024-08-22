@@ -23,6 +23,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   rules: {
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
     // Typescript
     '@typescript-eslint/no-unused-vars': 'warn',
     // React rules
