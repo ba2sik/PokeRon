@@ -4,7 +4,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { apiRouter } from './routes/api.routes.js';
-import { supabase } from './supabase/supabseClient';
 import { env } from './env/env';
 
 const app: Express = express();
@@ -25,14 +24,11 @@ app.use(
 app.use('/api', apiRouter);
 
 app.get('/', async (req: Request, res: Response) => {
-  // const favoriteCards = await prisma.favoriteCard.findMany();
-  // res.send(favoriteCards);
-  const user = await supabase.auth.getSession();
-  res.send(user);
+  res.send('Hello World');
 });
 
 app.use((err: Error, req: Request, res: Response) => {
-  console.error('Unhandled error:', err.message); // Log the error
+  console.error('Unhandled error:', err.message);
   res.status(500).json({ message: 'An unexpected error occurred', error: err.message });
 });
 

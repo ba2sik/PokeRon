@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { useSession } from '../../hooks/auth/useSession';
 
 export const PokeCard: React.FC<Pokemon> = React.memo(function PokeCard({ id, name, isFavorite }) {
-  const { data: session, isLoading } = useSession();
+  const { data: session } = useSession();
   const updatePokemonCache = useUpdatePokemonCache();
   const { removeFavorite, addFavorite } = useFavoriteApiOperations();
 
