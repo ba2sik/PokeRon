@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { Pokemon } from '../../types/pokemons';
 import { useOnReachedBottom } from '../../hooks/useOnReachedBottom';
 import { PokeCard } from '..';
+import { Pokemon } from '@repo/shared-types';
 
 type PokedexProps = {
   pokemons: Pokemon[];

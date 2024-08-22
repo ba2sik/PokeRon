@@ -1,10 +1,10 @@
 import * as pokeClient from '@repo/poke-client';
 import { PokemonSummary } from '@repo/poke-client';
-import { Pokemon } from 'client/src/types/pokemons';
 import { URL_ID_SEGMENT_INDEX } from '../types/api';
 import { extractUrlPathSegment } from '../utils/urlExtractor';
 import { prismaClient } from '../index';
 import { FavoriteCard, Prisma } from '@prisma/client';
+import { Pokemon } from '@repo/shared-types';
 
 // @ts-expect-error weird ass usage
 const api = new pokeClient.default.PokemonApi();

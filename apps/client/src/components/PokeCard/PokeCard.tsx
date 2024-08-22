@@ -1,11 +1,11 @@
 import React from 'react';
-import { Pokemon } from '../../types/pokemons';
 import { FavoriteButton } from './FavoriteButton';
 import { useUpdatePokemonCache } from '../../hooks/useUpdatePokemonCache';
 import { useFavoriteApiOperations } from '../../hooks/useFavoriteApiOperations';
 import { isNullOrUndefined } from '../../utils';
 import toast from 'react-hot-toast';
 import { useSession } from '../../hooks/auth/useSession';
+import { Pokemon } from '@repo/shared-types';
 
 export const PokeCard: React.FC<Pokemon> = React.memo(function PokeCard({ id, name, isFavorite }) {
   const { data: session } = useSession();

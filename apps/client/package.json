@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@repo/eslint-config": "*",
+    "@repo/shared-types": "*",
     "@tanstack/react-query": "^5.51.1",
     "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.7.2",

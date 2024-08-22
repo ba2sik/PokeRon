@@ -1,5 +1,6 @@
 import { QueryOptions, useQuery, UseQueryResult } from '@tanstack/react-query';
-import AuthService, { UserSession } from '../../requests/auth';
+import AuthService from '../../requests/auth';
+import { UserSession } from '@repo/shared-types';
 
 export const useSession = (options?: QueryOptions): UseQueryResult<UserSession> => {
   return useQuery({
