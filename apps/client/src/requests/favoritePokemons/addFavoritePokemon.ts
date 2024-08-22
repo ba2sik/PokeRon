@@ -6,7 +6,7 @@ export const addFavoritePokemon = async (id: number) => {
 
     return response.data;
   } catch (error) {
-    console.error('Error deleting favorite pokemon', error);
+    console.error('Error adding favorite pokemon', error);
     throw error;
   }
 };

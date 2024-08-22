@@ -1,6 +1,6 @@
 {
   "apps/**/*.{js,ts,jsx,tsx}": [
     "npm run format",
-    "turbo lint --"
+    "eslint --ext ts,tsx --report-unused-disable-directives --max-warnings=0"
   ]
 }

@@ -7,4 +7,4 @@ export const authRouter = Router();
 authRouter.post('/login', login);
 authRouter.post('/register', register);
 authRouter.post('/logout', checkAccessToken, logout);
-authRouter.get('/me', checkAccessToken, verifyToken);
+authRouter.get('/me', verifyToken);
