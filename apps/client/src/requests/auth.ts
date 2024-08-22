@@ -1,7 +1,6 @@
 import apiClient from './apiClient';
-import { AuthPayload } from '../components/AuthForm/types/auth-payload-schema';
 import { isAxiosError } from 'axios';
-import { UserSession } from '@repo/shared-types';
+import { AuthPayload, UserSession } from '@repo/shared-types';
 
 export default {
   login,

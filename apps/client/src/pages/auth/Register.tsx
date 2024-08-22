@@ -1,11 +1,11 @@
 import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';
 import toast from 'react-hot-toast';
 import { useRegister } from '../../hooks/auth/useRegister';
+import { AuthPayload } from '@repo/shared-types';
 
 export const Register: React.FC = () => {
   const { mutateAsync: register } = useRegister();

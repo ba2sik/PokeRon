@@ -1,9 +1,10 @@
 {
   "name": "@repo/shared-types",
   "version": "1.0.0",
-  "main": "./index.js",
+  "main": "./index.ts",
   "types": "./index.ts",
   "dependencies": {
-    "typescript": "latest"
+    "typescript": "latest",
+    "zod": "^3.23.8"
   }
 }

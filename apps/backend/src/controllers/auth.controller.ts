@@ -2,9 +2,10 @@ import { Request, Response } from 'express';
 import { supabase } from '../supabase/supabseClient';
 import { isNullOrUndefined } from '../utils/types';
 import AuthService from '../services/auth.service';
-import { UserSession } from '@repo/shared-types';
+import { AuthPayload, UserSession } from '@repo/shared-types';
+import { TypedRequestBody } from '../types/requests';
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -29,7 +30,7 @@ export const login = async (req: Request, res: Response) => {
   return res.status(200).json({ message: 'Signed in successfully' });
 };
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {

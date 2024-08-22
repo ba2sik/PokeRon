@@ -1,8 +1,8 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AuthPayload, authPayloadSchema } from './types/auth-payload-schema';
 import { FormInput } from './FormInput';
+import { AuthPayload, authPayloadSchema } from '@repo/shared-types';
 
 type AuthFormType = {
   onSubmit: SubmitHandler<AuthPayload>;
