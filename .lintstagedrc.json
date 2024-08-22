@@ -1,6 +1,6 @@
 {
   "apps/**/*.{js,ts,jsx,tsx}": [
-    "eslint --fix",
-    "prettier --write"
+    "npm run format",
+    "turbo lint --"
   ]
 }
