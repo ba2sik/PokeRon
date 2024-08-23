@@ -9,6 +9,7 @@
 ![nodejs](https://img.shields.io/badge/-node.js-darkslategray?style=for-the-badge&logo=node.js&color=1c1c1c&logoColor=8CC84B)
 ![express](https://img.shields.io/badge/-express-darkslategray?style=for-the-badge&logo=express&color=1c1c1c&logoColor=000000)
 ![prisma](https://img.shields.io/badge/-prisma-darkslategray?style=for-the-badge&logo=prisma&color=1c1c1c&logoColor=2D3748)
+![redis](https://img.shields.io/badge/-redis-darkslategray?style=for-the-badge&logo=redis&color=1c1c1c&logoColor=DC382D)
 ![tailwindcss](https://img.shields.io/badge/-tailwindcss-darkslategray?style=for-the-badge&logo=tailwindcss&color=1c1c1c&logoColor=38B2AC)
 ![@supabase/supabase-js](https://img.shields.io/badge/-@supabase/supabase--js-darkslategray?style=for-the-badge&logo=supabase&color=1c1c1c&logoColor=3F5D7D)
 ![axios](https://img.shields.io/badge/-axios-darkslategray?style=for-the-badge&logo=axios&color=1c1c1c&logoColor=5A29E3)
