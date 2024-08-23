@@ -2,9 +2,10 @@ import * as pokeClient from '@repo/poke-client';
 import { PokemonSummary } from '@repo/poke-client';
 import { URL_ID_SEGMENT_INDEX } from '../types/api';
 import { extractUrlPathSegment } from '../utils/urlExtractor';
-import { prismaClient } from '../index';
+import { prismaClient, redisClient } from '../index';
 import { FavoriteCard, Prisma } from '@prisma/client';
 import { Pokemon } from '@repo/shared-types';
+import { isNotNullOrUndefined } from '../utils/types';
 
 // @ts-expect-error weird ass usage
 const api = new pokeClient.default.PokemonApi();
@@ -20,11 +21,20 @@ export default {
 
 async function getPokemons(): Promise<Pokemon[]> {
   try {
+    const storedPokemons = await redisClient.get('pokemons');
+
+    if (isNotNullOrUndefined(storedPokemons)) {
+      return JSON.parse(storedPokemons);
+    }
+
     const {
       data: { results: pokemonsSummaries = [] },
     } = await api.pokemonList(POKEMONS_COUNT);
 
-    return pokemonsSummaries.map(mapPokemonSummaryToBasicPokemon);
+    const pokemons = pokemonsSummaries.map(mapPokemonSummaryToPokemon);
+    await redisClient.set('pokemons', JSON.stringify(pokemons));
+
+    return pokemons;
   } catch (error) {
     console.error('Error fetching pokemons', error);
     throw error;
@@ -85,7 +95,7 @@ async function deleteFavoritePokemon(favoriteCard: FavoriteCard): Promise<Favori
   }
 }
 
-const mapPokemonSummaryToBasicPokemon = (pokemonSummary: PokemonSummary): Pokemon => {
+const mapPokemonSummaryToPokemon = (pokemonSummary: PokemonSummary): Pokemon => {
   const pokemonId = extractUrlPathSegment(pokemonSummary.url, URL_ID_SEGMENT_INDEX);
 
   return {

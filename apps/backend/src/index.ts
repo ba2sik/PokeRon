@@ -5,11 +5,13 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { apiRouter } from './routes/api.routes.js';
 import { env } from './env/env';
+import { createClient } from 'redis';
 
 const app: Express = express();
 const port = env.PORT;
 
 export const prismaClient = new PrismaClient();
+export const redisClient = createClient();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,6 +34,16 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   res.status(500).json({ message: 'An unexpected error occurred', error: err.message });
 });
 
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+const start = async () => {
+  try {
+    await redisClient.on('error', (err) => console.log('Redis Client Error', err)).connect();
+
+    app.listen(port, () => {
+      console.log(`[server]: Server is running at http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
