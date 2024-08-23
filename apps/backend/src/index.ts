@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -23,11 +23,11 @@ app.use(
 );
 app.use('/api', apiRouter);
 
-app.get('/', async (req: Request, res: Response) => {
+app.get('/', async (_req: Request, res: Response) => {
   res.send('Hello World');
 });
 
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error('Unhandled error:', err.message);
   res.status(500).json({ message: 'An unexpected error occurred', error: err.message });
 });
