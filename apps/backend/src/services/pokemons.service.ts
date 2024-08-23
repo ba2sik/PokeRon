@@ -5,10 +5,16 @@ import { extractUrlPathSegment } from '../utils/urlExtractor';
 import { prismaClient, redisClient } from '../index';
 import { FavoriteCard, Prisma } from '@prisma/client';
 import { Pokemon } from '@repo/shared-types';
+import { SetOptions } from 'redis';
 import { isNotNullOrUndefined } from '../utils/types';
+import { hashes } from '../constants/redis';
 
 // @ts-expect-error weird ass usage
 const api = new pokeClient.default.PokemonApi();
+
+const setCacheConfig: SetOptions = {
+  EX: 24 * 60 * 60, // 1 day
+};
 
 const POKEMONS_COUNT = 1000;
 
@@ -21,20 +27,27 @@ export default {
 
 async function getPokemons(): Promise<Pokemon[]> {
   try {
-    const storedPokemons = await redisClient.get('pokemons');
+    const ttl = await redisClient.ttl('pokemons');
+
+    // EXPIRED OR KEY DOES NOT EXIST
+    if (ttl === -2) {
+      const {
+        data: { results: pokemonsSummaries = [] },
+      } = await api.pokemonList(POKEMONS_COUNT);
+
+      const pokemons = pokemonsSummaries.map(mapPokemonSummaryToPokemon);
+      await redisClient.set(hashes.pokemonsList, JSON.stringify(pokemons), setCacheConfig);
+
+      return pokemons;
+    }
+
+    const storedPokemons = await redisClient.get(hashes.pokemonsList);
 
     if (isNotNullOrUndefined(storedPokemons)) {
       return JSON.parse(storedPokemons);
+    } else {
+      throw new Error('Pokemons do not exist on redis');
     }
-
-    const {
-      data: { results: pokemonsSummaries = [] },
-    } = await api.pokemonList(POKEMONS_COUNT);
-
-    const pokemons = pokemonsSummaries.map(mapPokemonSummaryToPokemon);
-    await redisClient.set('pokemons', JSON.stringify(pokemons));
-
-    return pokemons;
   } catch (error) {
     console.error('Error fetching pokemons', error);
     throw error;
