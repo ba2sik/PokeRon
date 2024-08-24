@@ -1,5 +1,3 @@
-import * as pokeClient from '@repo/poke-client';
-import { PokemonSummary } from '@repo/poke-client';
 import { URL_ID_SEGMENT_INDEX } from '../types/api';
 import { extractUrlPathSegment } from '../utils/urlExtractor';
 import { prismaClient, redisClient } from '../index';
@@ -8,9 +6,9 @@ import { Pokemon } from '@repo/shared-types';
 import { SetOptions } from 'redis';
 import { isNotNullOrUndefined } from '../utils/types';
 import { hashes } from '../constants/redis';
+import { PokemonApi, PokemonSummary } from '@repo/poke-client';
 
-// @ts-expect-error weird ass usage
-const api = new pokeClient.default.PokemonApi();
+const api = new PokemonApi();
 
 const setCacheConfig: SetOptions = {
   EX: 24 * 60 * 60, // 1 day
