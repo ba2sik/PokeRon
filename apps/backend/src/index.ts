@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { apiRouter } from './routes/api.routes.js';
 import { env } from './env/env';
 import { createClient } from 'redis';
+import { StatusCodes } from 'http-status-codes';
 
 const app: Express = express();
 const port = env.PORT;
