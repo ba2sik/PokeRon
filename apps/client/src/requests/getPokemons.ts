@@ -1,5 +1,5 @@
-import { Pokemon } from '../types/pokemons';
 import apiClient from './apiClient';
+import { Pokemon } from '@repo/shared-types';
 
 export const getPokemons = async (): Promise<Pokemon[]> => {
   try {
