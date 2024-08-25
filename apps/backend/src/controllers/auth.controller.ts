@@ -18,7 +18,6 @@ export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) =
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    console.error(error);
     return res
       .status(StatusCodes.UNAUTHORIZED)
       .json({ message: 'Invalid credentials', error: error.message });
