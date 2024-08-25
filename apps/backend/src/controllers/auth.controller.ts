@@ -3,10 +3,10 @@ import { supabase } from '../supabase/supabseClient';
 import { isNotNullOrUndefined, isNullOrUndefined } from '../utils/types';
 import { getUserByToken, isUserExistsError } from '../services/auth.service';
 import { AuthPayload, UserSession } from '@repo/shared-types';
-import { TypedRequestBody } from '../types/requests';
 import { AccessTokenCookieOptions } from '../constants/cookies';
 import { isEmptyString } from '../utils/strings';
 import { StatusCodes } from 'http-status-codes';
+import { TypedRequestBody } from '../types/typedRequestBody';
 
 export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;

@@ -21,10 +21,10 @@ export const PokeCard: React.FC<Pokemon> = React.memo(function PokeCard({ id, na
     updatePokemonCache(id);
 
     if (isFavorite) {
-      removeFavorite(id);
-    } else {
-      addFavorite(id);
+      return removeFavorite(id);
     }
+
+    addFavorite(id);
   };
 
   return (
