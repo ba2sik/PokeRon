@@ -32,7 +32,7 @@ export const PokeCard: React.FC<Pokemon> = React.memo(function PokeCard({ id, na
       <FavoriteButton
         isFavorite={isFavorite}
         onClick={onFavoriteClick}
-        className="absolute start-0 top-0 p-3"
+        className="absolute start-0 top-0 m-2"
       />
       <img
         src={`https://img.pokemondb.net/artwork/${name}.jpg`}
