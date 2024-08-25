@@ -1,4 +1,6 @@
 import apiClient from '../apiClient';
+import { isAxiosError } from 'axios';
+import { StatusCodes } from 'http-status-codes';
 
 export const addFavoritePokemon = async (id: number) => {
   try {
@@ -6,6 +8,10 @@ export const addFavoritePokemon = async (id: number) => {
 
     return response.data;
   } catch (error) {
+    if (isAxiosError(error) && error.response?.status === StatusCodes.UNAUTHORIZED) {
+      throw new Error('Please login to favorite a pokemon');
+    }
+
     console.error('Error adding favorite pokemon', error);
     throw error;
   }
