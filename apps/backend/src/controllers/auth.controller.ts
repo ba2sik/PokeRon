@@ -5,11 +5,12 @@ import AuthService, { isUserExistsError } from '../services/auth.service';
 import { AuthPayload, UserSession } from '@repo/shared-types';
 import { TypedRequestBody } from '../types/requests';
 import { AccessTokenCookieOptions } from '../constants/cookies';
+import { isEmptyString } from '../utils/strings';
 
 export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
+  if (isEmptyString(email) || isEmptyString(password)) {
     return res.status(400).json({ message: 'Please fill in all fields' });
   }
 
@@ -29,7 +30,7 @@ export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) =
 export const register = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
+  if (isEmptyString(email) || isEmptyString(password)) {
     return res.status(400).json({ message: 'Please fill in all fields' });
   }
 
