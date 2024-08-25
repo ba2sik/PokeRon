@@ -4,6 +4,7 @@ import { isNullOrUndefined } from '../utils/types';
 import AuthService from '../services/auth.service';
 import { AuthPayload, UserSession } from '@repo/shared-types';
 import { TypedRequestBody } from '../types/requests';
+import { AccessTokenCookieOptions } from '../constants/cookies';
 
 export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
@@ -20,12 +21,7 @@ export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) =
 
   const { access_token } = data.session;
 
-  res.cookie('access_token', access_token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: 1000 * 60 * 60 * 24, // 1 day
-  });
+  res.cookie('access_token', access_token, AccessTokenCookieOptions);
 
   return res.status(200).json({ message: 'Signed in successfully' });
 };
@@ -49,12 +45,7 @@ export const register = async (req: TypedRequestBody<AuthPayload>, res: Response
 
   const { access_token } = data.session;
 
-  res.cookie('access_token', access_token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: 1000 * 60 * 60 * 24, // 1 day
-  });
+  res.cookie('access_token', access_token, AccessTokenCookieOptions);
 
   return res.status(201).json({ message: 'User created successfully' });
 };
