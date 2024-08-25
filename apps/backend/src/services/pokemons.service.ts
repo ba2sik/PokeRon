@@ -3,7 +3,7 @@ import { prismaClient, redisClient } from '../index';
 import { FavoriteCard, Prisma } from '@prisma/client';
 import { Pokemon } from '@repo/shared-types';
 import { SetOptions } from 'redis';
-import { isNotNullOrUndefined } from '../utils/types';
+import { isNullOrUndefined } from '../utils/types';
 import { hashes } from '../constants/redis';
 import { PokemonApi, PokemonSummary } from '@repo/poke-client';
 import { URL_ID_SEGMENT_INDEX } from '../constants/api';
@@ -41,11 +41,11 @@ async function getPokemons(): Promise<Pokemon[]> {
 
     const storedPokemons = await redisClient.get(hashes.pokemonsList);
 
-    if (isNotNullOrUndefined(storedPokemons)) {
-      return JSON.parse(storedPokemons);
-    } else {
+    if (isNullOrUndefined(storedPokemons)) {
       throw new Error('Pokemons do not exist on redis');
     }
+
+    return JSON.parse(storedPokemons);
   } catch (error) {
     console.error('Error fetching pokemons', error);
     throw error;
