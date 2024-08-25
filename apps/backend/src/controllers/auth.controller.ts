@@ -4,17 +4,11 @@ import { isNotNullOrUndefined, isNullOrUndefined } from '../utils/types';
 import { getUserByToken, isUserExistsError } from '../services/auth.service';
 import { AuthPayload, UserSession } from '@repo/shared-types';
 import { AccessTokenCookieOptions } from '../constants/cookies';
-import { isEmptyString } from '../utils/strings';
 import { StatusCodes } from 'http-status-codes';
 import { TypedRequestBody } from '../types/typedRequestBody';
 
 export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
-
-  if (isEmptyString(email) || isEmptyString(password)) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Please fill in all fields' });
-  }
-
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
@@ -32,11 +26,6 @@ export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) =
 
 export const register = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
-
-  if (isEmptyString(email) || isEmptyString(password)) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Please fill in all fields' });
-  }
-
   const { data, error } = await supabase.auth.signUp({ email, password });
 
   if (isNotNullOrUndefined(error)) {
