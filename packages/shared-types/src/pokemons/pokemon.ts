@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-export const pokemonIdSchema = z.coerce.number().int();
-
 const pokemonSchema = z
   .object({
     name: z.string().min(1),
-    id: pokemonIdSchema,
+    id: z.coerce.number().int(),
     isFavorite: z.boolean(),
   })
   .strict();
+
+export const pokemonIdSchema = pokemonSchema.pick({ id: true });
 
 export type Pokemon = z.infer<typeof pokemonSchema>;
