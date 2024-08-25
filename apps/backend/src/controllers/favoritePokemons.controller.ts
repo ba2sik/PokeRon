@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { getUserByToken } from '../services/auth.service';
-import { isNotNullOrUndefined } from '../utils/types';
+import { isNullOrUndefined } from '../utils/types';
 import { StatusCodes } from 'http-status-codes';
 import { deleteFavoritePokemon, insertFavoritePokemon } from '../services/pokemons.service';
 
@@ -18,13 +18,13 @@ export const removeFavoritePokemon = async (req: Request, res: Response, next: N
       user_id: user.id,
     });
 
-    if (isNotNullOrUndefined(deletedFavoriteCard)) {
-      return res.status(StatusCodes.OK).end();
-    } else {
+    if (isNullOrUndefined(deletedFavoriteCard)) {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: `Could not delete favorite card for user ${user.id} and pokemon ${pokemonId}`,
       });
     }
+
+    return res.status(StatusCodes.OK).end();
   } catch (error) {
     if (error instanceof Error) {
       return res
@@ -50,13 +50,13 @@ export const addFavoritePokemon = async (req: Request, res: Response, next: Next
       user_id: user.id,
     });
 
-    if (isNotNullOrUndefined(favoriteCard)) {
-      return res.status(StatusCodes.CREATED).end();
-    } else {
+    if (isNullOrUndefined(favoriteCard)) {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: `Could not add favorite card for user ${user.id} and pokemon ${pokemonId}`,
       });
     }
+
+    return res.status(StatusCodes.CREATED).end();
   } catch (error) {
     if (error instanceof Error) {
       return res
