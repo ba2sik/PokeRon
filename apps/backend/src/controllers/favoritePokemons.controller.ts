@@ -2,13 +2,14 @@ import { NextFunction, Request, Response } from 'express';
 import AuthService from '../services/auth.service';
 import pokemonsService from '../services/pokemons.service';
 import { isNotNullOrUndefined } from '../utils/types';
+import { StatusCodes } from 'http-status-codes';
 
 export const deleteFavoritePokemon = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await AuthService.getUserByToken(req.cookies.access_token);
 
     if (!user) {
-      return res.status(401).json({ message: 'Access token is invalid' });
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Access token is invalid' });
     }
 
     const pokemonId = parseInt(req.params.id);
@@ -18,16 +19,16 @@ export const deleteFavoritePokemon = async (req: Request, res: Response, next: N
     });
 
     if (isNotNullOrUndefined(deletedFavoriteCard)) {
-      return res.status(200).end();
+      return res.status(StatusCodes.OK).end();
     } else {
-      return res.status(500).json({
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: `Could not delete favorite card for user ${user.id} and pokemon ${pokemonId}`,
       });
     }
   } catch (error) {
     if (error instanceof Error) {
       return res
-        .status(404)
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ message: 'Error deleting favorite card', error: error.message });
     }
 
@@ -40,7 +41,7 @@ export const addFavoritePokemon = async (req: Request, res: Response, next: Next
     const user = await AuthService.getUserByToken(req.cookies.access_token);
 
     if (!user) {
-      return res.status(401).json({ message: 'Access token is invalid' });
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Access token is invalid' });
     }
 
     const pokemonId = parseInt(req.params.id);
@@ -50,15 +51,17 @@ export const addFavoritePokemon = async (req: Request, res: Response, next: Next
     });
 
     if (isNotNullOrUndefined(favoriteCard)) {
-      return res.status(201).end();
+      return res.status(StatusCodes.CREATED).end();
     } else {
-      return res.status(500).json({
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: `Could not add favorite card for user ${user.id} and pokemon ${pokemonId}`,
       });
     }
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(409).json({ message: 'Error adding favorite card', error: error.message });
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Error adding favorite card', error: error.message });
     }
 
     next(error);

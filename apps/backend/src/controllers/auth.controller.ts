@@ -6,61 +6,69 @@ import { AuthPayload, UserSession } from '@repo/shared-types';
 import { TypedRequestBody } from '../types/requests';
 import { AccessTokenCookieOptions } from '../constants/cookies';
 import { isEmptyString } from '../utils/strings';
+import { StatusCodes } from 'http-status-codes';
 
 export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
 
   if (isEmptyString(email) || isEmptyString(password)) {
-    return res.status(400).json({ message: 'Please fill in all fields' });
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Please fill in all fields' });
   }
 
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    return res.status(401).json({ message: 'Invalid credentials', error: error.message });
+    console.error(error);
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ message: 'Invalid credentials', error: error.message });
   }
 
   const { access_token } = data.session;
 
   res.cookie('access_token', access_token, AccessTokenCookieOptions);
 
-  return res.status(200).json({ message: 'Signed in successfully' });
+  return res.status(StatusCodes.OK).json({ message: 'Signed in successfully' });
 };
 
 export const register = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
 
   if (isEmptyString(email) || isEmptyString(password)) {
-    return res.status(400).json({ message: 'Please fill in all fields' });
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Please fill in all fields' });
   }
 
   const { data, error } = await supabase.auth.signUp({ email, password });
 
   if (isNotNullOrUndefined(error)) {
     if (isUserExistsError(error)) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(StatusCodes.CONFLICT).json({ message: 'User already exists' });
     } else {
       console.error(error);
-      return res.status(500).json({ message: 'Error signing up', error: error.message });
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Error signing up', error: error.message });
     }
   }
 
   if (isNullOrUndefined(data.session)) {
-    return res.status(500).json({ message: 'Error signing up' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Error signing up' });
   }
 
   const { access_token } = data.session;
 
   res.cookie('access_token', access_token, AccessTokenCookieOptions);
 
-  return res.status(201).json({ message: 'User created successfully' });
+  return res.status(StatusCodes.CREATED).json({ message: 'User created successfully' });
 };
 
 export const logout = async (req: Request, res: Response) => {
   const { error } = await supabase.auth.signOut(req.cookies.access_token);
 
   if (error) {
-    return res.status(500).json({ message: 'Failed to log out', error: error.message });
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: 'Failed to log out', error: error.message });
   }
 
   res.clearCookie('access_token', {
@@ -69,21 +77,21 @@ export const logout = async (req: Request, res: Response) => {
     sameSite: 'strict',
   });
 
-  return res.status(200).json({ message: 'Logged out successfully' });
+  return res.status(StatusCodes.OK).json({ message: 'Logged out successfully' });
 };
 
 export const verifyToken = async (req: Request, res: Response<UserSession>) => {
   const accessToken = req.cookies.access_token;
 
   if (!accessToken) {
-    return res.status(200).json({ loggedIn: false });
+    return res.status(StatusCodes.OK).json({ loggedIn: false });
   }
 
   const user = await AuthService.getUserByToken(accessToken);
 
   if (isNullOrUndefined(user)) {
-    return res.status(200).json({ loggedIn: false });
+    return res.status(StatusCodes.OK).json({ loggedIn: false });
   }
 
-  return res.status(200).json({ loggedIn: true, email: user.email });
+  return res.status(StatusCodes.OK).json({ loggedIn: true, email: user.email });
 };

@@ -31,7 +31,9 @@ app.get('/', async (_req: Request, res: Response) => {
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error('Unhandled error:', err.message);
-  res.status(500).json({ message: 'An unexpected error occurred', error: err.message });
+  res
+    .status(StatusCodes.INTERNAL_SERVER_ERROR)
+    .json({ message: 'An unexpected error occurred', error: err.message });
 });
 
 const start = async () => {

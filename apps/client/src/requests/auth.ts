@@ -1,6 +1,7 @@
 import apiClient from './apiClient';
 import { isAxiosError } from 'axios';
 import { AuthPayload, UserSession } from '@repo/shared-types';
+import { StatusCodes } from 'http-status-codes';
 
 export default {
   login,
@@ -17,7 +18,7 @@ async function login(credentials: AuthPayload) {
 
     return response.data;
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 401) {
+    if (isAxiosError(error) && error.response?.status === StatusCodes.UNAUTHORIZED) {
       throw new Error('Invalid email or password');
     }
 
@@ -31,7 +32,7 @@ async function register(credentials: AuthPayload) {
 
     return response.data;
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 409) {
+    if (isAxiosError(error) && error.response?.status === StatusCodes.CONFLICT) {
       throw new Error('Email already in use');
     }
 

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import pokemonService from '../services/pokemons.service.js';
 import AuthService from '../services/auth.service';
 import { isNotNullOrUndefined } from '../utils/types';
+import { StatusCodes } from 'http-status-codes';
 
 export const getPokemons = async (req: Request, res: Response) => {
   const accessToken = req.cookies.access_token;
@@ -18,6 +19,6 @@ export const getPokemons = async (req: Request, res: Response) => {
 
     res.json(pokemons);
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error });
   }
 };
