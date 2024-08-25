@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { enrichPokemonsWithUserFavorites, readPokemons } from '../services/pokemons.service.js';
 import { getUserByToken } from '../services/auth.service';
-import { isNotNullOrUndefined } from '../utils/types';
+import { isNullOrUndefined } from '../utils/types';
 import { StatusCodes } from 'http-status-codes';
 
 export const getPokemons = async (req: Request, res: Response) => {
@@ -9,16 +9,14 @@ export const getPokemons = async (req: Request, res: Response) => {
 
   try {
     const pokemons = await readPokemons();
+    const user = await getUserByToken(accessToken);
 
-    if (isNotNullOrUndefined(accessToken)) {
-      const user = await getUserByToken(accessToken);
-      if (user) {
-        const pokemonsWithFavorites = await enrichPokemonsWithUserFavorites(pokemons, user.id);
-        return res.json(pokemonsWithFavorites);
-      }
+    if (isNullOrUndefined(user)) {
+      return res.json(pokemons);
     }
 
-    return res.json(pokemons);
+    const pokemonsWithFavorites = await enrichPokemonsWithUserFavorites(pokemons, user.id);
+    return res.json(pokemonsWithFavorites);
   } catch (error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error });
   }

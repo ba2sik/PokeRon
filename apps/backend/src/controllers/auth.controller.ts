@@ -81,11 +81,6 @@ export const logout = async (req: Request, res: Response) => {
 
 export const verifyToken = async (req: Request, res: Response<UserSession>) => {
   const accessToken = req.cookies.access_token;
-
-  if (!accessToken) {
-    return res.status(StatusCodes.OK).json({ loggedIn: false });
-  }
-
   const user = await getUserByToken(accessToken);
 
   if (isNullOrUndefined(user)) {
