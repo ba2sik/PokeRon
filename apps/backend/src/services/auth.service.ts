@@ -2,11 +2,7 @@ import { AuthError, isAuthApiError, User } from '@supabase/supabase-js';
 import { supabase } from '../supabase/supabseClient';
 import { supabaseErrorCodes } from '../constants/supabase';
 
-export default {
-  getUserByToken,
-};
-
-async function getUserByToken(token: string): Promise<User | null> {
+export async function getUserByToken(token: string): Promise<User | null> {
   try {
     const {
       data: { user },

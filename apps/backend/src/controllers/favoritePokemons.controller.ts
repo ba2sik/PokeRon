@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import AuthService from '../services/auth.service';
+import { getUserByToken } from '../services/auth.service';
 import pokemonsService from '../services/pokemons.service';
 import { isNotNullOrUndefined } from '../utils/types';
 import { StatusCodes } from 'http-status-codes';
 
 export const deleteFavoritePokemon = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await AuthService.getUserByToken(req.cookies.access_token);
+    const user = await getUserByToken(req.cookies.access_token);
 
     if (!user) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Access token is invalid' });
@@ -38,7 +38,7 @@ export const deleteFavoritePokemon = async (req: Request, res: Response, next: N
 
 export const addFavoritePokemon = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await AuthService.getUserByToken(req.cookies.access_token);
+    const user = await getUserByToken(req.cookies.access_token);
 
     if (!user) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Access token is invalid' });

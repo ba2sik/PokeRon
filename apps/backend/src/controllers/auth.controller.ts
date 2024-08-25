@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { supabase } from '../supabase/supabseClient';
 import { isNotNullOrUndefined, isNullOrUndefined } from '../utils/types';
-import AuthService, { isUserExistsError } from '../services/auth.service';
+import { getUserByToken, isUserExistsError } from '../services/auth.service';
 import { AuthPayload, UserSession } from '@repo/shared-types';
 import { TypedRequestBody } from '../types/requests';
 import { AccessTokenCookieOptions } from '../constants/cookies';
@@ -87,7 +87,7 @@ export const verifyToken = async (req: Request, res: Response<UserSession>) => {
     return res.status(StatusCodes.OK).json({ loggedIn: false });
   }
 
-  const user = await AuthService.getUserByToken(accessToken);
+  const user = await getUserByToken(accessToken);
 
   if (isNullOrUndefined(user)) {
     return res.status(StatusCodes.OK).json({ loggedIn: false });
