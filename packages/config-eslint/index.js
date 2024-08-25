@@ -5,7 +5,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: ['eslint:recommended', 'prettier', 'plugin:@typescript-eslint/recommended'],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
-  plugins: ['@typescript-eslint'],
+  plugins: ['prettier', '@typescript-eslint'],
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'no-unused-vars': 'off',

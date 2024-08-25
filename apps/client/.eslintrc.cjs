@@ -6,16 +6,10 @@ module.exports = {
   extends: [
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
-    'prettier',
     '@repo/eslint-config/index.js',
   ],
-  ignorePatterns: [
-    'dist',
-    '.eslintrc.cjs',
-    'vite.config.ts',
-  ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', 'prettier'],
+  plugins: ['react-refresh'],
   parserOptions: {
     sourceType: 'module',
     ecmaVersion: 2020,
@@ -24,8 +18,6 @@ module.exports = {
   },
   rules: {
     'no-console': ['warn', { allow: ['warn', 'error'] }],
-    // Typescript
-    '@typescript-eslint/no-unused-vars': 'warn',
     // React rules
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
