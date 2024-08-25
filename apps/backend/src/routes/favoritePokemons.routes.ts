@@ -3,8 +3,14 @@ import {
   addFavoritePokemon,
   removeFavoritePokemon,
 } from '../controllers/favoritePokemons.controller';
+import { validateRequestParams } from '../middlewares/validateRequest';
+import { pokemonIdSchema } from '@repo/shared-types';
 
 export const favoritePokemonsRouter = Router();
 
-favoritePokemonsRouter.post('/:id', addFavoritePokemon);
-favoritePokemonsRouter.delete('/:id', removeFavoritePokemon);
+favoritePokemonsRouter.post('/:id', validateRequestParams(pokemonIdSchema), addFavoritePokemon);
+favoritePokemonsRouter.delete(
+  '/:id',
+  validateRequestParams(pokemonIdSchema),
+  removeFavoritePokemon,
+);
