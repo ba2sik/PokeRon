@@ -8,6 +8,10 @@ import { hashes } from '../constants/redis';
 import { PokemonApi, PokemonSummary } from '@repo/poke-client';
 import { URL_ID_SEGMENT_INDEX } from '../constants/api';
 import { isTtlExpired } from '../utils/redis';
+import {
+  addFavoritePokemon,
+  deleteFavoritePokemon,
+} from '../controllers/favoritePokemons.controller';
 
 const api = new PokemonApi();
 
@@ -60,11 +64,16 @@ async function addUserFavoritePokemons(pokemons: Pokemon[], userId: string): Pro
       },
     });
 
-    for (const favoriteCard of favoriteCards) {
-      pokemons[favoriteCard.pokemon_id - 1].isFavorite = true;
-    }
+    const pokemonsWithFavorites = [...pokemons];
 
-    return pokemons;
+    favoriteCards.forEach(({ pokemon_id }) => {
+      pokemonsWithFavorites[pokemon_id - 1] = {
+        ...pokemonsWithFavorites[pokemon_id - 1],
+        isFavorite: true,
+      };
+    });
+
+    return pokemonsWithFavorites;
   } catch (error) {
     console.error('Error fetching favorite cards', error);
     throw error;
