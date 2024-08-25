@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { supabase } from '../supabase/supabseClient';
-import { isNullOrUndefined } from '../utils/types';
-import AuthService from '../services/auth.service';
+import { isNotNullOrUndefined, isNullOrUndefined } from '../utils/types';
+import AuthService, { isUserExistsError } from '../services/auth.service';
 import { AuthPayload, UserSession } from '@repo/shared-types';
 import { TypedRequestBody } from '../types/requests';
 import { AccessTokenCookieOptions } from '../constants/cookies';
@@ -35,12 +35,17 @@ export const register = async (req: TypedRequestBody<AuthPayload>, res: Response
 
   const { data, error } = await supabase.auth.signUp({ email, password });
 
-  if (error) {
-    return res.status(409).json({ message: 'Invalid credentials', error: error.message });
+  if (isNotNullOrUndefined(error)) {
+    if (isUserExistsError(error)) {
+      return res.status(400).json({ message: 'User already exists' });
+    } else {
+      console.error(error);
+      return res.status(500).json({ message: 'Error signing up', error: error.message });
+    }
   }
 
   if (isNullOrUndefined(data.session)) {
-    return res.status(500).json({ message: 'Session not retrieved' });
+    return res.status(500).json({ message: 'Error signing up' });
   }
 
   const { access_token } = data.session;
