@@ -8,8 +8,3 @@ export const authPayloadSchema = z
   .strict();
 
 export type AuthPayload = z.infer<typeof authPayloadSchema>;
-
-export type UserSession = {
-  loggedIn: boolean;
-  email?: string;
-};
