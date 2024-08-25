@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { getUserByToken } from '../services/auth.service';
-import pokemonsService from '../services/pokemons.service';
 import { isNotNullOrUndefined } from '../utils/types';
 import { StatusCodes } from 'http-status-codes';
+import { deleteFavoritePokemon, insertFavoritePokemon } from '../services/pokemons.service';
 
-export const deleteFavoritePokemon = async (req: Request, res: Response, next: NextFunction) => {
+export const removeFavoritePokemon = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await getUserByToken(req.cookies.access_token);
 
@@ -13,7 +13,7 @@ export const deleteFavoritePokemon = async (req: Request, res: Response, next: N
     }
 
     const pokemonId = parseInt(req.params.id);
-    const deletedFavoriteCard = await pokemonsService.deleteFavoritePokemon({
+    const deletedFavoriteCard = await deleteFavoritePokemon({
       pokemon_id: pokemonId,
       user_id: user.id,
     });
@@ -45,7 +45,7 @@ export const addFavoritePokemon = async (req: Request, res: Response, next: Next
     }
 
     const pokemonId = parseInt(req.params.id);
-    const favoriteCard = await pokemonsService.addFavoritePokemon({
+    const favoriteCard = await insertFavoritePokemon({
       pokemon_id: pokemonId,
       user_id: user.id,
     });

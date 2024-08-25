@@ -8,27 +8,17 @@ import { hashes } from '../constants/redis';
 import { PokemonApi, PokemonSummary } from '@repo/poke-client';
 import { URL_ID_SEGMENT_INDEX } from '../constants/api';
 import { isTtlExpired } from '../utils/redis';
-import {
-  addFavoritePokemon,
-  deleteFavoritePokemon,
-} from '../controllers/favoritePokemons.controller';
+import { SECONDS_IN_A_DAY } from '../constants/time';
 
 const api = new PokemonApi();
 
 const setCacheConfig: SetOptions = {
-  EX: 24 * 60 * 60, // 1 day
+  EX: SECONDS_IN_A_DAY,
 };
 
 const POKEMONS_COUNT = 1000;
 
-export default {
-  getPokemons,
-  addUserFavoritePokemons,
-  addFavoritePokemon,
-  deleteFavoritePokemon,
-};
-
-async function getPokemons(): Promise<Pokemon[]> {
+export const readPokemons = async (): Promise<Pokemon[]> => {
   try {
     const ttl = await redisClient.ttl('pokemons');
 
@@ -54,9 +44,12 @@ async function getPokemons(): Promise<Pokemon[]> {
     console.error('Error fetching pokemons', error);
     throw error;
   }
-}
+};
 
-async function addUserFavoritePokemons(pokemons: Pokemon[], userId: string): Promise<Pokemon[]> {
+export const enrichPokemonsWithUserFavorites = async (
+  pokemons: Pokemon[],
+  userId: string,
+): Promise<Pokemon[]> => {
   try {
     const favoriteCards = await prismaClient.favoriteCard.findMany({
       where: {
@@ -78,9 +71,9 @@ async function addUserFavoritePokemons(pokemons: Pokemon[], userId: string): Pro
     console.error('Error fetching favorite cards', error);
     throw error;
   }
-}
+};
 
-async function addFavoritePokemon(favoriteCard: FavoriteCard): Promise<FavoriteCard> {
+export const insertFavoritePokemon = async (favoriteCard: FavoriteCard): Promise<FavoriteCard> => {
   try {
     return await prismaClient.favoriteCard.create({
       data: favoriteCard,
@@ -93,9 +86,9 @@ async function addFavoritePokemon(favoriteCard: FavoriteCard): Promise<FavoriteC
     }
     throw error;
   }
-}
+};
 
-async function deleteFavoritePokemon(favoriteCard: FavoriteCard): Promise<FavoriteCard> {
+export const deleteFavoritePokemon = async (favoriteCard: FavoriteCard): Promise<FavoriteCard> => {
   try {
     return await prismaClient.favoriteCard.delete({
       where: {
@@ -113,7 +106,7 @@ async function deleteFavoritePokemon(favoriteCard: FavoriteCard): Promise<Favori
     }
     throw error;
   }
-}
+};
 
 const mapPokemonSummaryToPokemon = (pokemonSummary: PokemonSummary): Pokemon => {
   const pokemonId = extractUrlPathSegment(pokemonSummary.url, URL_ID_SEGMENT_INDEX);

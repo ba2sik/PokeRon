@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import {
   addFavoritePokemon,
-  deleteFavoritePokemon,
+  removeFavoritePokemon,
 } from '../controllers/favoritePokemons.controller';
 
 export const favoritePokemonsRouter = Router();
 
 favoritePokemonsRouter.post('/:id', addFavoritePokemon);
-favoritePokemonsRouter.delete('/:id', deleteFavoritePokemon);
+favoritePokemonsRouter.delete('/:id', removeFavoritePokemon);
