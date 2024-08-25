@@ -1,4 +1,3 @@
-import { URL_ID_SEGMENT_INDEX } from '../types/api';
 import { extractUrlPathSegment } from '../utils/urlExtractor';
 import { prismaClient, redisClient } from '../index';
 import { FavoriteCard, Prisma } from '@prisma/client';
@@ -7,6 +6,8 @@ import { SetOptions } from 'redis';
 import { isNotNullOrUndefined } from '../utils/types';
 import { hashes } from '../constants/redis';
 import { PokemonApi, PokemonSummary } from '@repo/poke-client';
+import { URL_ID_SEGMENT_INDEX } from '../constants/api';
+import { isTtlExpired } from '../utils/redis';
 
 const api = new PokemonApi();
 
@@ -27,8 +28,7 @@ async function getPokemons(): Promise<Pokemon[]> {
   try {
     const ttl = await redisClient.ttl('pokemons');
 
-    // EXPIRED OR KEY DOES NOT EXIST
-    if (ttl === -2) {
+    if (isTtlExpired(ttl)) {
       const {
         data: { results: pokemonsSummaries = [] },
       } = await api.pokemonList(POKEMONS_COUNT);
