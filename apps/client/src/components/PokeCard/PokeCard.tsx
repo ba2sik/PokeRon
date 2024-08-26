@@ -2,29 +2,40 @@ import React from 'react';
 import { FavoriteButton } from './FavoriteButton';
 import { useUpdatePokemonCache } from '../../hooks/useUpdatePokemonCache';
 import { useFavoriteApiOperations } from '../../hooks/useFavoriteApiOperations';
-import { isNullOrUndefined } from '../../utils';
 import toast from 'react-hot-toast';
 import { useSession } from '../../hooks/auth/useSession';
-import { Pokemon } from '@repo/shared-types';
+import { LOGGED_OUT_USER, Pokemon } from '@repo/shared-types';
 
 export const PokeCard: React.FC<Pokemon> = React.memo(function PokeCard({ id, name, isFavorite }) {
-  const { data: session } = useSession();
+  const { data: session = LOGGED_OUT_USER } = useSession();
   const updatePokemonCache = useUpdatePokemonCache();
   const { removeFavorite, addFavorite } = useFavoriteApiOperations();
 
   const onFavoriteClick = () => {
-    if (isNullOrUndefined(session) || !session.loggedIn) {
-      toast.error('Please login to favorite a pokemon');
-      return;
+    if (!session.loggedIn) {
+      return toast.error('Please login to favorite a pokemon');
     }
 
-    updatePokemonCache(id);
-
+    // TODO: export this logic to a custom toaster function
     if (isFavorite) {
-      return removeFavorite(id);
+      return toast.promise(removeFavorite(id), {
+        loading: '...',
+        success: () => {
+          updatePokemonCache(id);
+          return 'Pokemon removed successfully';
+        },
+        error: (err) => err.toString(),
+      });
     }
 
-    addFavorite(id);
+    return toast.promise(addFavorite(id), {
+      loading: '...',
+      success: () => {
+        updatePokemonCache(id);
+        return 'Pokemon added successfully';
+      },
+      error: (err) => err.toString(),
+    });
   };
 
   return (

@@ -12,7 +12,7 @@ export const useFavoriteApiOperations = () => {
   });
 
   return {
-    removeFavorite: removeMutation.mutate,
-    addFavorite: addMutation.mutate,
+    removeFavorite: removeMutation.mutateAsync,
+    addFavorite: addMutation.mutateAsync,
   };
 };
