@@ -1,26 +1,26 @@
 import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema';
-import { isNotNullOrUndefined } from '../../utils';
-import { useAuth } from '../../hooks/auth/useAuth';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';
+import toast from 'react-hot-toast';
+import { useLogin } from '../../hooks/auth/useLogin';
+import { AuthPayload } from '@repo/shared-types';
 
 export const Login: React.FC = () => {
-  const { signIn } = useAuth();
+  const { mutateAsync: login } = useLogin();
+
   const navigate = useNavigate();
 
-  const handleLogin: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    const { data, error } = await signIn({ email, password });
-
-    if (isNotNullOrUndefined(error)) {
-      alert(error.message);
-      return null;
-    }
-
-    alert(data?.user?.email + ' signed in successfully');
-    return navigate(ROUTES.HOME);
+  const handleLogin: SubmitHandler<AuthPayload> = ({ email, password }) => {
+    toast.promise(login({ email, password }), {
+      loading: 'Signing in...',
+      success: ({ message }) => {
+        navigate(ROUTES.HOME);
+        return message;
+      },
+      error: (err) => err.toString(),
+    });
   };
 
   return (

@@ -1,6 +1,6 @@
 {
   "apps/**/*.{js,ts,jsx,tsx}": [
-    "eslint --fix",
-    "prettier --write"
+    "npm run format",
+    "eslint --ext ts,tsx --report-unused-disable-directives --max-warnings=0"
   ]
 }

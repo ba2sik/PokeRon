@@ -1,7 +1,7 @@
 import { FieldPath } from 'react-hook-form';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import React from 'react';
-import { AuthPayload } from './types/auth-payload-schema';
+import { AuthPayload } from '@repo/shared-types';
 
 type FormInputProps = {
   fieldName: FieldPath<AuthPayload>;

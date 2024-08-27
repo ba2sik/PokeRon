@@ -18,7 +18,6 @@
 ![zod](https://img.shields.io/badge/-zod-darkslategray?style=for-the-badge&logo=zod&color=1c1c1c&logoColor=E34F26)
 ![turbo](https://img.shields.io/badge/-turbo-darkslategray?style=for-the-badge&logo=turbo&color=1c1c1c&logoColor=8B5CF6)
 
-
 **PokeRon** is an app that lets you view and search Pokémons, log in to your account, and save your favorite ones.  
 Explore, find your favorites, and enjoy a personalized Pokémon experience!
 

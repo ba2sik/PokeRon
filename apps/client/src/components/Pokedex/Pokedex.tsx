@@ -1,38 +1,36 @@
 import React, { useRef, useState } from 'react';
-import { BasicPokemon } from '../../types/pokemons';
 import { useOnReachedBottom } from '../../hooks/useOnReachedBottom';
 import { PokeCard } from '..';
+import { Pokemon } from '@repo/shared-types';
 
 type PokedexProps = {
-  basicPokemons: BasicPokemon[];
+  pokemons: Pokemon[];
 };
 
 const NUM_OF_POKEMONS_TO_LOAD = 24;
 
-export const Pokedex: React.FC<PokedexProps> = ({ basicPokemons = [] }) => {
-  const [currentShowingBasicPokemons, setCurrentShowingBasicPokemons] = React.useState(
-    basicPokemons.slice(0, NUM_OF_POKEMONS_TO_LOAD),
-  );
-  const [currentOffset, setCurrentOffset] = useState(NUM_OF_POKEMONS_TO_LOAD);
+export const Pokedex: React.FC<PokedexProps> = ({ pokemons = [] }) => {
   const divRef = useRef<HTMLDivElement>(null);
+  const [numberOfPokemonsShowing, setNumberOfPokemonsShowing] = useState(NUM_OF_POKEMONS_TO_LOAD);
 
   const loadMorePokemons = () => {
-    const newItems = basicPokemons.slice(currentOffset, currentOffset + NUM_OF_POKEMONS_TO_LOAD);
-    setCurrentShowingBasicPokemons((prevItems) => [...prevItems, ...newItems]);
-    setCurrentOffset(currentOffset + NUM_OF_POKEMONS_TO_LOAD);
+    setNumberOfPokemonsShowing(numberOfPokemonsShowing + NUM_OF_POKEMONS_TO_LOAD);
   };
 
   useOnReachedBottom(divRef, loadMorePokemons);
+
+  const pokemonsToRender = pokemons.slice(0, numberOfPokemonsShowing);
 
   return (
     <div
       ref={divRef}
       className="flex flex-wrap justify-center px-8 py-2 gap-8 overflow-y-auto"
     >
-      {currentShowingBasicPokemons.map(({ name, id }) => (
+      {pokemonsToRender.map(({ id, name, isFavorite }) => (
         <PokeCard
-          name={name}
           id={id}
+          name={name}
+          isFavorite={isFavorite}
           key={id}
         />
       ))}

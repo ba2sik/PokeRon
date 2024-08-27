@@ -1,26 +1,25 @@
 import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { AuthPayload } from '../../components/AuthForm/types/auth-payload-schema';
-import { isNotNullOrUndefined } from '../../utils';
-import { useAuth } from '../../hooks/auth/useAuth';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { ROUTES } from '../../constants/routes';
+import toast from 'react-hot-toast';
+import { useRegister } from '../../hooks/auth/useRegister';
+import { AuthPayload } from '@repo/shared-types';
 
 export const Register: React.FC = () => {
-  const { signUp } = useAuth();
+  const { mutateAsync: register } = useRegister();
   const navigate = useNavigate();
 
-  const handleSignUp: SubmitHandler<AuthPayload> = async ({ email, password }) => {
-    const { data, error } = await signUp({ email, password });
-
-    if (isNotNullOrUndefined(error)) {
-      alert(error.message);
-      return null;
-    }
-
-    alert(data?.user?.email + ' signed up successfully');
-    return navigate(ROUTES.HOME);
+  const handleSignUp: SubmitHandler<AuthPayload> = ({ email, password }) => {
+    toast.promise(register({ email, password }), {
+      loading: 'Signing Up...',
+      success: () => {
+        navigate(ROUTES.HOME);
+        return 'Signed up successfully';
+      },
+      error: (err) => err.toString(),
+    });
   };
 
   return (
