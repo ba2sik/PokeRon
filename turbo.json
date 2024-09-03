@@ -3,20 +3,28 @@
   "tasks": {
     "build": {
       "dependsOn": [
+        "^prisma:generate",
         "^build"
       ],
       "inputs": [
         "$TURBO_DEFAULT$",
-        ".env*"
+        ".env",
+        ".env.local"
       ],
       "outputs": [
         "dist/**"
       ]
     },
-    "lint": {},
     "dev": {
+      "dependsOn": [
+        "^prisma:generate"
+      ],
       "cache": false,
       "persistent": true
+    },
+    "prisma:generate": {
+      "cache": false,
+      "env": ["DATABASE_URL"]
     }
   }
 }

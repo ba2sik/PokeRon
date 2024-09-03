@@ -4,7 +4,7 @@ export const PokeToaster = () => (
   <Toaster
     position="bottom-right"
     toastOptions={{
-      duration: 7000,
+      duration: 5000,
       style: {
         border: '1px solid darkblue',
         padding: '16px',
