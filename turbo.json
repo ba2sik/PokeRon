@@ -8,13 +8,13 @@
       ],
       "inputs": [
         "$TURBO_DEFAULT$",
-        ".env*"
+        ".env",
+        ".env.local"
       ],
       "outputs": [
         "dist/**"
       ]
     },
-    "lint": {},
     "dev": {
       "dependsOn": [
         "^prisma:generate"
@@ -23,7 +23,8 @@
       "persistent": true
     },
     "prisma:generate": {
-      "cache": false
+      "cache": false,
+      "env": ["DATABASE_URL"]
     }
   }
 }
