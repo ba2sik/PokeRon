@@ -1,5 +1,5 @@
 import { extractUrlPathSegment } from '../utils/urlExtractor';
-import { prismaClient, redisClient } from '../index';
+import { prismaClient } from '../index';
 import { FavoriteCard, Prisma } from '@prisma/client';
 import { Pokemon } from '@repo/shared-types';
 import { isNullOrUndefined } from '../utils/types';
@@ -7,6 +7,7 @@ import { hashes, redisCacheConfig } from '../constants/redis';
 import { PokemonApi, PokemonSummary } from '@repo/poke-client';
 import { URL_ID_SEGMENT_INDEX } from '../constants/api';
 import { isTtlExpired } from '../utils/redis';
+import { redisClient } from '../config/redisClient';
 
 const api = new PokemonApi();
 

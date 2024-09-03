@@ -6,6 +6,7 @@ import { AuthPayload, UserSession } from '@repo/shared-types';
 import { AccessTokenCookieOptions } from '../constants/cookies';
 import { StatusCodes } from 'http-status-codes';
 import { TypedRequestBody } from '../types/typedRequestBody';
+import { env } from '../env/env';
 
 export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
@@ -61,7 +62,7 @@ export const logout = async (req: Request, res: Response) => {
 
   res.clearCookie('access_token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: env.runtimeEnv === 'production',
     sameSite: 'strict',
   });
 
