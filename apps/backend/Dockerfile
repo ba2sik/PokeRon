@@ -1,26 +1,41 @@
-FROM node:20-alpine
+FROM node:20-alpine AS base
 
+FROM base AS builder
+
+RUN apk update
+RUN apk add --no-cache libc6-compat
+
+# Set working directory
 WORKDIR /app
 
-# Copy root package.json and lockfile
-COPY package.json ./
-COPY package-lock.json ./
+RUN npm install -g turbo@^2
+COPY . .
 
-# Install all dependencies (including dev dependencies)
+# Generate a partial monorepo with a pruned lockfile for a target workspace.
+RUN turbo prune backend --docker
+
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
+RUN apk update
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+# First install the dependencies (as they change less often)
+COPY --from=builder /app/out/json/ .
 RUN npm install
 
-# Copy local directories to the current local directory of our docker image (/app)
-COPY ./src ./src
-COPY ./prisma ./prisma
+# Build the project
+COPY --from=builder /app/out/full/ .
+RUN npx turbo run build --filter=backend
 
-RUN npm install --omit=dev
+FROM base AS runner
+WORKDIR /app
 
-RUN npm run prisma:generate
-
-RUN npm run build
-
-
+# Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 express
+USER express
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "apps/backend/dist/src/index.js"]
