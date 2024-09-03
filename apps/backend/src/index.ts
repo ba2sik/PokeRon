@@ -1,5 +1,5 @@
 import express, { Express, NextFunction, Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@repo/db';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';

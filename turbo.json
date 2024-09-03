@@ -3,6 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": [
+        "^prisma:generate",
         "^build"
       ],
       "inputs": [
@@ -15,8 +16,14 @@
     },
     "lint": {},
     "dev": {
+      "dependsOn": [
+        "^prisma:generate"
+      ],
       "cache": false,
       "persistent": true
+    },
+    "prisma:generate": {
+      "cache": false
     }
   }
 }
