@@ -4,7 +4,7 @@ import { env } from '../env/env';
 
 export const AccessTokenCookieOptions: CookieOptions = {
   httpOnly: true,
-  secure: env.runtimeEnv === 'production',
+  secure: env.runtimeEnv.NODE_ENV === 'production',
   sameSite: 'strict',
   maxAge: MS_IN_A_DAY,
 };
