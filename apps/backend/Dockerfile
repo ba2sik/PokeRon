@@ -9,13 +9,17 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 RUN npm install -g turbo@^2
+
 COPY . .
 
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
 RUN turbo prune backend --docker
 
+CMD ["ls", "-l"]
+
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
+
 RUN apk update
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
@@ -26,6 +30,7 @@ RUN npm install
 
 # Build the project
 COPY --from=builder /app/out/full/ .
+
 RUN npx turbo run build --filter=backend
 
 FROM base AS runner
@@ -36,6 +41,14 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 express
 USER express
 
+COPY --from=installer /app/apps/backend/package.json .
+
+# Copy the build output
+COPY --from=installer --chown=express:nodejs /app/dist/ .
+
+WORKDIR /app/apps/backend
+
 EXPOSE 3000
 
-CMD ["node", "apps/backend/dist/src/index.js"]
+#CMD ["node", "apps/backend/dist/src/index.js"]
+CMD ["ls", "-la"]
