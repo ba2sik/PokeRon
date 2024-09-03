@@ -9,6 +9,9 @@ export const env = createEnv({
     CLIENT_URL: z.string().url(),
     REDIS_HOST: z.string().ip().default('127.0.0.1'),
     REDIS_PORT: z.coerce.number().default(6379),
+    NODE_ENV: z.enum(['development', 'test', 'production']),
   },
-  runtimeEnv: process.env,
+  runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
+  },
 });
