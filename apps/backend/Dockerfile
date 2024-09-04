@@ -15,7 +15,7 @@ COPY . .
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
 RUN turbo prune backend --docker
 
-CMD ["ls", "-l"]
+CMD ["tree", "."]
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -26,6 +26,7 @@ WORKDIR /app
 
 # First install the dependencies (as they change less often)
 COPY --from=builder /app/out/json/ .
+
 RUN npm install
 
 # Build the project
@@ -44,11 +45,10 @@ USER express
 COPY --from=installer /app/apps/backend/package.json .
 
 # Copy the build output
-COPY --from=installer --chown=express:nodejs /app/dist/ .
+COPY --from=installer --chown=express:nodejs /app/apps/backend/dist/ .
 
 WORKDIR /app/apps/backend
 
 EXPOSE 3000
 
-#CMD ["node", "apps/backend/dist/src/index.js"]
-CMD ["ls", "-la"]
+CMD ["node", "dist/src/index.js"]
