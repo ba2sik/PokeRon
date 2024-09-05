@@ -3,7 +3,7 @@ import { PrismaClient } from '@repo/db';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
-import { apiRouter } from './routes/api.routes.js';
+import { apiRouter } from './routes/api.routes';
 import { env } from './env/env';
 import { StatusCodes } from 'http-status-codes';
 import { redisClient } from './config/redisClient';

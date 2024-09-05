@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { pokemonsRouter } from './pokemons.routes.js';
+import { pokemonsRouter } from './pokemons.routes';
 import { authRouter } from './auth.routes';
 
 export const apiRouter = Router();
