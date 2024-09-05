@@ -1,9 +1,8 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "start": "node dist/src/index.js",
+    "start": "node dist/index.js",
     "dev": "dotenv -e .env.local -- tsx watch src/index.ts",
     "build": "tsc -b",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0"
