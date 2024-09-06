@@ -1,18 +1,33 @@
-version: '3'
 services:
   app:
+    container_name: backend
     build:
-      context: ./apps/backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/backend/Dockerfile
     ports:
-      - "3000:3000"
+      - 3000:3000
+    env_file:
+      - ./apps/backend/.env.docker
+    networks:
+      - app_network
     environment:
       - NODE_ENV=production
       - REDIS_HOST=redis
+      - REDIS_PORT=6379
     depends_on:
       - redis
+    volumes:
+      - ./apps/backend:/app/apps/backend
+      - ./packages/database/prisma:/app/packages/database/prisma  # Mount correct prisma directory
+      - /app/apps/backend/node_modules
 
   redis:
     image: "redis:latest"
     ports:
       - "6379:6379"
+    networks:
+       - app_network
+
+networks:
+  app_network:
+    driver: bridge

@@ -44,7 +44,6 @@ const EnvSchema = z.object({
       description: 'Redis IP address',
       required_error: '😱 You forgot to add a Redis IP address',
     })
-    .ip()
     .default('127.0.0.1'),
   REDIS_PORT: z.coerce
     .number({ description: 'Redis port' })
@@ -56,7 +55,6 @@ const EnvSchema = z.object({
 const result = EnvSchema.safeParse(process.env);
 
 if (!result.success) {
-  console.log(result.error);
   printZodError(result.error);
   process.exit(1);
 }
