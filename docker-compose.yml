@@ -5,15 +5,17 @@ services:
       context: .
       dockerfile: ./apps/backend/Dockerfile
     ports:
-      - 3000:3000
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     env_file:
       - ./apps/backend/.env.docker
     networks:
       - app_network
     environment:
       - NODE_ENV=production
+      - PORT=${BACKEND_PORT}
       - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - REDIS_PORT=${REDIS_PORT}
+      - CLIENT_URL=http://${HOST}:${CLIENT_PORT}
     depends_on:
       - redis
     volumes:
@@ -24,7 +26,7 @@ services:
   redis:
     image: "redis:latest"
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:${REDIS_PORT}"
     networks:
        - app_network
 
@@ -34,10 +36,9 @@ services:
       context: .
       dockerfile: ./apps/client/Dockerfile
     ports:
-      - "8080:8080"
-
-    env_file:
-      - ./apps/backend/.env.docker
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    environment:
+      - VITE_SERVER_URL=http://${HOST}:${BACKEND_PORT}
     networks:
       - app_network
 

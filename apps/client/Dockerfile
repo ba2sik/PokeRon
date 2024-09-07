@@ -35,4 +35,4 @@ COPY --from=installer --chown=serve:nodejs /app .
 
 EXPOSE 8080
 
-CMD ["npx", "serve", "-s", "build", "-l", "8080"]
+CMD ["npx", "serve", "-s", "apps/client/dist", "-l", "8080"]
