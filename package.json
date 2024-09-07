@@ -6,7 +6,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
-    "predeploy": "npm run build",
+    "predeploy": "npm --prefix apps/client run build:deploy",
     "deploy": "gh-pages -d apps/client/dist",
     "docker:build": "docker-compose build --no-cache",
     "docker:up": "docker-compose up",
