@@ -50,6 +50,12 @@ const EnvSchema = z.object({
     .positive()
     .max(65536, `Redis Port should be between 0 and 65536`)
     .default(6379),
+  REDIS_URL: z
+    .string({
+      description: 'Redis URL',
+      required_error: '😱 You forgot to add a Redis URL',
+    })
+    .optional(),
 });
 
 const result = EnvSchema.safeParse(process.env);
