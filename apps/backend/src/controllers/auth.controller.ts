@@ -3,10 +3,9 @@ import { supabase } from '../supabase/supabseClient';
 import { isNotNullOrUndefined, isNullOrUndefined } from '../utils/types';
 import { getUserByToken, isUserExistsError } from '../services/auth.service';
 import { AuthPayload, UserSession } from '@repo/shared-types';
-import { AccessTokenCookieOptions } from '../constants/cookies';
+import { defaultCookieOptions, expiringCookieOptions } from '../constants/cookies';
 import { StatusCodes } from 'http-status-codes';
 import { TypedRequestBody } from '../types/typedRequestBody';
-import { env } from '../env/env';
 
 export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) => {
   const { email, password } = req.body;
@@ -20,7 +19,7 @@ export const login = async (req: TypedRequestBody<AuthPayload>, res: Response) =
 
   const { access_token } = data.session;
 
-  res.cookie('access_token', access_token, AccessTokenCookieOptions);
+  res.cookie('access_token', access_token, expiringCookieOptions);
 
   return res.status(StatusCodes.OK).json({ message: 'Signed in successfully' });
 };
@@ -46,7 +45,7 @@ export const register = async (req: TypedRequestBody<AuthPayload>, res: Response
 
   const { access_token } = data.session;
 
-  res.cookie('access_token', access_token, AccessTokenCookieOptions);
+  res.cookie('access_token', access_token, expiringCookieOptions);
 
   return res.status(StatusCodes.CREATED).json({ message: 'User created successfully' });
 };
@@ -60,11 +59,7 @@ export const logout = async (req: Request, res: Response) => {
       .json({ message: 'Failed to log out', error: error.message });
   }
 
-  res.clearCookie('access_token', {
-    httpOnly: true,
-    secure: env.NODE_ENV === 'production',
-    sameSite: 'strict',
-  });
+  res.clearCookie('access_token', defaultCookieOptions);
 
   return res.status(StatusCodes.OK).json({ message: 'Logged out successfully' });
 };
