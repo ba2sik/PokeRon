@@ -7,6 +7,7 @@
 ![react](https://img.shields.io/badge/-react-darkslategray?style=for-the-badge&logo=react&color=1c1c1c&logoColor=61DAFB)
 ![typescript](https://img.shields.io/badge/-typescript-darkslategray?style=for-the-badge&logo=typescript&color=1c1c1c&logoColor=3178C6)
 ![nodejs](https://img.shields.io/badge/-node.js-darkslategray?style=for-the-badge&logo=node.js&color=1c1c1c&logoColor=8CC84B)
+![docker](https://img.shields.io/badge/-docker-darkslategray?style=for-the-badge&logo=docker&color=1c1c1c&logoColor=2496ED)
 ![express](https://img.shields.io/badge/-express-darkslategray?style=for-the-badge&logo=express&color=1c1c1c&logoColor=000000)
 ![prisma](https://img.shields.io/badge/-prisma-darkslategray?style=for-the-badge&logo=prisma&color=1c1c1c&logoColor=2D3748)
 ![redis](https://img.shields.io/badge/-redis-darkslategray?style=for-the-badge&logo=redis&color=1c1c1c&logoColor=DC382D)
