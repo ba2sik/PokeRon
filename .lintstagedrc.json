@@ -1,5 +1,5 @@
 {
-  "apps/**/*.{js,ts,jsx,tsx}": [
+  "apps/**/!(vite.config).{js,ts,jsx,tsx}": [
     "npm run format",
     "eslint --ext ts,tsx --report-unused-disable-directives --max-warnings=0"
   ]

@@ -28,6 +28,19 @@ services:
     networks:
        - app_network
 
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: ./apps/client/Dockerfile
+    ports:
+      - "8080:8080"
+
+    env_file:
+      - ./apps/backend/.env.docker
+    networks:
+      - app_network
+
 networks:
   app_network:
     driver: bridge

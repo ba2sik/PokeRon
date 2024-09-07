@@ -5,5 +5,18 @@ import eslint from 'vite-plugin-eslint';
 
 export default defineConfig({
   base: '/PokeRon',
-  plugins: [react(), eslint()],
+  plugins: [
+    react(),
+    eslint({
+      exclude: ['**/node_modules/**', '**/dist/**'],
+    }),
+  ],
+  preview: {
+    port: 8080,
+    strictPort: true,
+  },
+  server: {
+    port: 8080,
+    strictPort: true,
+  },
 });
