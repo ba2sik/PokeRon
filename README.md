@@ -22,9 +22,7 @@
 **PokeRon** is an app that lets you view and search Pokémons, log in to your account, and save your favorite ones.  
 Explore, find your favorites, and enjoy a personalized Pokémon experience!
 
-<!---
 Check it out [here](https://ba2sik.github.io/PokeRon/).
--->
 
 ![PokeRon Screenshot](/apps/client/public/screenshot.png)
 
@@ -33,11 +31,13 @@ Check it out [here](https://ba2sik.github.io/PokeRon/).
 To get started with PokeRon, follow these steps:
 
 1. **Clone the repository:**
+
    ```
    git clone https://github.com/ba2sik/PokeRon.git
    ```
 
 2. **Install dependencies:**
+
    ```
    npm install
    ```
@@ -49,9 +49,3 @@ To get started with PokeRon, follow these steps:
 
 This will build both the backend and client, then start the application with Docker.  
 Enjoy exploring the world of Pokémon!
-
-
-
-
-
-
