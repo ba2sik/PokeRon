@@ -6,6 +6,10 @@ import { deleteFavoritePokemon, insertFavoritePokemon } from '../services/pokemo
 
 export const removeFavoritePokemon = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    if (isNullOrUndefined(req.params.id)) {
+      res.status(StatusCodes.BAD_REQUEST).json({ message: 'id is missing' });
+    }
+
     const user = await getUserByToken(req.cookies.access_token);
 
     if (!user) {
@@ -38,6 +42,10 @@ export const removeFavoritePokemon = async (req: Request, res: Response, next: N
 
 export const addFavoritePokemon = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    if (isNullOrUndefined(req.params.id)) {
+      res.status(StatusCodes.BAD_REQUEST).json({ message: 'id is missing' });
+    }
+
     const user = await getUserByToken(req.cookies.access_token);
 
     if (!user) {

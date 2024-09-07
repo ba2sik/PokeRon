@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { enrichPokemonsWithUserFavorites, readPokemons } from '../services/pokemons.service.js';
+import { enrichPokemonsWithUserFavorites, readPokemons } from '../services/pokemons.service';
 import { getUserByToken } from '../services/auth.service';
 import { isNullOrUndefined } from '../utils/types';
 import { StatusCodes } from 'http-status-codes';

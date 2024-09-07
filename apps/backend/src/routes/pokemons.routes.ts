@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getPokemons } from '../controllers/pokemons.controller.js';
+import { getPokemons } from '../controllers/pokemons.controller';
 import { favoritePokemonsRouter } from './favoritePokemons.routes';
 import { checkAccessToken } from '../middlewares/checkAccessToken';
 
