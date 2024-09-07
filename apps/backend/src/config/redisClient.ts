@@ -1,5 +1,5 @@
 import { createClient } from 'redis';
-import { env } from 'src/env/env';
+import { env } from '../env/env';
 
 const isProd = env.NODE_ENV === 'production';
 
