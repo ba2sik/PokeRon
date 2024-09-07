@@ -2,6 +2,15 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": {
+      "env": [
+        "SUPABASE_ANON_KEY",
+        "SUPABASE_URL",
+        "DATABASE_URL",
+        "CLIENT_URL",
+        "PORT",
+        "REDIS_HOST",
+        "REDIS_PORT"
+      ],
       "dependsOn": [
         "^prisma:generate",
         "^build"
@@ -24,7 +33,9 @@
     },
     "prisma:generate": {
       "cache": false,
-      "env": ["DATABASE_URL"]
+      "env": [
+        "DATABASE_URL"
+      ]
     }
   }
 }
