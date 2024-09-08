@@ -7,6 +7,7 @@
 ![react](https://img.shields.io/badge/-react-darkslategray?style=for-the-badge&logo=react&color=1c1c1c&logoColor=61DAFB)
 ![typescript](https://img.shields.io/badge/-typescript-darkslategray?style=for-the-badge&logo=typescript&color=1c1c1c&logoColor=3178C6)
 ![nodejs](https://img.shields.io/badge/-node.js-darkslategray?style=for-the-badge&logo=node.js&color=1c1c1c&logoColor=8CC84B)
+![docker](https://img.shields.io/badge/-docker-darkslategray?style=for-the-badge&logo=docker&color=1c1c1c&logoColor=2496ED)
 ![express](https://img.shields.io/badge/-express-darkslategray?style=for-the-badge&logo=express&color=1c1c1c&logoColor=000000)
 ![prisma](https://img.shields.io/badge/-prisma-darkslategray?style=for-the-badge&logo=prisma&color=1c1c1c&logoColor=2D3748)
 ![redis](https://img.shields.io/badge/-redis-darkslategray?style=for-the-badge&logo=redis&color=1c1c1c&logoColor=DC382D)
@@ -18,9 +19,33 @@
 ![zod](https://img.shields.io/badge/-zod-darkslategray?style=for-the-badge&logo=zod&color=1c1c1c&logoColor=E34F26)
 ![turbo](https://img.shields.io/badge/-turbo-darkslategray?style=for-the-badge&logo=turbo&color=1c1c1c&logoColor=8B5CF6)
 
-**PokeRon** is an app that lets you view and search Pokémons, log in to your account, and save your favorite ones.  
+**PokéRon** is an app that lets you view and search Pokémons, log in to your account, and save your favorite ones.  
 Explore, find your favorites, and enjoy a personalized Pokémon experience!
 
 Check it out [here](https://ba2sik.github.io/PokeRon/).
 
-![PokeRon Screenshot](/apps/client/public/screenshot.png)
+![PokéRon Screenshot](/apps/client/public/screenshot.png)
+
+## Getting Started
+
+To get started with PokéRon, follow these steps:
+
+1. **Clone the repository:**
+
+   ```
+   git clone https://github.com/ba2sik/PokeRon.git
+   ```
+
+2. **Install dependencies:**
+
+   ```
+   npm install
+   ```
+
+3. **Run the application:**
+   ```
+   npm run docker:up
+   ```
+
+This will build both the backend and client, then start the application with Docker.  
+Enjoy exploring the world of Pokémon!
