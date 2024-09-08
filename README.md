@@ -19,7 +19,7 @@
 ![zod](https://img.shields.io/badge/-zod-darkslategray?style=for-the-badge&logo=zod&color=1c1c1c&logoColor=E34F26)
 ![turbo](https://img.shields.io/badge/-turbo-darkslategray?style=for-the-badge&logo=turbo&color=1c1c1c&logoColor=8B5CF6)
 
-**PokéRon** is an app that lets you view and search Pokémons, log in to your account, and save your favorite ones.  
+**PokéRon** is an app that lets you view and search Pokémon, log in to your account, and save your favorite ones.  
 Explore, find your favorites, and enjoy a personalized Pokémon experience!
 
 Check it out [here](https://ba2sik.github.io/PokeRon/).
@@ -31,21 +31,38 @@ Check it out [here](https://ba2sik.github.io/PokeRon/).
 To get started with PokéRon, follow these steps:
 
 1. **Clone the repository:**
-
    ```
    git clone https://github.com/ba2sik/PokeRon.git
    ```
 
 2. **Install dependencies:**
-
    ```
    npm install
    ```
 
-3. **Run the application:**
+3. **Set up Supabase:**
+    - Make sure you have a Supabase project set up.
+
+
+4. **Set up environment variables:**
+    - **Root Directory:**
+        - Create a `.env` file in the root directory. You can copy the contents from [`.env.example`](https://github.com/ba2sik/PokeRon/blob/main/.env.example) to set up your environment variables.
+
+    - **Backend:**
+        - Create a `.env.docker` file in the `apps/backend` directory. Use [`.env.docker.example`](https://github.com/ba2sik/PokeRon/blob/main/apps/backend/.env.docker.example) as a reference to configure environment variables for the backend, including Supabase and PostgreSQL settings.
+
+
+5. **Run Prisma to generate the database schema:**
+    - In the `packages/database` directory, run the following commands to create the necessary tables in your database:
+      ```
+      npm run prisma:generate
+      npm run prisma:push
+      ```
+
+6. **Run the application:**
    ```
    npm run docker:up
    ```
+   This will build both the backend and client, then start the application with Docker.
 
-This will build both the backend and client, then start the application with Docker.  
 Enjoy exploring the world of Pokémon!
