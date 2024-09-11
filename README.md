@@ -22,7 +22,7 @@
 **PokéRon** is an app that lets you view and search Pokémon, log in to your account, and save your favorite ones.  
 Explore, find your favorites, and enjoy a personalized Pokémon experience!
 
-Check it out [here](https://ba2sik.github.io/PokeRon/).
+Check it out [here](https://pokeron.ronzano.com/).
 
 ![PokéRon Screenshot](/apps/client/public/screenshot.png)
 
